@@ -127,7 +127,17 @@ addons/    plate_importer/
 docs/
 ```
 
-## 9. Milestones
+## 9. Dev Tooling (token-efficient by design)
+
+Tools print terse summaries; full output goes to git-ignored logs under `.godot/`.
+
+| Tool | Purpose |
+|---|---|
+| `bash tools/run_tests.sh [-v]` | Headless test suite (`tests/*_test.gd`, `test_*` methods, any engine error fails the test). Prints only failures + `N passed, M failed`; `-v` for the full log. |
+| `bash tools/capture.sh <name> <WxH> <frames> [args]` | Runs the main scene in a window at any size (including 21:9) and saves one frame to `.godot/captures/<name>.png` via the `DebugCapture` autoload. Movie Maker is not used: it crops non-16:9 windows to 1920×1080. |
+| Test-level user args | `--autorun` (player runs right), `--spawn-x=<m>` (spawn position). |
+
+## 10. Milestones
 
 **M1 — Specs proof (this spec's implementation scope):**
 - Project settings from Section 6.

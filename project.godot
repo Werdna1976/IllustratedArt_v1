@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="IllustratedArtGame v1"
+run/main_scene="res://scenes/level/test_level.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+DebugCapture="*res://scripts/debug_capture.gd"
 
 [display]
 
