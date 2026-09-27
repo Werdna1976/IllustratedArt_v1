@@ -38,6 +38,18 @@ This spec fixes the numbers everything else depends on: world scale, camera, lev
 - Camera travel: **115.2 m** horizontal (134.4 − 19.2), **5.4 m** vertical (16.2 − 10.8).
 - Target play time: 3–5 minutes per level.
 
+### 3.1 Levels are chains of sections
+The 134.4 × 16.2 m size above is the **default horizontal section**, not a fixed level size. A level is an ordered chain of sections, each with its own bounds, plates (sized by the §4 formula for that section's `level_size`) and camera clamp:
+
+| Section type | Shape | Notes |
+|---|---|---|
+| Horizontal | ~5–8 screens × 1.5 screens | The default (M1 test level). |
+| Vertical climb | ~1.5 screens × 4–8 screens | Level 7 tower climb, Level 5 tower. Plates stitched vertically. |
+| Arena | ~1.5–2 screens × 1–1.5 screens | Boss / set-piece fights; camera locks to arena bounds (§5.4). |
+| Vehicle run | Short fixed set + looping plates | Train roofs/cars (Levels 1, 4): the vehicle stays still, background plates scroll and wrap (§4.1). |
+
+Transitions between sections are seamless where art allows (shared edge plates) or covered by doors, drops and camera cuts.
+
 ## 4. Layer Stack & Plate Sizes
 
 **Sizing formula** (implemented once, in `WorldSpec`; the table below is its output):
@@ -63,34 +75,52 @@ Key properties:
 - **Aspect ratios:** 16:9 to 21:9 are fully supported. Narrower aspects (16:10, 4:3) keep the same height and show less width. Wider than 21:9 (e.g. 32:9) switches the camera to keep 21:9's width and crops height, so plate edges are never visible.
 - **Budget:** strips ≤ 2,048 px wide, BC7-compressed with mipmaps ≈ **86 MB VRAM per level**.
 
+### 4.1 Looping plates (vehicle runs)
+For moving-vehicle sections the world scrolls past a stationary vehicle. Each background layer is a **horizontally seamless** plate that wraps; its scroll speed = vehicle speed × the layer's scroll factor (§2), so perspective parallax stays correct. Loop plates need only ~1.5–2 screens of width per layer instead of the full run length.
+
 ## 5. Rendering: Depth, Lighting, Camera
 
 ### 5.1 Plates
 - Each plate strip is a `MeshInstance3D` quad with a `StandardMaterial3D`: alpha-scissor transparency, unshaded by default, per-pixel lit for gameplay/near layers when lighting is wanted. The sky plate sets `disable_fog`. (A custom shader is deferred until a feature needs one.)
 - Quad size in metres = strip px ÷ layer density (px/m).
+- **Emissive masks are core** (cyberpunk neon): each plate may ship an emissive map (`<layer>_emit.png`) driving `emission`; glow (§5.2) blooms it. Signs can flicker via a per-plate emission energy curve.
+- **Lit plates are core** for gameplay and near layers, with **normal maps** (`<layer>_n.png`) so neon, blade flashes and lightning light the painted surfaces. Far layers stay unshaded.
 
 ### 5.2 Environment (one `WorldEnvironment` per level)
 - **Depth fog** tinted per-level haze colour — primary depth cue.
 - **DoF blur:** far blur on far BG + sky; near blur on foreground. Gameplay plane in focus.
 - **Glow** for emissive elements.
 - **Tonemap + per-level colour-grading LUT** to unify AI art across generation batches.
-- **Volumetric fog:** optional per-level toggle for light shafts between layers.
+- **Volumetric fog:** per-level toggle for light shafts between layers.
+- **Weather:** rain (GPU particles in front of and between layers) and lightning (a brief directional-light + sky flash) are core effects for the cyberpunk levels.
 
 ### 5.3 Lighting
 - One `DirectionalLight3D` per level for mood/colour.
 - `OmniLight3D` / `SpotLight3D` for local sources; cull masks restrict them to gameplay + near layers.
 - Soft player-follow rim/fill light to separate the character from backgrounds.
-- Normal maps for gameplay plates: optional, later milestone.
+- Normal maps for gameplay/near plates and characters: core (see §5.1, §5.6).
+- **Blade signature light:** when the blade disrupts a network enemy, a short-lived `OmniLight3D` on the blade flashes (cyan), lighting nearby characters and lit plates, together with an emissive blade sprite.
 
 ### 5.4 CameraRig (`scenes/camera_rig.tscn`)
 - Smoothed follow of the player, horizontal look-ahead, vertical dead-zone.
 - Clamp to level bounds at the gameplay plane.
 - Additive offsets: dolly (zoom), trauma-based shake, scripted cinematic nudges via trigger `Area3D`s. All offsets are bounded to stay within the 10% plate margin.
+- **Camera locks:** entering an arena (or scripted zone) swaps the clamp bounds to that zone's rect, blending over ~0.5 s; leaving restores the section bounds.
 
 ### 5.5 Physics
 - `CharacterBody3D` player and `StaticBody3D` level collision exist only at z = 0; player Z axis locked.
 - Jolt Physics, physics tick **120 Hz**, with **physics interpolation on** so movement and camera stay smooth at any refresh rate.
 - **Actor render offset:** collision lives at z = 0, but actor and platform *visuals* render at **z = +0.5 m** so they always draw in front of the gameplay plate (which sits exactly at z = 0). The 2.5% perspective difference is negligible.
+
+### 5.6 Characters (flat, illustrated — no 3D models)
+Characters are flat painted art on quads, living in the same 3D scene as the plates, so the whole game stays 2.5D.
+
+- **Authoring:** a *cutout rig* — the character is painted once as separate parts (head, torso, limbs, blade) and animated on a 2D skeleton (Godot `Skeleton2D`/`Polygon2D`, or Spine). Painting each part once is what keeps an AI-assisted character consistent across every frame.
+- **Runtime:** animations are **baked to sprite sheets** (albedo + normal + emissive) and played on `AnimatedSprite3D` / a sprite quad at z = `ACTOR_Z` (+0.5 m). Baking keeps runtime cheap with many enemies on screen.
+- **Resolution:** authored at **2× gameplay density (200 px/m)** — a 1.8 m character is ~360 px tall in source, ~180 px on a 1080p screen — so it stays crisp at 1440p and during camera dolly-ins.
+- **Facing:** mirror horizontally (side-on game; no turnaround art needed). Asymmetric details (blade hand) are handled by flipping the rig before baking where needed.
+- **Lighting:** sprites are lit (normal maps) so neon, the blade signature light and lightning affect them like the plates; `alpha_scissor` keeps depth sorting correct.
+- **Effects:** slashes, sparks and disruption glitches are separate additive/emissive sprite layers.
 
 ## 6. Project Settings
 
@@ -115,6 +145,10 @@ Key properties:
 4. Export PNG (alpha for gameplay, near and foreground layers).
 5. Place at `art/levels/<level>/<layer>.png`.
 6. Editor plugin `addons/plate_importer/` slices into ≤ 2,048-px strips, applies BC7 + mipmaps, and generates the layer's quads at the correct depth and scale.
+
+**Companion maps:** gameplay/near plates and all characters also get a normal map and (where anything glows) an emissive mask, same size and name with `_n` / `_emit` suffixes. Normal maps can be generated from the painted albedo with a normal-from-image tool and touched up.
+
+**Characters:** paint parts on a parts sheet → rig in the 2D cutout tool → bake each animation to sprite sheets (albedo/normal/emissive) at 200 px/m → `art/characters/<name>/`.
 
 **Style guide rules:** shared prompt template, per-game palette, consistent key-light direction; contrast and saturation decrease with layer depth (fog supplies part of this, so plates should not over-fade).
 
@@ -148,4 +182,11 @@ Tools print terse summaries; full output goes to git-ignored logs under `.godot/
 - Capsule player: run + jump on simple collision.
 - Success: traversing the level shows correct parallax at every layer, no plate edges visible at 16:9 or 21:9, stable 60+ fps.
 
-**Later milestones (out of M1 scope):** plate importer plugin, real AI art for a first level, character art/animation, normal-mapped lit plates, volumetric fog, cinematic camera triggers, chunk streaming for longer levels.
+**M1 status:** complete (branch `m1-specs-proof`, 38 tests).
+
+**Road to a Level 1 vertical slice** (game design: *The Last Train*), each milestone its own plan:
+- **M2 — Character & combat core:** cutout-rig → baked sprite-sheet pipeline proven with a placeholder character (albedo/normal/emissive on a lit quad); the full moveset (light, heavy, parry, dodge, launcher, finisher) against a training dummy and one basic enemy; blade signature light; hit-stop and readable telegraphs.
+- **M3 — Sections & plate pipeline:** section chains and transitions, arena camera locks, looping plates for vehicle runs, emissive + normal plate maps, rain/lightning, and the `plate_importer` editor plugin (BC7 strips, companion maps).
+- **M4 — Level 1 vertical slice:** real AI-assisted art for *The Last Train*, security officers and drones, the train-roof escape set piece, Moth comms, per-level LUT/fog palette. Quality bar for the remaining seven levels.
+
+**After the slice:** Levels 2–8 in order, reusing the systems above; chunk streaming only if a section outgrows memory.

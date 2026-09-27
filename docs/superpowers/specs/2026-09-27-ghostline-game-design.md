@@ -71,6 +71,14 @@ Underground darkness → the city's brightest heights.
 
 Per-level palettes map directly onto the technical spec's per-level environment (fog colour, colour-grading LUT, key light).
 
-## 5. Open Proposals
+## 5. Production Decisions (adopted 2026-09-27)
 
-Pending the author's decisions; see the design discussion of 2026-09-27. Once decided, accepted items move into the sections above and into the technical spec.
+1. **Levels are chains of sections** (horizontal, vertical climb, arena, vehicle run) — see technical spec §3.1. Level 7's climb and Level 5's tower are vertical sections; every boss gets an arena.
+2. **Moving trains are faked:** the train stays still and looping background plates scroll past (technical spec §4.1). Applies to Level 1's escape and Level 4.
+3. **Neon is core tech:** emissive masks, lit/normal-mapped plates, rain and lightning are built early, not deferred.
+4. **Boss arenas lock the camera** to arena bounds.
+5. **The finale reuses earlier levels:** Level 8's memory phases re-present earlier levels' plates through a glitch/hologram treatment — memorable, cheap, and on-theme.
+6. **The blade signature is a real light:** each network disruption flashes a cyan light that lights nearby characters and scenery.
+7. **Story is delivered mainly through Moth over comms** (portrait + text/voice during play), keeping cutscenes rare.
+8. **Vertical slice first:** Level 1 is built to final quality — every move, the train-roof set piece, real art — before Levels 2–8.
+9. **Characters stay 2.5D:** flat painted cutout rigs baked to lit sprite sheets; no 3D models (technical spec §5.6).
