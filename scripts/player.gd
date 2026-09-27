@@ -21,6 +21,7 @@ static func create() -> Player:
 
 func _ready() -> void:
 	GameInput.ensure_actions()
+	add_to_group(&"player")
 
 
 func intent() -> Dictionary:
