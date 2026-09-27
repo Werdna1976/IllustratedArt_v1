@@ -112,15 +112,22 @@ For moving-vehicle sections the world scrolls past a stationary vehicle. Each ba
 - Jolt Physics, physics tick **120 Hz**, with **physics interpolation on** so movement and camera stay smooth at any refresh rate.
 - **Actor render offset:** collision lives at z = 0, but actor and platform *visuals* render at **z = +0.5 m** so they always draw in front of the gameplay plate (which sits exactly at z = 0). The 2.5% perspective difference is negligible.
 
-### 5.6 Characters (flat, illustrated — no 3D models)
-Characters are flat painted art on quads, living in the same 3D scene as the plates, so the whole game stays 2.5D.
+### 5.6 Characters (flat, illustrated — live cutout, no 3D models)
+Characters are flat painted parts on lit quads in the same 3D scene as the plates, so the whole game stays 2.5D.
 
-- **Authoring:** a *cutout rig* — the character is painted once as separate parts (head, torso, limbs, blade) and animated on a 2D skeleton (Godot `Skeleton2D`/`Polygon2D`, or Spine). Painting each part once is what keeps an AI-assisted character consistent across every frame.
-- **Runtime:** animations are **baked to sprite sheets** (albedo + normal + emissive) and played on `AnimatedSprite3D` / a sprite quad at z = `ACTOR_Z` (+0.5 m). Baking keeps runtime cheap with many enemies on screen.
-- **Resolution:** authored at **2× gameplay density (200 px/m)** — a 1.8 m character is ~360 px tall in source, ~180 px on a 1080p screen — so it stays crisp at 1440p and during camera dolly-ins.
-- **Facing:** mirror horizontally (side-on game; no turnaround art needed). Asymmetric details (blade hand) are handled by flipping the rig before baking where needed.
-- **Lighting:** sprites are lit (normal maps) so neon, the blade signature light and lightning affect them like the plates; `alpha_scissor` keeps depth sorting correct.
-- **Effects:** slashes, sparks and disruption glitches are separate additive/emissive sprite layers.
+- **Parts sheet:** each character is painted once as separate parts (head, torso, pelvis, upper/lower arms, hands, thighs, shins, feet, blade, swap parts such as open/closed hands) on one sheet, side view facing right, at **400 px/m** (a 1.8 m fighter ≈ 720 px tall). Companion `_n` (normal) and `_emit` (glow) maps match it pixel for pixel.
+- **Rig authoring (2D):** a character rig is an ordinary Godot 2D scene — a `Node2D` hierarchy of `Sprite2D` parts using regions of the parts sheet, pivots set with `offset`, layering by `z_index` — animated with `AnimationPlayer` in the 2D editor. The 2D rig is never rendered.
+- **Runtime (3D mirror):** `CutoutMirror` builds one lit `MeshInstance3D` quad per `Sprite2D` and each frame copies the part's 2D transform (px → metres at 400 px/m, Y flipped) onto it in the character's plane at z = `ACTOR_Z`; `z_index` becomes a tiny z offset for layering. Parts are normal-mapped and emissive, so neon, the blade signature light and lightning light them natively.
+- **Facing:** mirror the rig horizontally; quads render double-sided.
+- **Memory:** ~16 MB per character (2048² sheet × 3 maps, BC7 + mips). Large bosses use a 4096² sheet.
+- **Effects:** slashes, sparks and disruption glitches are separate additive/emissive quads.
+
+### 5.7 Combat core
+- **Moves are data:** each move is a `MoveData` resource — startup / active / recovery (seconds), damage, stagger damage, knockback, launch velocity, hit-stop, cancel window, animation name. Tuning never touches code.
+- **Hitboxes / hurtboxes:** `Area3D` shapes on the gameplay plane, enabled only during a move's active window.
+- **Player moveset:** light (3-hit combo), heavy, parry (timed window → counter opening), dodge (brief invulnerability), launcher (sends light enemies airborne for aerial follow-ups), finisher (on a staggered enemy).
+- **Enemies:** health + stagger meter; a full stagger meter opens a finisher. Attacks are telegraphed (wind-up pose + red glint) before the active window.
+- **Feel:** hit-stop on impact, small camera shake, blade signature light on every network disruption.
 
 ## 6. Project Settings
 
@@ -148,7 +155,9 @@ Characters are flat painted art on quads, living in the same 3D scene as the pla
 
 **Companion maps:** gameplay/near plates and all characters also get a normal map and (where anything glows) an emissive mask, same size and name with `_n` / `_emit` suffixes. Normal maps can be generated from the painted albedo with a normal-from-image tool and touched up.
 
-**Characters:** paint parts on a parts sheet → rig in the 2D cutout tool → bake each animation to sprite sheets (albedo/normal/emissive) at 200 px/m → `art/characters/<name>/`.
+**Characters:** paint a parts sheet at 400 px/m → `art/characters/<name>/parts.png` (+ `_n`, `_emit`) → rig and animate in a Godot 2D scene (§5.6).
+
+**Full art guide (sizes, prompts per AI tool, parts-sheet layout):** `docs/art/art-guide.md`.
 
 **Style guide rules:** shared prompt template, per-game palette, consistent key-light direction; contrast and saturation decrease with layer depth (fog supplies part of this, so plates should not over-fade).
 
@@ -185,7 +194,7 @@ Tools print terse summaries; full output goes to git-ignored logs under `.godot/
 **M1 status:** complete (branch `m1-specs-proof`, 38 tests).
 
 **Road to a Level 1 vertical slice** (game design: *The Last Train*), each milestone its own plan:
-- **M2 — Character & combat core:** cutout-rig → baked sprite-sheet pipeline proven with a placeholder character (albedo/normal/emissive on a lit quad); the full moveset (light, heavy, parry, dodge, launcher, finisher) against a training dummy and one basic enemy; blade signature light; hit-stop and readable telegraphs.
+- **M2 — Character & combat core:** live cutout rig (2D-authored, mirrored to lit 3D quads) proven with a generated placeholder character; art tools (`make_maps.py`, `check_art.py`) and the art guide; the full moveset (light, heavy, parry, dodge, launcher, finisher) against a training dummy and one basic enemy; blade signature light; hit-stop and readable telegraphs.
 - **M3 — Sections & plate pipeline:** section chains and transitions, arena camera locks, looping plates for vehicle runs, emissive + normal plate maps, rain/lightning, and the `plate_importer` editor plugin (BC7 strips, companion maps).
 - **M4 — Level 1 vertical slice:** real AI-assisted art for *The Last Train*, security officers and drones, the train-roof escape set piece, Moth comms, per-level LUT/fog palette. Quality bar for the remaining seven levels.
 

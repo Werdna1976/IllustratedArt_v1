@@ -81,4 +81,4 @@ Per-level palettes map directly onto the technical spec's per-level environment 
 6. **The blade signature is a real light:** each network disruption flashes a cyan light that lights nearby characters and scenery.
 7. **Story is delivered mainly through Moth over comms** (portrait + text/voice during play), keeping cutscenes rare.
 8. **Vertical slice first:** Level 1 is built to final quality — every move, the train-roof set piece, real art — before Levels 2–8.
-9. **Characters stay 2.5D:** flat painted cutout rigs baked to lit sprite sheets; no 3D models (technical spec §5.6).
+9. **Characters stay 2.5D:** flat painted cutout rigs animated live as lit 2.5D parts; no 3D models (technical spec §5.6).
