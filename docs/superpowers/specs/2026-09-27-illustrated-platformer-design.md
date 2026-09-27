@@ -39,27 +39,33 @@ This spec fixes the numbers everything else depends on: world scale, camera, lev
 
 ## 4. Layer Stack & Plate Sizes
 
-A layer at camera distance *d* must cover `travel + visible_extent(d)`, where `visible_extent(d) = screen_extent × d / 20`. Pixel size = metres × 2000/d. Final authoring sizes add ~10% margin for shake, dolly and look-ahead.
+**Sizing formula** (implemented once, in `WorldSpec`; the table below is its output):
 
-| Layer | Depth z | Cam dist d | Scroll | Density | Authoring plate size (px) |
+- Visible extent at camera distance *d*: `screen_extent × d / 20`, where screen extent at the gameplay plane is 10.8 m tall and `10.8 × aspect` m wide.
+- Area a layer must cover over the whole level (camera clamped to level bounds):
+  `span_w = level_w + screen_w × (d/20 − 1)`, `span_h = level_h + 10.8 × (d/20 − 1)`.
+- Plate px = `span × (2000 / d) × 1.10` (10% margin for shake, dolly and look-ahead), rounded **up** to a multiple of 64 (with a 1e-6 tolerance so float noise never adds a step). Width is computed at the widest supported aspect, **21:9**.
+- Plates are centred on the level centre, so they cover every camera position symmetrically.
+
+| Layer | Depth z | Cam dist d | Scroll | Density | Plate size (px) |
 |---|---|---|---|---|---|
-| Foreground (DoF-blurred) | −8 m | 12 m | 1.67× | 167 px/m | Sparse props only; authored at half density (~83 px/m) |
-| **Gameplay** | 0 m | 20 m | 1.00× | 100 px/m | **13,440 × 1,800** |
-| Near BG | +10 m | 30 m | 0.67× | 67 px/m | **9,600 × 1,600** |
-| Mid BG | +40 m | 60 m | 0.33× | 33 px/m | **5,760 × 1,400** |
-| Far BG | +100 m | 120 m | 0.17× | 17 px/m | **3,840 × 1,300** |
-| Sky | ~+400 m | ~420 m | ~0.05× | — | **2,560 × 1,440** single plate |
+| Foreground (DoF-blurred) | −8 m | 12 m | 1.67× | 167 px/m | Sparse props only, not a continuous plate |
+| **Gameplay** | 0 m | 20 m | 1.00× | 100 px/m | **14,784 × 1,792** |
+| Near BG | +10 m | 30 m | 0.67× | 67 px/m | **10,816 × 1,600** |
+| Mid BG | +40 m | 60 m | 0.33× | 33 px/m | **6,784 × 1,408** |
+| Far BG | +100 m | 120 m | 0.17× | 17 px/m | **4,800 × 1,344** |
+| Sky | +400 m | 420 m | 0.05× | 4.8 px/m | **3,392 × 1,280** |
 
 Key properties:
 - Plate **height stays ~1,300–1,800 px at every depth**; only width shrinks with distance. One upscaled AI-output height (~1,536 px) serves all layers.
-- **~16 painted plates per level:** 7 gameplay, 5 near, 3 mid, 2 far, 1 sky (counted in 2,048-px-wide units, rounded).
-- **Ultrawide (21:9)** adds ~3% to background widths; covered by the margin. Supported aspect range: 16:9 to 21:9. Narrower aspects (16:10, 4:3) show extra height and are clamped by level bounds.
-- **Budget:** plates split into strips ≤ 2,048 px wide, BC7-compressed with mipmaps ≈ **75 MB VRAM per level**.
+- **~23 painted strips per level** in 2,048-px-wide units: 8 gameplay, 6 near, 4 mid, 3 far, 2 sky.
+- **Aspect ratios:** 16:9 to 21:9 are fully supported. Narrower aspects (16:10, 4:3) keep the same height and show less width. Wider than 21:9 (e.g. 32:9) switches the camera to keep 21:9's width and crops height, so plate edges are never visible.
+- **Budget:** strips ≤ 2,048 px wide, BC7-compressed with mipmaps ≈ **86 MB VRAM per level**.
 
 ## 5. Rendering: Depth, Lighting, Camera
 
 ### 5.1 Plates
-- Each plate strip is a `MeshInstance3D` quad using one shared shader `shaders/plate.gdshader`: alpha-scissor/alpha-blend, `unshaded` by default; a `lit` variant for gameplay/near layers.
+- Each plate strip is a `MeshInstance3D` quad with a `StandardMaterial3D`: alpha-scissor transparency, unshaded by default, per-pixel lit for gameplay/near layers when lighting is wanted. The sky plate sets `disable_fog`. (A custom shader is deferred until a feature needs one.)
 - Quad size in metres = strip px ÷ layer density (px/m).
 
 ### 5.2 Environment (one `WorldEnvironment` per level)
@@ -82,7 +88,8 @@ Key properties:
 
 ### 5.5 Physics
 - `CharacterBody3D` player and `StaticBody3D` level collision exist only at z = 0; player Z axis locked.
-- Jolt Physics, physics tick **120 Hz**.
+- Jolt Physics, physics tick **120 Hz**, with **physics interpolation on** so movement and camera stay smooth at any refresh rate.
+- **Actor render offset:** collision lives at z = 0, but actor and platform *visuals* render at **z = +0.5 m** so they always draw in front of the gameplay plate (which sits exactly at z = 0). The 2.5% perspective difference is negligible.
 
 ## 6. Project Settings
 
@@ -96,6 +103,7 @@ Key properties:
 | TAA | Off (smears animated sprites) |
 | VSync | On |
 | `physics/common/physics_ticks_per_second` | 120 |
+| `physics/common/physics_interpolation` | On |
 | 3D physics engine | Jolt (existing) |
 
 ## 7. Art Pipeline
@@ -114,7 +122,6 @@ Key properties:
 ```
 scenes/    level/, camera_rig.tscn, player.tscn, parallax_layer.tscn
 scripts/
-shaders/   plate.gdshader
 art/       levels/<level>/, characters/
 addons/    plate_importer/
 docs/
