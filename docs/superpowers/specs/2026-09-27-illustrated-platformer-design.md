@@ -3,6 +3,7 @@
 **Date:** 2026-09-27
 **Engine:** Godot 4.7, Forward+ (D3D12 on Windows), Jolt Physics
 **Status:** Draft for review
+**Game design:** `2026-09-27-ghostline-game-design.md` (Cyberpunk: Ghostline — story, levels, combat, palettes)
 
 ## 1. Goal
 
