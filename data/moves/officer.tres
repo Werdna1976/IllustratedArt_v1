@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="MoveSet" format=3]
+
+[ext_resource type="Script" path="res://scripts/combat/move_data.gd" id="1_7lv6f"]
+[ext_resource type="Script" path="res://scripts/combat/move_set.gd" id="2_1nky1"]
+
+[sub_resource type="Resource" id="Resource_lc376"]
+script = ExtResource("1_7lv6f")
+id = &"officer_attack"
+anim = &"officer_attack"
+startup = 0.15
+active = 0.1
+recovery = 0.5
+damage = 12.0
+knockback = Vector2(4, 0)
+hit_stop = 0.06
+hitbox_offset = Vector2(0.9, 1)
+hitbox_size = Vector2(1.2, 0.8)
+
+[resource]
+script = ExtResource("2_1nky1")
+moves = Array[ExtResource("1_7lv6f")]([SubResource("Resource_lc376")])

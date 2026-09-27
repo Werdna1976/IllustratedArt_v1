@@ -1,0 +1,131 @@
+[gd_resource type="Resource" script_class="MoveSet" format=3]
+
+[ext_resource type="Script" path="res://scripts/combat/move_data.gd" id="1_h0d32"]
+[ext_resource type="Script" path="res://scripts/combat/move_set.gd" id="2_g5f2y"]
+
+[sub_resource type="Resource" id="Resource_c6yqe"]
+script = ExtResource("1_h0d32")
+id = &"light1"
+anim = &"light1"
+startup = 0.08
+active = 0.08
+recovery = 0.18
+damage = 10.0
+stagger = 10.0
+knockback = Vector2(2, 0)
+hit_stop = 0.05
+cancel_from = 0.14
+next_combo = &"light2"
+hitbox_offset = Vector2(0.9, 1)
+hitbox_size = Vector2(1.2, 0.8)
+
+[sub_resource type="Resource" id="Resource_yhnwu"]
+script = ExtResource("1_h0d32")
+id = &"light2"
+anim = &"light2"
+startup = 0.08
+active = 0.08
+recovery = 0.2
+damage = 10.0
+stagger = 10.0
+knockback = Vector2(2, 0)
+hit_stop = 0.05
+cancel_from = 0.14
+next_combo = &"light3"
+hitbox_offset = Vector2(0.9, 1)
+hitbox_size = Vector2(1.2, 0.8)
+
+[sub_resource type="Resource" id="Resource_78f03"]
+script = ExtResource("1_h0d32")
+id = &"light3"
+anim = &"light3"
+startup = 0.12
+active = 0.1
+recovery = 0.3
+damage = 16.0
+stagger = 18.0
+knockback = Vector2(5, 0)
+hit_stop = 0.08
+hitbox_offset = Vector2(1, 1)
+hitbox_size = Vector2(1.4, 1)
+
+[sub_resource type="Resource" id="Resource_rqenw"]
+script = ExtResource("1_h0d32")
+id = &"heavy"
+anim = &"heavy"
+startup = 0.3
+active = 0.12
+recovery = 0.4
+damage = 25.0
+stagger = 35.0
+knockback = Vector2(7, 1)
+hit_stop = 0.12
+hitbox_offset = Vector2(1.1, 1)
+hitbox_size = Vector2(1.6, 1.2)
+
+[sub_resource type="Resource" id="Resource_au23w"]
+script = ExtResource("1_h0d32")
+id = &"launcher"
+anim = &"launcher"
+startup = 0.18
+active = 0.1
+recovery = 0.35
+damage = 12.0
+stagger = 15.0
+knockback = Vector2(0.5, 11)
+hit_stop = 0.08
+hitbox_offset = Vector2(0.8, 1.2)
+hitbox_size = Vector2(1.2, 1.6)
+
+[sub_resource type="Resource" id="Resource_t4yyo"]
+script = ExtResource("1_h0d32")
+id = &"air_light"
+anim = &"air_light"
+startup = 0.06
+active = 0.1
+recovery = 0.15
+damage = 8.0
+stagger = 8.0
+knockback = Vector2(1, 3)
+hit_stop = 0.05
+cancel_from = 0.12
+next_combo = &"air_light"
+hitbox_offset = Vector2(0.8, 0.9)
+hitbox_size = Vector2(1.2, 1)
+airborne_only = true
+
+[sub_resource type="Resource" id="Resource_ovaxj"]
+script = ExtResource("1_h0d32")
+id = &"finisher"
+anim = &"finisher"
+startup = 0.1
+active = 0.2
+recovery = 0.5
+damage = 100.0
+knockback = Vector2(6, 2)
+hit_stop = 0.2
+hitbox_offset = Vector2(1, 1)
+hitbox_size = Vector2(1.8, 1.4)
+requires_staggered_target = true
+
+[sub_resource type="Resource" id="Resource_jiikm"]
+script = ExtResource("1_h0d32")
+id = &"parry"
+anim = &"parry"
+startup = 0.02
+active = 0.15
+recovery = 0.25
+is_parry = true
+
+[sub_resource type="Resource" id="Resource_n0iul"]
+script = ExtResource("1_h0d32")
+id = &"dodge"
+anim = &"dodge"
+active = 0.25
+recovery = 0.12
+dash_speed = 12.0
+is_dodge = true
+
+[resource]
+script = ExtResource("2_g5f2y")
+moves = Array[ExtResource("1_h0d32")]([SubResource("Resource_c6yqe"), SubResource("Resource_yhnwu"), SubResource("Resource_78f03"), SubResource("Resource_rqenw"), SubResource("Resource_au23w"), SubResource("Resource_t4yyo"), SubResource("Resource_ovaxj"), SubResource("Resource_jiikm"), SubResource("Resource_n0iul")])
