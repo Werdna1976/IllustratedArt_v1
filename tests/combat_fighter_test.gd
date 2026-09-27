@@ -84,3 +84,20 @@ func test_stun_cancels_and_blocks_input() -> void:
 	assert_true(not f.request(&"light"), "stunned")
 	_run(f, 0.31)
 	assert_true(f.request(&"light"), "free after stun")
+
+
+func test_cancel_ends_previous_active_window_first() -> void:
+	var f := _fighter()
+	f.request(&"light")
+	f.request(&"light") # buffered; fires at light1's cancel time (0.14), inside its active window (0.08-0.16)
+	var events := _run(f, 0.15)
+	var end_i := events.rfind(&"active_end")
+	var start_i := events.find(&"started:light2")
+	assert_true(start_i > 0 and end_i >= 0 and end_i < start_i, "light1's window closes before light2 starts: %s" % [events])
+
+
+func test_dodge_cannot_cancel_its_own_recovery() -> void:
+	var f := _fighter()
+	f.request(&"dodge")
+	_run(f, 0.3) # dodge recovery (0.25-0.37)
+	assert_true(not f.request(&"dodge"), "no dodge chaining for permanent invulnerability")

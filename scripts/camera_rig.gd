@@ -9,13 +9,18 @@ const LOOK_AHEAD_RATE := 2.0 ## 1/s; how fast look-ahead swings on a turn.
 const FOLLOW_RATE := 6.0 ## 1/s; exponential follow smoothing.
 const DEAD_ZONE_HALF := 1.5 ## Metres of vertical free play before the camera follows.
 const FOCUS_OFFSET_Y := 1.5 ## Camera centre sits this far above the target.
+const MAX_SHAKE := 0.3 ## Metres; well inside the 10% plate margin (spec §5.4).
+const TRAUMA_DECAY := 1.5 ## Trauma lost per second.
 
 var target: Node3D
 var level_size := WorldSpec.LEVEL_SIZE
 var aspect_override := 0.0 ## > 0 forces an aspect (tests); 0 reads the viewport.
 var camera: Camera3D
 
+var trauma := 0.0 ## 0-1; shake offset grows with trauma².
+
 var _look := 0.0
+var _shake_t := 0.0
 var _focus_y := 0.0
 
 
@@ -25,6 +30,7 @@ func _ready() -> void:
 	camera.far = 1000.0
 	add_child(camera)
 	camera.make_current()
+	add_to_group(&"camera_rig")
 	get_viewport().size_changed.connect(apply_projection)
 	apply_projection()
 
@@ -56,7 +62,12 @@ func snap_to_target() -> void:
 	reset_physics_interpolation()
 
 
+func add_trauma(amount: float) -> void:
+	trauma = clampf(trauma + amount, 0.0, 1.0)
+
+
 func _physics_process(delta: float) -> void:
+	_update_shake(delta)
 	if target == null:
 		return
 	var facing: float = (target as Player).facing if target is Player else 1.0
@@ -65,6 +76,14 @@ func _physics_process(delta: float) -> void:
 	var goal := WorldSpec.clamp_camera_center(_goal(), aspect(), level_size)
 	position.x = smooth(position.x, goal.x, FOLLOW_RATE, delta)
 	position.y = smooth(position.y, goal.y, FOLLOW_RATE, delta)
+
+
+# Shake moves only the camera child, so the rig's clamp and follow maths are untouched.
+func _update_shake(delta: float) -> void:
+	trauma = maxf(trauma - TRAUMA_DECAY * delta, 0.0)
+	_shake_t += delta
+	var amount := MAX_SHAKE * trauma * trauma / sqrt(2.0)
+	camera.position = Vector3(amount * sin(_shake_t * 37.0), amount * cos(_shake_t * 29.0), WorldSpec.CAMERA_DISTANCE)
 
 
 func _goal() -> Vector2:

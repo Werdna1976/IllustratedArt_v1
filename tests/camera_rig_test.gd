@@ -66,3 +66,19 @@ func test_resize_to_narrower_aspect_reclamps_immediately() -> void:
 	rig.aspect_override = 16.0 / 9.0
 	rig.apply_projection()
 	assert_near(rig.position.y, 5.4, 1e-4, "re-clamped to 16:9 bottom limit without easing")
+
+
+func test_shake_is_bounded_and_decays() -> void:
+	var rig := _rig(Vector3(60, 8, 0), 16.0 / 9.0)
+	rig.snap_to_target()
+	rig.add_trauma(1.0)
+	var max_offset := 0.0
+	for i in 12:
+		rig._physics_process(1.0 / 60.0)
+		max_offset = maxf(max_offset, Vector2(rig.camera.position.x, rig.camera.position.y).length())
+	assert_true(max_offset > 0.01, "shakes (max %.3f m)" % max_offset)
+	assert_true(max_offset <= CameraRig.MAX_SHAKE + 1e-6, "stays within the plate margin")
+	for i in 120:
+		rig._physics_process(1.0 / 60.0)
+	assert_near(rig.camera.position.x, 0.0, 1e-6, "settles back (x)")
+	assert_near(rig.camera.position.y, 0.0, 1e-6, "settles back (y)")

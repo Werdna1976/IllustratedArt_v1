@@ -57,3 +57,24 @@ func test_overlapping_hit_stops_restore_time_scale() -> void:
 	assert_true(Engine.time_scale < 1.0, "still frozen by the longer stop")
 	await tree.create_timer(0.08, true, false, true).timeout
 	assert_near(Engine.time_scale, 1.0, 1e-6, "restored")
+
+
+func test_heavy_knockback_moves_the_target() -> void:
+	var p := _pair()
+	var a: Fighter = p[0]
+	var b: Fighter = p[1]
+	var floor_body := StaticBody3D.new()
+	var shape := CollisionShape3D.new()
+	var box := BoxShape3D.new()
+	box.size = Vector3(40, 1, 2)
+	shape.shape = box
+	floor_body.add_child(shape)
+	floor_body.position = Vector3(0, -0.5, 0)
+	add_node(floor_body)
+	a.position.y = 0.9
+	b.position.y = 0.9
+	await _frames(10)
+	var start_x := b.position.x
+	a.combat.request(&"heavy")
+	await _frames(120)
+	assert_true(b.position.x - start_x >= 1.0, "heavy pushes the target at least 1 m (moved %.2f m)" % (b.position.x - start_x))

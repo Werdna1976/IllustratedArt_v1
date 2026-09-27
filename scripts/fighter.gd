@@ -17,6 +17,8 @@ const LAYER_HURTBOX := 1 << 3
 const BLADE_COLOR := Color("#39f3ff")
 const BLADE_FLASH_ENERGY := 6.0
 const BLADE_FLASH_TIME := 0.25
+const KNOCKBACK_DECEL := 12.0 ## m/s² of slide while stunned, so hits visibly push.
+const SHAKE_PER_HIT_STOP := 3.0 ## Camera trauma per second of hit-stop (clamped 0.15-0.6).
 
 var facing := 1.0 ## +1 right, -1 left; read by CameraRig for look-ahead.
 var vitals: Vitals
@@ -107,7 +109,10 @@ func _physics_process(delta: float) -> void:
 	if x != 0.0 and move == null:
 		facing = signf(x)
 	var jump: bool = want.jump and move == null and not combat.is_stunned()
+	var slide_x := velocity.x
 	velocity = PlayerMotor.step(velocity, x, jump, is_on_floor(), delta)
+	if combat.is_stunned():
+		velocity.x = move_toward(slide_x, 0.0, KNOCKBACK_DECEL * delta)
 	if move and move.is_dodge and combat.phase() == MoveData.Phase.ACTIVE:
 		velocity.x = move.dash_speed * facing
 	if want.action != &"":
@@ -121,6 +126,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_event(event: StringName) -> void:
 	if event.begins_with("started:"):
+		_set_hitbox(false)
 		_play(combat.current.anim)
 	elif event == &"active_start":
 		var move := combat.current
@@ -149,6 +155,7 @@ func _check_hits() -> void:
 			HitResolver.Outcome.HIT:
 				target.receive_hit(result, self)
 				HitStop.trigger(get_tree(), move.hit_stop)
+				get_tree().call_group(&"camera_rig", &"add_trauma", clampf(move.hit_stop * SHAKE_PER_HIT_STOP, 0.15, 0.6))
 				if target.is_network:
 					_flash_blade()
 				hit_landed.emit(target, result)

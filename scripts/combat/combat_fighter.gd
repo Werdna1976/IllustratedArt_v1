@@ -31,7 +31,7 @@ func request(id: StringName, airborne: bool = false) -> bool:
 		elif buffered == &"":
 			buffered = move.id
 		return true
-	if move.is_dodge and phase() == MoveData.Phase.RECOVERY:
+	if move.is_dodge and not current.is_dodge and phase() == MoveData.Phase.RECOVERY:
 		_start(move)
 		return true
 	return false
@@ -92,6 +92,8 @@ func _resolve(id: StringName, airborne: bool) -> StringName:
 
 
 func _start(move: MoveData) -> void:
+	if current and current.phase_at(t) == MoveData.Phase.ACTIVE:
+		_events.append(&"active_end") # a cancel inside the active window must close it first
 	current = move
 	t = 0.0
 	buffered = &""
