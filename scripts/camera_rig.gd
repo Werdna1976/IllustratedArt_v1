@@ -40,6 +40,11 @@ func apply_projection() -> void:
 	var proj := WorldSpec.projection_for_aspect(aspect())
 	camera.keep_aspect = proj.keep_aspect
 	camera.fov = proj.fov
+	# A narrower view has tighter bounds; clamp now so no plate edge shows while easing.
+	var c := WorldSpec.clamp_camera_center(Vector2(position.x, position.y), aspect(), level_size)
+	if not is_equal_approx(c.x, position.x) or not is_equal_approx(c.y, position.y):
+		position = Vector3(c.x, c.y, 0.0)
+		reset_physics_interpolation()
 
 
 ## Jump straight to the target (level start / respawn) with no smoothing.

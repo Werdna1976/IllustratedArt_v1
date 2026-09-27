@@ -57,3 +57,12 @@ func test_projection_follows_aspect_changes() -> void:
 	rig.aspect_override = 32.0 / 9.0
 	rig.apply_projection()
 	assert_eq(rig.camera.keep_aspect, Camera3D.KEEP_WIDTH, "32:9 keeps 21:9 width")
+
+
+func test_resize_to_narrower_aspect_reclamps_immediately() -> void:
+	var rig := _rig(Vector3(60, 1.9, 0), 32.0 / 9.0)
+	rig.snap_to_target()
+	assert_true(rig.position.y < 5.4, "precondition: 32:9 lets the camera sit low (y=%s)" % rig.position.y)
+	rig.aspect_override = 16.0 / 9.0
+	rig.apply_projection()
+	assert_near(rig.position.y, 5.4, 1e-4, "re-clamped to 16:9 bottom limit without easing")
