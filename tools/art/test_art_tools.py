@@ -76,5 +76,23 @@ class CheckArtTest(unittest.TestCase):
             self.assertEqual(check_art.check_file(sky), [])
 
 
+import make_placeholder_fighter
+
+
+class PlaceholderFighterTest(unittest.TestCase):
+    def test_sheet_packs_all_parts_without_overlap(self):
+        with tempfile.TemporaryDirectory() as d:
+            make_placeholder_fighter.main([d])
+            parts = json.load(open(os.path.join(d, "parts.json")))
+            self.assertIn("blade", parts); self.assertIn("arm_upper_far", parts); self.assertIn("glint", parts)
+            rects = list(parts.values())
+            for i, a in enumerate(rects):
+                for b in rects[i + 1:]:
+                    overlap = a[0] < b[0] + b[2] and b[0] < a[0] + a[2] and a[1] < b[1] + b[3] and b[1] < a[1] + a[3]
+                    self.assertFalse(overlap, (a, b))
+            self.assertEqual(Image.open(os.path.join(d, "parts.png")).size, (2048, 2048))
+            self.assertEqual(check_art.check_file(os.path.join(d, "parts.png")), [])
+
+
 if __name__ == "__main__":
     unittest.main()
