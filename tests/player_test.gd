@@ -9,6 +9,8 @@ func test_actions_registered_once() -> void:
 		assert_true(InputMap.has_action(action), "action %s exists" % action)
 	assert_eq(InputMap.action_get_events(&"jump").size(), 4, "jump bindings not duplicated")
 	assert_eq(InputMap.action_get_events(&"move_left").size(), 3, "move_left bindings")
+	for action: StringName in [&"light_attack", &"heavy_attack", &"launcher", &"parry", &"dodge"]:
+		assert_true(InputMap.has_action(action), "combat action %s exists" % action)
 
 
 func test_accelerates_to_run_speed_without_exceeding() -> void:
@@ -38,10 +40,12 @@ func test_z_velocity_always_zero() -> void:
 
 func test_visual_sits_in_front_of_gameplay_plate() -> void:
 	var p := Player.create()
-	var visual := p.get_node("Visual") as MeshInstance3D
-	assert_true(visual.position.z - Player.RADIUS > 0.0, "whole capsule visual is in front of z = 0")
+	add_node(p)
+	assert_true(p.visual.position.z >= WorldSpec.ACTOR_Z - 1e-6, "cutout visual at ACTOR_Z")
+	assert_eq(p.mirror.quads.size(), 17, "all 17 cutout parts mirrored")
+	for q: MeshInstance3D in p.mirror.quads.values():
+		assert_true(p.visual.position.z + q.position.z > 0.0, "every part in front of z = 0")
 	assert_true(p.axis_lock_linear_z, "z locked")
-	p.free()
 
 
 func test_player_falls_and_lands_on_floor() -> void:

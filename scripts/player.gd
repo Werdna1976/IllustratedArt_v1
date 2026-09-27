@@ -1,35 +1,21 @@
 class_name Player
-extends CharacterBody3D
-## Capsule player on the gameplay plane. Collision at z = 0; the visual is offset to
-## WorldSpec.ACTOR_Z so it always draws in front of the gameplay plate.
+extends Fighter
+## Input-driven fighter using the placeholder cutout (spec §5.6–5.7). Heavy becomes the finisher
+## when a staggered enemy stands within FINISHER_RANGE in front.
 
-const RADIUS := 0.4
-const HEIGHT := 1.8
+const FINISHER_RANGE := 2.0
+const RIG := preload("res://scenes/characters/placeholder_fighter_rig.tscn")
+const ALBEDO := preload("res://art/characters/placeholder_fighter/parts.png")
+const NORMAL := preload("res://art/characters/placeholder_fighter/parts_n.png")
+const EMISSIVE := preload("res://art/characters/placeholder_fighter/parts_emit.png")
+const MOVES := preload("res://data/moves/player.tres")
 
-var facing := 1.0 ## +1 right, -1 left; read by CameraRig for look-ahead.
 var autorun := false ## Forces running right (demo / capture runs).
 
 
 static func create() -> Player:
 	var player := Player.new()
-	player.axis_lock_linear_z = true
-	var shape := CollisionShape3D.new()
-	var capsule := CapsuleShape3D.new()
-	capsule.radius = RADIUS
-	capsule.height = HEIGHT
-	shape.shape = capsule
-	player.add_child(shape)
-	var visual := MeshInstance3D.new()
-	visual.name = "Visual"
-	var mesh := CapsuleMesh.new()
-	mesh.radius = RADIUS
-	mesh.height = HEIGHT
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = Color(0.95, 0.55, 0.2)
-	mesh.material = mat
-	visual.mesh = mesh
-	visual.position.z = WorldSpec.ACTOR_Z
-	player.add_child(visual)
+	player.build(RIG, ALBEDO, NORMAL, EMISSIVE, MOVES, 100.0, 100.0)
 	return player
 
 
@@ -37,9 +23,27 @@ func _ready() -> void:
 	GameInput.ensure_actions()
 
 
-func _physics_process(delta: float) -> void:
-	var input_x := 1.0 if autorun else Input.get_axis(&"move_left", &"move_right")
-	if input_x != 0.0:
-		facing = signf(input_x)
-	velocity = PlayerMotor.step(velocity, input_x, Input.is_action_just_pressed(&"jump"), is_on_floor(), delta)
-	move_and_slide()
+func intent() -> Dictionary:
+	var action := &""
+	if Input.is_action_just_pressed(&"light_attack"):
+		action = &"light"
+	elif Input.is_action_just_pressed(&"heavy_attack"):
+		action = resolve_heavy_action()
+	elif Input.is_action_just_pressed(&"launcher"):
+		action = &"launcher"
+	elif Input.is_action_just_pressed(&"parry"):
+		action = &"parry"
+	elif Input.is_action_just_pressed(&"dodge"):
+		action = &"dodge"
+	var x := 1.0 if autorun else Input.get_axis(&"move_left", &"move_right")
+	return {"x": x, "jump": Input.is_action_just_pressed(&"jump"), "action": action}
+
+
+func resolve_heavy_action() -> StringName:
+	for node in get_tree().get_nodes_in_group(&"enemies"):
+		var enemy := node as Fighter
+		if enemy and enemy.vitals.is_staggered():
+			var ahead := (enemy.global_position.x - global_position.x) * facing
+			if ahead >= 0.0 and ahead <= FINISHER_RANGE:
+				return &"finisher"
+	return &"heavy"

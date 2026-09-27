@@ -28,12 +28,11 @@ func _process(_delta: float) -> void:
 
 
 func sync() -> void:
-	var to_rig := _rig.get_global_transform().affine_inverse()
 	for sprite: Sprite2D in quads:
 		var quad: MeshInstance3D = quads[sprite]
 		var size := sprite.region_rect.size
 		var top_left := sprite.offset - size * 0.5 if sprite.centered else sprite.offset
-		var rel := to_rig * sprite.get_global_transform()
+		var rel := _rig_transform(sprite)
 		var c := rel * (top_left + size * 0.5)
 		var s := rel.get_scale()
 		(quad.mesh as QuadMesh).size = size / WorldSpec.CHAR_PX_PER_M
@@ -41,6 +40,16 @@ func sync() -> void:
 				Basis(Vector3.BACK, -rel.get_rotation()) * Basis.from_scale(Vector3(s.x, s.y, 1.0)),
 				Vector3(c.x / WorldSpec.CHAR_PX_PER_M, -c.y / WorldSpec.CHAR_PX_PER_M, sprite.z_index * Z_STEP))
 		quad.visible = _visible_in_rig(sprite)
+
+
+# Sprite transform relative to the rig root, composed from local transforms (works outside the tree).
+func _rig_transform(node: Node2D) -> Transform2D:
+	var t := node.transform
+	var parent := node.get_parent() as Node2D
+	while parent and parent != _rig:
+		t = parent.transform * t
+		parent = parent.get_parent() as Node2D
+	return t
 
 
 # Visibility up to (not including) the rig root, which is always hidden.
