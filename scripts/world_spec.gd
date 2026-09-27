@@ -12,6 +12,7 @@ const MAX_ASPECT := 21.0 / 9.0 ## Widest aspect that shows extra width; wider cr
 const PLATE_MARGIN := 1.10 ## Slack for shake, dolly and look-ahead.
 const PLATE_ROUND := 64
 const STRIP_MAX_PX := 2048
+const CHAR_PX_PER_M := 400.0 ## Character parts-sheet density (spec §5.6).
 const ACTOR_Z := 0.5 ## Actor/platform visuals sit this far in front of the gameplay plate.
 
 
