@@ -29,8 +29,4 @@ static func platforms() -> Array[Rect2]:
 
 
 static func walls() -> Array[Rect2]:
-	var h := WorldSpec.LEVEL_SIZE.y + 10.0
-	return [
-		Rect2(-1.0, -1.0, 1.0, h),
-		Rect2(WorldSpec.LEVEL_SIZE.x, -1.0, 1.0, h),
-	]
+	return LevelBuilder.walls(WorldSpec.LEVEL_SIZE)

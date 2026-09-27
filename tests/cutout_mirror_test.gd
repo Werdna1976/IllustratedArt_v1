@@ -72,3 +72,14 @@ func test_hidden_part_hides_quad() -> void:
 	(r[1] as Sprite2D).visible = false
 	mirror.sync()
 	assert_true(not (mirror.quads[r[1]] as MeshInstance3D).visible, "quad hidden")
+
+
+func test_emission_comes_only_from_the_glow_mask() -> void:
+	var r := _rig()
+	var mirror := CutoutMirror.new()
+	add_node(r[0])
+	add_node(mirror)
+	mirror.setup(r[0], _atlas(), null, _atlas())
+	var mat := (mirror.quads[r[1]] as MeshInstance3D).material_override as StandardMaterial3D
+	var texture_only := mat.emission_operator == BaseMaterial3D.EMISSION_OP_MULTIPLY or mat.emission == Color.BLACK
+	assert_true(texture_only, "emission must not add a constant colour on top of the mask")

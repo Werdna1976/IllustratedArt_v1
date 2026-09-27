@@ -178,8 +178,12 @@ Tools print terse summaries; full output goes to git-ignored logs under `.godot/
 | Tool | Purpose |
 |---|---|
 | `bash tools/run_tests.sh [-v]` | Headless test suite (`tests/*_test.gd`, `test_*` methods, any engine error fails the test). Prints only failures + `N passed, M failed`; `-v` for the full log. |
-| `bash tools/capture.sh <name> <WxH> <frames> [args]` | Runs the main scene in a window at any size (including 21:9) and saves one frame to `.godot/captures/<name>.png` via the `DebugCapture` autoload. Movie Maker is not used: it crops non-16:9 windows to 1920×1080. |
-| Test-level user args | `--autorun` (player runs right), `--spawn-x=<m>` (spawn position). |
+| `bash tools/capture.sh <name> <WxH> <frames> [res://scene.tscn] [args]` | Runs the main scene in a window at any size (including 21:9) and saves one frame to `.godot/captures/<name>.png` via the `DebugCapture` autoload. Movie Maker is not used: it crops non-16:9 windows to 1920×1080. |
+| Test-level user args | `--autorun` (player runs right), `--spawn-x=<m>` (spawn position). Sandbox: `--demo` (auto-attacks the dummy). |
+| `python tools/art/make_maps.py <png>` | Starter `_n` / `_emit` maps from colour art; never overwrites without `--force`. |
+| `python tools/art/check_art.py art` | Validates delivered art; one line per file. |
+| `godot --headless --path . --script res://tools/art_sizes.gd -- <w_m> <h_m> [sizes.json]` | Plate sizes for any section (writes the JSON `check_art.py` uses). |
+| `python tools/art/probe_px.py <png> x0 y0 x1 y1` | Mean colour of a screenshot region — cheap visual assertions without viewing images. |
 
 ## 10. Milestones
 
@@ -191,7 +195,8 @@ Tools print terse summaries; full output goes to git-ignored logs under `.godot/
 - Capsule player: run + jump on simple collision.
 - Success: traversing the level shows correct parallax at every layer, no plate edges visible at 16:9 or 21:9, stable 60+ fps.
 
-**M1 status:** complete (branch `m1-specs-proof`, 38 tests).
+**M1 status:** complete (38 tests).
+**M2 status:** complete — live cutout fighter, full moveset, officer + dummy, combat sandbox (`scenes/level/combat_sandbox.tscn`), art tools; 73 Godot + 9 Python tests.
 
 **Road to a Level 1 vertical slice** (game design: *The Last Train*), each milestone its own plan:
 - **M2 — Character & combat core:** live cutout rig (2D-authored, mirrored to lit 3D quads) proven with a generated placeholder character; art tools (`make_maps.py`, `check_art.py`) and the art guide; the full moveset (light, heavy, parry, dodge, launcher, finisher) against a training dummy and one basic enemy; blade signature light; hit-stop and readable telegraphs.

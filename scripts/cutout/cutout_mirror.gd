@@ -88,5 +88,6 @@ static func _material(sprite: Sprite2D, albedo: Texture2D, normal: Texture2D, em
 	if emissive:
 		mat.emission_enabled = true
 		mat.emission = Color.WHITE
+		mat.emission_operator = BaseMaterial3D.EMISSION_OP_MULTIPLY # glow = mask colour only
 		mat.emission_texture = emissive
 	return mat
