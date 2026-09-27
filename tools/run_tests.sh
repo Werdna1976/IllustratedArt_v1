@@ -13,6 +13,8 @@ status=$?
 if [[ "${1:-}" == "-v" ]]; then
 	cat "$LOG"
 else
-	grep -E '^(FAIL|    )|SCRIPT ERROR|Parse Error|^ERROR|^\s+at: .*\.gd|passed, [0-9]+ failed' "$LOG" | head -60
+	# First 8 distinct engine/script errors (context for failures), then every FAIL and the summary.
+	grep -E 'SCRIPT ERROR|^ERROR' "$LOG" | sort -u | head -8
+	grep -E '^(FAIL|    [^ ])|passed, [0-9]+ failed' "$LOG"
 fi
 exit $status
