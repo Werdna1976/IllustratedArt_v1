@@ -1,22 +1,147 @@
 {
- "size_m": [57.6, 12.0],
+ "size_m": [
+  57.6,
+  12.0
+ ],
  "type": "vehicle",
- "env": {"background": "#05060a", "fog": "#141824", "fog_density": 0.008,
-         "ambient": "#2a3040", "ambient_energy": 0.45, "sun": "#5060a0", "sun_energy": 0.25,
-         "greybox": "#3a4150"},
- "placeholder": {"gameplay": ["#3a4150", "#232733", 0.95], "mid_loop": ["#141a2a", "#0a0d16", 0.55],
-                 "near_loop": ["#262a36", "#15171f", 0.3]},
- "spawn": [2.0, 5.0],
- "exit": [55.5, 4.0, 1.5, 5.0],
- "collision": [[0.5, 0, 18.5, 4.0], [19.6, 0, 18.4, 4.0], [38.6, 0, 18.5, 4.0],
-               [19.0, 2.2, 0.6, 0.3], [38.0, 2.2, 0.6, 0.3],
-               [9, 4, 0.8, 0.7], [28, 4, 0.6, 1.2], [47, 4, 1.0, 0.9]],
- "lights": [{"pos": [10, 6.5, 2.0], "color": "#9fd8ff", "range": 9, "energy": 1.5},
-            {"pos": [29, 6.5, 2.0], "color": "#9fd8ff", "range": 9, "energy": 1.5},
-            {"pos": [48, 6.5, 2.0], "color": "#9fd8ff", "range": 9, "energy": 1.5}],
- "enemies": [{"type": "officer", "x": 30.0, "y": 5.5}, {"type": "officer", "x": 50.0, "y": 5.5}],
- "weather": {"rain": false, "lightning": false},
- "flicker_layers": ["near_loop"],
+ "env": {
+  "background": "#05060a",
+  "fog": "#141824",
+  "fog_density": 0.008,
+  "ambient": "#c2c4cf",
+  "ambient_energy": 1.0,
+  "sun": "#d4d6e6",
+  "sun_energy": 0.5,
+  "greybox": "#3a4150"
+ },
+ "placeholder": {
+  "gameplay": [
+   "#3a4150",
+   "#232733",
+   0.95
+  ],
+  "mid_loop": [
+   "#141a2a",
+   "#0a0d16",
+   0.55
+  ],
+  "near_loop": [
+   "#262a36",
+   "#15171f",
+   0.3
+  ]
+ },
+ "spawn": [
+  2.0,
+  5.0
+ ],
+ "exit": [
+  55.5,
+  4.0,
+  1.5,
+  5.0
+ ],
+ "collision": [
+  [
+   0.5,
+   0,
+   18.5,
+   4.0
+  ],
+  [
+   19.6,
+   0,
+   18.4,
+   4.0
+  ],
+  [
+   38.6,
+   0,
+   18.5,
+   4.0
+  ],
+  [
+   19.0,
+   2.2,
+   0.6,
+   0.3
+  ],
+  [
+   38.0,
+   2.2,
+   0.6,
+   0.3
+  ],
+  [
+   9,
+   4,
+   0.8,
+   0.7
+  ],
+  [
+   28,
+   4,
+   0.6,
+   1.2
+  ],
+  [
+   47,
+   4,
+   1.0,
+   0.9
+  ]
+ ],
+ "lights": [
+  {
+   "pos": [
+    10,
+    6.5,
+    2.0
+   ],
+   "color": "#9fd8ff",
+   "range": 9,
+   "energy": 1.5
+  },
+  {
+   "pos": [
+    29,
+    6.5,
+    2.0
+   ],
+   "color": "#9fd8ff",
+   "range": 9,
+   "energy": 1.5
+  },
+  {
+   "pos": [
+    48,
+    6.5,
+    2.0
+   ],
+   "color": "#9fd8ff",
+   "range": 9,
+   "energy": 1.5
+  }
+ ],
+ "enemies": [
+  {
+   "type": "officer",
+   "x": 30.0,
+   "y": 5.5
+  },
+  {
+   "type": "officer",
+   "x": 50.0,
+   "y": 5.5
+  }
+ ],
+ "weather": {
+  "rain": false,
+  "lightning": false
+ },
+ "flicker_layers": [
+  "near_loop"
+ ],
  "loop_speed": 30.0,
  "loop_ramp_s": 6.0
 }

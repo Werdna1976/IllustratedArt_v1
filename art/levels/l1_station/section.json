@@ -8,10 +8,10 @@
   "background": "#07080c",
   "fog": "#1b1f2e",
   "fog_density": 0.008,
-  "ambient": "#2a3040",
-  "ambient_energy": 0.45,
-  "sun": "#5060a0",
-  "sun_energy": 0.25,
+  "ambient": "#c2c4cf",
+  "ambient_energy": 1.0,
+  "sun": "#d4d6e6",
+  "sun_energy": 0.5,
   "greybox": "#2b2733"
  },
  "placeholder": {
@@ -130,7 +130,7 @@
   {
    "image": "fg_sign.png",
    "x": 41.0,
-   "y": -2.0
+   "y": -4.5
   },
   {
    "image": "fg_pillar.png",

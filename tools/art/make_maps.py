@@ -1,10 +1,11 @@
 """Generate starter companion maps for a colour PNG.
 
-usage: python tools/art/make_maps.py <png> [--strength 2.0] [--glow 0.8] [--force]
+usage: python tools/art/make_maps.py <png> [--strength 2.0] [--glow 0.8] [--force | --if-stale]
 
 Writes <stem>_n.png (normal map, OpenGL/+Y-up as Godot expects) and <stem>_emit.png
 (glow mask from bright, saturated pixels) next to the input. An existing map is kept
-unless --force, so hand-painted masks are never lost.
+unless --force. --if-stale also regenerates a map that is older than the colour art (it was made
+from a previous version); a map edited after the colour art is treated as hand-painted and kept.
 """
 import argparse
 import os
@@ -52,12 +53,14 @@ def main(argv):
     ap.add_argument("--strength", type=float, default=2.0)
     ap.add_argument("--glow", type=float, default=0.8)
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--if-stale", action="store_true")
     args = ap.parse_args(argv)
     img = Image.open(args.png)
     stem = os.path.splitext(args.png)[0]
     for suffix, make in (("_n", lambda: make_normal(img, args.strength)), ("_emit", lambda: make_emissive(img, args.glow))):
         path = stem + suffix + ".png"
-        if os.path.exists(path) and not args.force:
+        stale = args.if_stale and os.path.exists(path) and os.path.getmtime(path) < os.path.getmtime(args.png)
+        if os.path.exists(path) and not args.force and not stale:
             print("kept", path)
             continue
         make().save(path)

@@ -33,6 +33,11 @@ compress/high_quality=true
 compress/normal_map={normal}
 mipmaps/generate=true
 """
+# Full-size delivered PNGs are sources only (the game loads the strips); Godot skips them.
+KEEP_TEMPLATE = """[remap]
+
+importer="keep"
+"""
 
 
 def _sources(section):
@@ -129,6 +134,10 @@ def import_section(section):
         size = Image.open(plate).size if os.path.exists(plate) else Image.open(solid).size
         with open(os.path.join(strips, "collision_traced.json"), "w") as f:
             json.dump(trace_solid(Image.open(solid), size), f)
+    for f in os.listdir(section):
+        if f.endswith(".png"):
+            with open(os.path.join(section, f + ".import"), "w", newline="\n") as imp:
+                imp.write(KEEP_TEMPLATE)
     with open(os.path.join(strips, "manifest.json"), "w") as f:
         json.dump(manifest, f, indent=1)
     with open(os.path.join(strips, "stamp.json"), "w") as f:

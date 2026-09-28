@@ -82,6 +82,17 @@ class ImportArtTest(unittest.TestCase):
             os.utime(far, (1_000_000_000, 1_000_000_000))  # e.g. unzipped art keeps an old date
             self.assertEqual(import_art.main([d]), 1)
 
+    def test_full_size_sources_are_not_imported_by_godot(self):
+        with tempfile.TemporaryDirectory() as d:
+            s = section(d)
+            for name in ("gameplay.png", "gameplay_n.png", "fg_pillar.png"):
+                Image.new("RGBA", (64, 32), (1, 1, 1, 255)).save(os.path.join(s, name))
+            Image.new("L", (64, 32), 255).save(os.path.join(s, "gameplay_solid.png"))
+            import_art.main([d])
+            for name in ("gameplay.png", "gameplay_n.png", "fg_pillar.png", "gameplay_solid.png"):
+                self.assertIn('importer="keep"', open(os.path.join(s, name + ".import")).read(), name)
+            self.assertIn("compress/mode=2", open(os.path.join(s, "_strips", "gameplay_00.png.import")).read())
+
 
 if __name__ == "__main__":
     unittest.main()

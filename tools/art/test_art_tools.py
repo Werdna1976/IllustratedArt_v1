@@ -40,6 +40,17 @@ class MakeMapsTest(unittest.TestCase):
             make_maps.main([src, "--force"])
             self.assertNotEqual(Image.open(emit).getpixel((0, 0)), (1, 2, 3, 255))
 
+    def test_if_stale_regenerates_maps_older_than_the_colour_art_only(self):
+        with tempfile.TemporaryDirectory() as d:
+            src = os.path.join(d, "near.png"); rgba(4, 4, (255, 0, 0, 255)).save(src)
+            emit = os.path.join(d, "near_emit.png"); rgba(4, 4, (1, 2, 3, 255)).save(emit)
+            nmap = os.path.join(d, "near_n.png"); rgba(4, 4, (7, 7, 7, 255)).save(nmap)
+            os.utime(emit, (1_000_000_000, 1_000_000_000))  # generated from older colour art -> stale
+            os.utime(nmap, (4_000_000_000, 4_000_000_000))  # painted after the colour art -> keep
+            make_maps.main([src, "--if-stale"])
+            self.assertNotEqual(Image.open(emit).getpixel((0, 0)), (1, 2, 3, 255))
+            self.assertEqual(Image.open(nmap).getpixel((0, 0)), (7, 7, 7, 255))
+
 
 class CheckArtTest(unittest.TestCase):
     def _char(self, d, size, alpha=True, companions=True):
