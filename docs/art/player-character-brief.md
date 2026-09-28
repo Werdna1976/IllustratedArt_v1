@@ -29,6 +29,7 @@ That means:
 - **Bionics, metallic:** the **right arm is a cybernetic prosthetic** in worn gunmetal and brushed steel with dark joint seams and a few **small lime-green status lights** at the shoulder and forearm. Natural metal tones, not painted neon. The left arm is a normal jacket sleeve with a gloved hand.
 - **Head:** short cropped dark hair, a lean face and a thin scar on one cheek. An optional small lime-green earpiece light is fine.
 - **The katana:** slim, gently curved blade in polished steel, a dark round guard (*tsuba*), and a long two-hand grip wrapped in **lime-green and black cord**. A **glowing neon lime-green energy edge** runs along the cutting edge. This glow is the character's signature.
+- **Scabbard on the back:** the *saya* is worn **diagonally across the back**, held by a harness strap across the chest, mouth at the top behind the shoulders and tip pointing down and back. With the katana drawn (always, during play), the empty scabbard stays on the back.
 
 **Palette (for reference; exact hues can vary slightly):**
 
@@ -68,7 +69,7 @@ Avoid pink, magenta, cyan and bright blue in the costume: those are the backgrou
 | `head.png` | 90 × 110 | Head and neck in profile facing right, focused neutral expression | Base of the neck, **bottom centre** |
 | `head_attack.png` | 90 × 110 | Same head, teeth gritted, eyes narrowed | Bottom centre |
 | `head_hurt.png` | 90 × 110 | Same head, wincing | Bottom centre |
-| `torso.png` | 110 × 230 | Chest and belly, jacket with neon collar lining and piping, standing upright | Waist, **bottom centre** (the neck joins at top centre) |
+| `torso.png` | 110 × 230 | Chest and belly, jacket with neon collar lining and piping, standing upright, **with the diagonal scabbard harness strap across the chest** (a yellow buckle suits it) | Waist, **bottom centre** (the neck joins at top centre) |
 | `pelvis.png` | 100 × 90 | Hips and belt (optional small yellow buckle), trouser top | **Centre** |
 | `arm_upper_near.png` | 50 × 130 | **Cybernetic** upper arm, hanging straight down | Shoulder, **top centre** (elbow at bottom centre) |
 | `arm_lower_near.png` | 45 × 120 | **Cybernetic** forearm with lime status lights, hanging straight down | Elbow, **top centre** (wrist at bottom centre) |
@@ -81,7 +82,7 @@ Avoid pink, magenta, cyan and bright blue in the costume: those are the backgrou
 | `shin_near.png` / `shin_far.png` | 50 × 170 | Shin and armoured boot upper, straight down | Knee, **top centre** (ankle at bottom centre) |
 | `foot_near.png` / `foot_far.png` | 90 × 40 | Armoured boot with neon sole and toe cap, toe pointing **right**, sole flat along the bottom edge | Ankle, **25 px from the left edge, mid-height** |
 | `katana.png` | 440 × 32 | The whole katana **horizontal, pommel at the left, tip at the right**, gentle upward curve toward the tip, cutting edge along the **bottom**. Layout left→right: pommel cap, **two-hand grip ~120 px long** (lime/black cord wrap), round guard at ~x 125, blade ~300 px to the tip. | **Near-hand grip point: 105 px from the left edge, mid-height** (just behind the guard). The far hand holds at **~35 px from the left**. |
-| `saya.png` *(optional)* | 440 × 32 | Empty scabbard, same orientation, dark lacquer with a thin yellow band | 105 px from the left, mid-height |
+| `saya.png` | 440 × 32 | **Empty scabbard**, drawn in the same horizontal orientation as the katana (mouth at the left, tip at the right), dark lacquer with a thin yellow band and a harness clip near the mouth. **The game mounts it diagonally across the back**; don't draw it angled. | Harness clip, **120 px from the left edge, mid-height** |
 
 **Joint overlap:** each limb segment's ends are **rounded** and extend **20–30 px past the joint** inside its canvas. For example, the upper arm's top 25 px is a rounded shoulder cap and its bottom 25 px a rounded elbow cap. Then when parts rotate they overlap instead of showing a gap. The canvas sizes above already include this overlap.
 
@@ -111,13 +112,13 @@ If you skip these, the game generates rough ones automatically from bright satur
 
 ## 6. Recommended workflow
 
-1. **Reference sheet first:** one full-body side view, facing right, standing in a relaxed **two-handed guard** (katana held diagonally forward, both hands on the grip) **and** a second neutral pose with arms slightly away from the body, **720 px tall on a transparent background**. Get this approved before cutting parts. It locks the design and colours.
+1. **Reference sheet first:** one full-body side view, facing right, standing in a relaxed **two-handed guard** (katana held diagonally forward, both hands on the grip, empty scabbard on the back) **and** a second neutral pose with arms slightly away from the body and the katana sheathed on the back, **720 px tall on a transparent background**. Get this approved before cutting parts. It locks the design and colours.
 2. **Cut or repaint each part** from the reference to the canvas sizes and orientations in §4. Limbs are straightened to hang down, with joints rounded and extended for overlap. The katana is painted separately, straight and horizontal.
 3. **Make the variants** (near/far darkness, hands, heads) from the same base, so they match exactly.
 4. **Deliver** all PNGs in one folder named `player_parts/`.
 
 ### Prompt for the reference sheet (adapt as needed)
-> Character reference sheet for a 2D side-scrolling game cutout rig, two poses side by side, both side view (profile) facing right: (1) relaxed two-handed katana guard, blade angled forward, both hands on the long grip; (2) neutral standing pose, arms slightly away from the body, legs slightly apart, katana sheathed at the hip. A disgraced former corporate enforcer turned street fighter: lean, athletic, mid-30s; fitted short tactical jacket with high collar in near-black and charcoal, slim dark cargo trousers, armoured boots; sparing neon accents in acid lime-green and warning yellow (collar lining, piping, shoulder panel, glove knuckles, boot soles); right arm is a worn gunmetal and brushed-steel cybernetic prosthetic with small lime-green status lights; short cropped dark hair, thin cheek scar. Slim curved katana, polished steel, dark round guard, long grip wrapped in lime-green and black cord, glowing neon lime-green energy edge. No pink, magenta, cyan or blue in the costume. Hand-painted illustrated concept art, painterly brush texture, clean readable silhouette, cinematic, key light from upper left, cool bounce light from lower right. Transparent background, no ground shadow, no text, no logo.
+> Character reference sheet for a 2D side-scrolling game cutout rig, two poses side by side, both side view (profile) facing right: (1) relaxed two-handed katana guard, blade angled forward, both hands on the long grip; (2) neutral standing pose, arms slightly away from the body, legs slightly apart, katana sheathed in a dark scabbard worn diagonally across the back (grip rising over the shoulder), held by a harness strap across the chest. A disgraced former corporate enforcer turned street fighter: lean, athletic, mid-30s; fitted short tactical jacket with high collar in near-black and charcoal, slim dark cargo trousers, armoured boots; sparing neon accents in acid lime-green and warning yellow (collar lining, piping, shoulder panel, glove knuckles, boot soles); right arm is a worn gunmetal and brushed-steel cybernetic prosthetic with small lime-green status lights; short cropped dark hair, thin cheek scar. Slim curved katana, polished steel, dark round guard, long grip wrapped in lime-green and black cord, glowing neon lime-green energy edge. No pink, magenta, cyan or blue in the costume. Hand-painted illustrated concept art, painterly brush texture, clean readable silhouette, cinematic, key light from upper left, cool bounce light from lower right. Transparent background, no ground shadow, no text, no logo.
 
 ### Prompt for a part (repeat per part)
 > From the approved character reference, paint ONLY the [PART, e.g. "near-side cybernetic upper arm"] as a separate cutout-animation part: drawn straight [ORIENTATION, e.g. "hanging vertically, shoulder at the top, elbow at the bottom"], rounded overlapping ends at both joints, same painterly style, lighting (key light upper left), colours and neon accents as the reference. Exact canvas [W × H] px, the part filling the canvas, transparent background, no shadow, no text.
@@ -128,7 +129,7 @@ If you skip these, the game generates rough ones automatically from bright satur
 ## 7. Delivery checklist
 
 - [ ] 1 reference sheet (`reference.png`: two-handed guard plus neutral pose, 720 px tall, facing right).
-- [ ] 22 part PNGs with the exact names and canvas sizes in §4: 3 heads, torso, pelvis, 4 arm segments, 6 hands, 4 leg segments, 2 feet, katana. Plus optional `saya.png`.
+- [ ] 23 part PNGs with the exact names and canvas sizes in §4: 3 heads, torso, pelvis, 4 arm segments, 6 hands, 4 leg segments, 2 feet, katana, saya (scabbard).
 - [ ] Glow masks: `katana_emit.png`, `arm_upper_near_emit.png`, `arm_lower_near_emit.png` (others optional).
 - [ ] All RGBA with transparent backgrounds, facing right, lit from the upper left, far parts about 25% darker.
 - [ ] Mostly dark costume with lime-green and yellow neon accents; no pink or cyan in the costume.
