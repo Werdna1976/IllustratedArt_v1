@@ -46,3 +46,22 @@ func test_material_flags() -> void:
 	var lit_nofog := PlateLayer.make_material(tex, true, false)
 	assert_eq(lit_nofog.shading_mode, BaseMaterial3D.SHADING_MODE_PER_PIXEL, "lit")
 	assert_eq(lit_nofog.disable_fog, true, "fog disabled (sky)")
+
+
+func test_companion_maps_on_plate_materials() -> void:
+	var tex := ImageTexture.create_from_image(Image.create_empty(4, 4, false, Image.FORMAT_RGBA8))
+	var mat := PlateLayer.make_material(tex, true, true, tex, tex)
+	assert_true(mat.normal_enabled and mat.normal_texture == tex, "normal map")
+	assert_true(mat.emission_enabled and mat.emission_texture == tex, "glow map")
+	assert_eq(mat.emission_operator, BaseMaterial3D.EMISSION_OP_MULTIPLY, "glow comes from the mask only")
+
+
+func test_set_glow_scales_every_strip() -> void:
+	var depth := 100.0
+	var strips := _blank_strips(depth)
+	var layer := PlateLayer.new()
+	layer.build(depth, strips, false, WorldSpec.LEVEL_SIZE, true, [], strips)
+	layer.set_glow(0.4)
+	for mi: MeshInstance3D in layer.get_children():
+		assert_near((mi.material_override as StandardMaterial3D).emission_energy_multiplier, 0.4, 1e-6, "glow energy")
+	layer.free()
