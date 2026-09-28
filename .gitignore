@@ -4,3 +4,4 @@
 art/_source/
 __pycache__/
 .superpowers/
+art/levels/*/_strips/
