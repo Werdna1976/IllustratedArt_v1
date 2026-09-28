@@ -14,19 +14,20 @@ static func default_styles() -> Array[Dictionary]:
 	]
 
 
-static func environment(parent: Node) -> void:
+## overrides: section.json "env" keys (background, fog, fog_density, ambient, ambient_energy).
+static func environment(parent: Node, overrides: Dictionary = {}) -> Environment:
 	var env := Environment.new()
 	env.background_mode = Environment.BG_COLOR
-	env.background_color = Color("#5b7fbf")
+	env.background_color = Color(overrides.get("background", "#5b7fbf"))
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	env.ambient_light_color = Color("#9fb0d0")
-	env.ambient_light_energy = 0.6
+	env.ambient_light_color = Color(overrides.get("ambient", "#9fb0d0"))
+	env.ambient_light_energy = overrides.get("ambient_energy", 0.6)
 	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	env.glow_enabled = true
 	env.fog_enabled = true
 	env.fog_mode = Environment.FOG_MODE_EXPONENTIAL
-	env.fog_light_color = Color("#b8c4dc")
-	env.fog_density = 0.004
+	env.fog_light_color = Color(overrides.get("fog", "#b8c4dc"))
+	env.fog_density = overrides.get("fog_density", 0.004)
 	var attrs := CameraAttributesPractical.new()
 	attrs.dof_blur_far_enabled = true
 	attrs.dof_blur_far_distance = 40.0 # camera distance; near BG (30 m) stays sharp
@@ -39,13 +40,20 @@ static func environment(parent: Node) -> void:
 	world_env.environment = env
 	world_env.camera_attributes = attrs
 	parent.add_child(world_env)
+	return env
+
+
+static func sun(parent: Node, color: Color = Color("#ffe2c0"), energy: float = 1.0) -> DirectionalLight3D:
+	var light := DirectionalLight3D.new()
+	light.rotation_degrees = Vector3(-35.0, -25.0, 0.0)
+	light.light_color = color
+	light.light_energy = energy
+	parent.add_child(light)
+	return light
 
 
 static func lights(parent: Node, lantern: Vector2) -> void:
-	var sun := DirectionalLight3D.new()
-	sun.rotation_degrees = Vector3(-35.0, -25.0, 0.0)
-	sun.light_color = Color("#ffe2c0")
-	parent.add_child(sun)
+	sun(parent)
 	var lamp := OmniLight3D.new()
 	lamp.position = Vector3(lantern.x, lantern.y, 1.5)
 	lamp.omni_range = 7.0
