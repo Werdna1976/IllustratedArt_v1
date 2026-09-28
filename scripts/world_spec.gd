@@ -69,9 +69,16 @@ static func plate_rect(depth: float, level_size: Vector2 = LEVEL_SIZE) -> Rect2:
 
 
 static func clamp_camera_center(center: Vector2, aspect: float, level_size: Vector2 = LEVEL_SIZE) -> Vector2:
+	return clamp_to_rect(center, aspect, Rect2(Vector2.ZERO, level_size))
+
+
+## Keeps the view inside rect; on an axis where the view is larger than rect, centres on rect.
+static func clamp_to_rect(center: Vector2, aspect: float, rect: Rect2) -> Vector2:
 	var half := screen_size(aspect) * 0.5
-	return Vector2(clampf(center.x, half.x, level_size.x - half.x),
-			clampf(center.y, half.y, level_size.y - half.y))
+	var c := rect.get_center()
+	var x := c.x if half.x * 2.0 > rect.size.x else clampf(center.x, rect.position.x + half.x, rect.end.x - half.x)
+	var y := c.y if half.y * 2.0 > rect.size.y else clampf(center.y, rect.position.y + half.y, rect.end.y - half.y)
+	return Vector2(x, y)
 
 
 ## Camera3D keep_aspect + fov (degrees) for a viewport aspect.

@@ -19,6 +19,12 @@ var camera: Camera3D
 
 var trauma := 0.0 ## 0-1; shake offset grows with trauma².
 
+var _bounds_from := Rect2()
+var _bounds_to := Rect2()
+var _blend := 1.0 ## 0..1 progress from _bounds_from to the target bounds.
+var _blend_time := 0.0
+var _locked := false
+
 var _look := 0.0
 var _shake_t := 0.0
 var _focus_y := 0.0
@@ -47,7 +53,7 @@ func apply_projection() -> void:
 	camera.keep_aspect = proj.keep_aspect
 	camera.fov = proj.fov
 	# A narrower view has tighter bounds; clamp now so no plate edge shows while easing.
-	var c := WorldSpec.clamp_camera_center(Vector2(position.x, position.y), aspect(), level_size)
+	var c := WorldSpec.clamp_to_rect(Vector2(position.x, position.y), aspect(), current_bounds())
 	if not is_equal_approx(c.x, position.x) or not is_equal_approx(c.y, position.y):
 		position = Vector3(c.x, c.y, 0.0)
 		reset_physics_interpolation()
@@ -57,9 +63,47 @@ func apply_projection() -> void:
 func snap_to_target() -> void:
 	_look = 0.0
 	_focus_y = target.global_position.y
-	var c := WorldSpec.clamp_camera_center(_goal(), aspect(), level_size)
+	var c := WorldSpec.clamp_to_rect(_goal(), aspect(), current_bounds())
 	position = Vector3(c.x, c.y, 0.0)
 	reset_physics_interpolation()
+
+
+## Confine the camera to rect (arenas, scripted zones), blending over `blend` seconds.
+func lock_to(rect: Rect2, blend := 0.5) -> void:
+	_start_blend(rect, blend)
+	_locked = true
+
+
+## Return to the section bounds.
+func unlock(blend := 0.5) -> void:
+	_start_blend(section_bounds(), blend)
+	_locked = false
+
+
+func is_locked() -> bool:
+	return _locked
+
+
+func locked_rect() -> Rect2:
+	return _bounds_to if _locked else Rect2()
+
+
+func section_bounds() -> Rect2:
+	return Rect2(Vector2.ZERO, level_size)
+
+
+func current_bounds() -> Rect2:
+	var target := _bounds_to if _locked or _blend < 1.0 else section_bounds()
+	if _blend >= 1.0:
+		return target
+	return Rect2(_bounds_from.position.lerp(target.position, _blend), _bounds_from.size.lerp(target.size, _blend))
+
+
+func _start_blend(to: Rect2, duration: float) -> void:
+	_bounds_from = current_bounds()
+	_bounds_to = to
+	_blend_time = duration
+	_blend = 0.0 if duration > 0.0 else 1.0
 
 
 func add_trauma(amount: float) -> void:
@@ -68,12 +112,14 @@ func add_trauma(amount: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	_update_shake(delta)
+	if _blend < 1.0:
+		_blend = minf(_blend + delta / _blend_time, 1.0)
 	if target == null:
 		return
 	var facing: float = (target as Player).facing if target is Player else 1.0
 	_look = smooth(_look, facing * LOOK_AHEAD, LOOK_AHEAD_RATE, delta)
 	_focus_y = dead_zone(_focus_y, target.global_position.y, DEAD_ZONE_HALF)
-	var goal := WorldSpec.clamp_camera_center(_goal(), aspect(), level_size)
+	var goal := WorldSpec.clamp_to_rect(_goal(), aspect(), current_bounds())
 	position.x = smooth(position.x, goal.x, FOLLOW_RATE, delta)
 	position.y = smooth(position.y, goal.y, FOLLOW_RATE, delta)
 

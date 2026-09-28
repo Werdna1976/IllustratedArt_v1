@@ -82,3 +82,26 @@ func test_shake_is_bounded_and_decays() -> void:
 		rig._physics_process(1.0 / 60.0)
 	assert_near(rig.camera.position.x, 0.0, 1e-6, "settles back (x)")
 	assert_near(rig.camera.position.y, 0.0, 1e-6, "settles back (y)")
+
+
+func test_clamp_to_rect_centres_when_rect_smaller_than_view() -> void:
+	var c := WorldSpec.clamp_to_rect(Vector2(0, 0), 16.0 / 9.0, Rect2(100, 0, 10, 5))
+	assert_near(c.x, 105.0, 1e-4, "centred x")
+	assert_near(c.y, 2.5, 1e-4, "centred y")
+
+
+func test_lock_blends_to_arena_and_unlock_restores() -> void:
+	var rig := _rig(Vector3(60, 5, 0), 16.0 / 9.0)
+	rig.snap_to_target()
+	var arena := Rect2(100, 0, 28.8, 16.2)
+	rig.lock_to(arena, 0.5)
+	assert_true(rig.is_locked(), "locked")
+	for i in 120:
+		rig._physics_process(1.0 / 60.0)
+	assert_eq(rig.current_bounds(), arena, "bounds reach the arena after the blend")
+	assert_true(rig.position.x >= 100.0 + 9.6 - 0.05, "camera moved inside the arena")
+	rig.unlock(0.5)
+	for i in 60:
+		rig._physics_process(1.0 / 60.0)
+	assert_true(not rig.is_locked(), "unlocked")
+	assert_eq(rig.current_bounds(), Rect2(Vector2.ZERO, rig.level_size), "back to the section bounds")
