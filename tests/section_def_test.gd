@@ -39,9 +39,8 @@ func test_pixel_collision_converts_to_world_metres() -> void:
 	var def := SectionDef.load_dir(_write_section("px", {"size_m": [40.0, 12.0], "collision": [[0, 0, 40, 1]]},
 			{"gameplay_collision.json": "[[100, 200, 300, 50]]", "_strips/collision_traced.json": "[[0, 0, 100, 100]]"}))
 	var plate := WorldSpec.plate_rect(0.0, Vector2(40, 12))
-	assert_eq(def.collision.size(), 3, "section + composed + traced")
-	assert_eq(def.collision[0], Rect2(0, 0, 40, 1), "section.json rect unchanged (metres)")
-	var r: Rect2 = def.collision[1]
+	assert_eq(def.collision.size(), 2, "art collision (composed + traced) replaces the greybox rect")
+	var r: Rect2 = def.collision[0]
 	assert_near(r.position.x, plate.position.x + 1.0, 1e-4, "x")
 	assert_near(r.size.x, 3.0, 1e-4, "w")
 	assert_near(r.end.y, plate.end.y - 2.0, 1e-4, "top edge 200 px below the plate top")
@@ -54,3 +53,11 @@ func test_missing_section_json_gives_defaults() -> void:
 	assert_eq(def.size, WorldSpec.LEVEL_SIZE, "default size")
 	assert_true(not def.has_exit, "no exit")
 	assert_eq(def.manifest, {}, "no strips yet")
+
+
+func test_greybox_collision_kept_without_art_collision_or_when_asked() -> void:
+	var plain := SectionDef.load_dir(_write_section("grey", {"size_m": [40.0, 12.0], "collision": [[0, 0, 40, 1]]}))
+	assert_eq(plain.collision, [Rect2(0, 0, 40, 1)] as Array[Rect2], "greybox used when there is no art collision")
+	var keep := SectionDef.load_dir(_write_section("keep", {"size_m": [40.0, 12.0], "collision": [[0, 0, 40, 1]],
+			"keep_greybox_collision": true}, {"gameplay_collision.json": "[[0, 0, 100, 100]]"}))
+	assert_eq(keep.collision.size(), 2, "opt-in keeps both")

@@ -24,6 +24,14 @@ static func make(p_hp: float, p_stagger: float) -> Vitals:
 	return v
 
 
+## Full health, no stagger (respawn).
+func reset() -> void:
+	hp = max_hp
+	stagger = 0.0
+	_since_hit = 0.0
+	_staggered_left = 0.0
+
+
 func take(damage: float, stagger_dmg: float) -> void:
 	hp = maxf(hp - damage, 0.0)
 	_since_hit = 0.0

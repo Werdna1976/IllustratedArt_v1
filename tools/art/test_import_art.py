@@ -62,6 +62,26 @@ class ImportArtTest(unittest.TestCase):
             rects = json.load(open(os.path.join(s, "_strips", "collision_traced.json")))
             self.assertEqual(rects, [[50, 60, 20, 20], [0, 80, 200, 20]])
 
+    def test_deleted_source_triggers_reimport(self):
+        with tempfile.TemporaryDirectory() as d:
+            s = section(d)
+            Image.new("RGBA", (100, 50), (0, 0, 0, 0)).save(os.path.join(s, "gameplay.png"))
+            mask = Image.new("L", (100, 50), 255); mask.save(os.path.join(s, "gameplay_solid.png"))
+            import_art.main([d])
+            os.remove(os.path.join(s, "gameplay_solid.png"))
+            self.assertEqual(import_art.main([d]), 1)
+            self.assertFalse(os.path.exists(os.path.join(s, "_strips", "collision_traced.json")))
+
+    def test_redelivered_file_with_older_timestamp_triggers_reimport(self):
+        with tempfile.TemporaryDirectory() as d:
+            s = section(d)
+            far = os.path.join(s, "far.png")
+            Image.new("RGBA", (100, 50), (1, 2, 3, 255)).save(far)
+            import_art.main([d])
+            Image.new("RGBA", (120, 50), (1, 2, 3, 255)).save(far)
+            os.utime(far, (1_000_000_000, 1_000_000_000))  # e.g. unzipped art keeps an old date
+            self.assertEqual(import_art.main([d]), 1)
+
 
 if __name__ == "__main__":
     unittest.main()

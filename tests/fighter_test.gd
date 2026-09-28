@@ -78,3 +78,18 @@ func test_heavy_knockback_moves_the_target() -> void:
 	a.combat.request(&"heavy")
 	await _frames(120)
 	assert_true(b.position.x - start_x >= 1.0, "heavy pushes the target at least 1 m (moved %.2f m)" % (b.position.x - start_x))
+
+
+func test_dead_fighter_stays_down_and_revive_clears_stagger() -> void:
+	var p := Player.create()
+	p.autorun = true # would run right if it could act
+	add_node(p)
+	await _frames(2)
+	p.receive_hit({"outcome": HitResolver.Outcome.HIT, "damage": 1000.0, "stagger": 1000.0, "knockback": Vector2.ZERO}, null)
+	var x0 := p.global_position.x
+	await _frames(60)
+	assert_true(absf(p.global_position.x - x0) < 0.05, "a dead fighter does not move (moved %.2f m)" % (p.global_position.x - x0))
+	assert_true(not p.combat.request(&"light"), "a dead fighter cannot attack")
+	p.revive()
+	assert_true(not p.vitals.is_staggered(), "revive clears stagger")
+	assert_true(p.combat.request(&"light"), "a revived fighter can attack")

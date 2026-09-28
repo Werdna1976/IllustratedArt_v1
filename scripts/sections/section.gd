@@ -64,6 +64,7 @@ func setup(p_def: SectionDef) -> void:
 	for arena_spec: Dictionary in def.arenas:
 		var arena := ArenaZone.new()
 		arena.setup(arena_spec.rect, arena_spec.enemies)
+		arena.cleared.connect(_check_exit)
 		add_child(arena)
 		arenas.append(arena)
 	_add_fx()
@@ -128,11 +129,15 @@ func _strips(layer: String) -> Dictionary:
 	var entry: Dictionary = def.manifest[layer]
 	var out := {"albedo": [] as Array[Texture2D], "normal": [] as Array[Texture2D], "emit": [] as Array[Texture2D]}
 	for i in entry.widths.size():
-		out.albedo.append(load("%s_strips/%s_%02d.png" % [def.dir, layer, i]))
-		if entry.has_n:
-			out.normal.append(load("%s_strips/%s_n_%02d.png" % [def.dir, layer, i]))
-		if entry.has_emit:
-			out.emit.append(load("%s_strips/%s_emit_%02d.png" % [def.dir, layer, i]))
+		for kind: String in ["albedo", "normal", "emit"]:
+			if (kind == "normal" and not entry.has_n) or (kind == "emit" and not entry.has_emit):
+				continue
+			var suffix: String = {"albedo": "", "normal": "_n", "emit": "_emit"}[kind]
+			var path := "%s_strips/%s%s_%02d.png" % [def.dir, layer, suffix, i]
+			if not ResourceLoader.exists(path):
+				push_warning("%s missing (run tools/import_art.sh); using a placeholder for %s" % [path, layer])
+				return {}
+			out[kind].append(load(path))
 	return out
 
 
@@ -171,9 +176,10 @@ func _add_props() -> void:
 	var px_per_m := WorldSpec.density(FG_DEPTH)
 	var available: Array = def.manifest.get("props", [])
 	for spec: Dictionary in def.props:
-		if not spec.image in available:
+		var path := "%s_strips/%s" % [def.dir, spec.image]
+		if not spec.image in available or not ResourceLoader.exists(path):
 			continue
-		var tex: Texture2D = load("%s_strips/%s" % [def.dir, spec.image])
+		var tex: Texture2D = load(path)
 		var size_m := Vector2(tex.get_size()) / px_per_m
 		var quad := QuadMesh.new()
 		quad.size = size_m
@@ -200,6 +206,21 @@ func _add_exit() -> void:
 
 
 func _on_exit_body(body: Node3D) -> void:
-	if body is Player and not _exited:
+	if body is Player and not _exited and not _arena_in_progress():
 		_exited = true
 		exited.emit()
+
+
+# An arena that has started but not been cleared keeps the exit shut.
+func _arena_in_progress() -> bool:
+	for arena in arenas:
+		if arena.active and not arena.is_cleared:
+			return true
+	return false
+
+
+# The player may already be standing in the exit when the arena clears.
+func _check_exit() -> void:
+	if exit_zone:
+		for body in exit_zone.get_overlapping_bodies():
+			_on_exit_body(body)

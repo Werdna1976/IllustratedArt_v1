@@ -49,3 +49,31 @@ func test_exit_emits_when_player_enters() -> void:
 	for i in 6:
 		await tree.physics_frame
 	assert_true(fired[0], "exited fired")
+
+
+func test_exit_ignored_while_an_arena_is_unfinished() -> void:
+	var s := Section.new()
+	s.setup(_def("ae", {"size_m": [40.0, 12.0], "collision": [[0, 0, 40, 1]], "exit": [30, 1, 4, 5],
+		"arenas": [{"rect": [20, 0, 20, 12], "enemies": []}]}))
+	add_node(s)
+	var fired := [false]
+	s.exited.connect(func() -> void: fired[0] = true)
+	s.arenas[0].active = true
+	var p := Player.create()
+	p.position = Vector3(32, 1.9, 0)
+	s.add_child(p)
+	for i in 6:
+		await tree.physics_frame
+	assert_true(not fired[0], "exit locked while the arena is active")
+
+
+func test_manifest_without_strip_files_uses_placeholders() -> void:
+	var dir := ROOT + "broken/"
+	DirAccess.make_dir_recursive_absolute(dir + "_strips")
+	FileAccess.open(dir + "section.json", FileAccess.WRITE).store_string(JSON.stringify({"size_m": [40.0, 12.0]}))
+	FileAccess.open(dir + "_strips/manifest.json", FileAccess.WRITE).store_string(
+			JSON.stringify({"gameplay": {"widths": [2048], "height": 100, "has_n": false, "has_emit": false}, "props": []}))
+	var s := Section.new()
+	s.setup(SectionDef.load_dir(dir))
+	add_node(s)
+	assert_eq(s.layers.size(), 5, "all five layers built, the broken one as a placeholder")

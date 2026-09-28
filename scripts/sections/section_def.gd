@@ -43,13 +43,16 @@ static func load_dir(p_dir: String) -> SectionDef:
 	if data.has("exit"):
 		def.has_exit = true
 		def.exit = _rect(data.exit)
-	for r: Array in data.get("collision", []):
-		def.collision.append(_rect(r))
+	# Collision from the art (compose_plate / traced mask) replaces the greybox boxes in section.json,
+	# unless "keep_greybox_collision" asks to keep both.
 	var plate := WorldSpec.plate_rect(0.0, def.size)
 	var ppm := WorldSpec.density(0.0)
 	for path in [def.dir + "gameplay_collision.json", def.dir + "_strips/collision_traced.json"]:
 		for px: Array in _read_json(path, []):
 			def.collision.append(px_to_world(px, plate, ppm))
+	if def.collision.is_empty() or data.get("keep_greybox_collision", false):
+		for r: Array in data.get("collision", []):
+			def.collision.append(_rect(r))
 	for light: Dictionary in data.get("lights", []):
 		def.lights.append(_light(light, _vec3(light.pos)))
 	for row: Dictionary in data.get("light_rows", []):

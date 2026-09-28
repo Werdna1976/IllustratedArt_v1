@@ -19,6 +19,7 @@ const BLADE_COLOR := Color("#39f3ff")
 const BLADE_FLASH_ENERGY := 6.0
 const BLADE_FLASH_TIME := 0.25
 const KNOCKBACK_DECEL := 12.0 ## m/s² of slide while stunned, so hits visibly push.
+const DEAD_STUN := 1e9 ## A dead fighter stays down until revive().
 const SHAKE_PER_HIT_STOP := 3.0 ## Camera trauma per second of hit-stop (clamped 0.15-0.6).
 
 var facing := 1.0 ## +1 right, -1 left; read by CameraRig for look-ahead.
@@ -86,11 +87,10 @@ func intent() -> Dictionary:
 
 ## attacker may be null (environmental damage, tests).
 func receive_hit(result: Dictionary, _attacker: Fighter) -> void:
+	if _dead:
+		return
 	var was_staggered := vitals.is_staggered()
 	vitals.take(result.damage, result.stagger)
-	if vitals.is_dead() and not _dead:
-		_dead = true
-		died.emit()
 	var kb: Vector2 = result.knockback
 	if kb != Vector2.ZERO:
 		velocity = Vector3(kb.x, kb.y, 0.0)
@@ -102,13 +102,18 @@ func receive_hit(result: Dictionary, _attacker: Fighter) -> void:
 		combat.stun(HURT_STUN)
 		_play(&"hurt")
 	got_hit.emit(result)
+	if vitals.is_dead():
+		# Last, so nothing above overrides the death stun.
+		_dead = true
+		combat.stun(DEAD_STUN)
+		_play(&"staggered")
+		died.emit()
 
 
 ## Back to full health, free to act (respawn).
 func revive() -> void:
 	_dead = false
-	vitals.hp = vitals.max_hp
-	vitals.stagger = 0.0
+	vitals.reset()
 	combat.stun(0.0)
 	velocity = Vector3.ZERO
 

@@ -36,8 +36,13 @@ mipmaps/generate=true
 
 
 def _sources(section):
-    return [os.path.join(section, f) for f in os.listdir(section)
+    return [os.path.join(section, f) for f in sorted(os.listdir(section))
             if f.endswith(".png") or f in ("section.json", "gameplay_collision.json")]
+
+
+def _fingerprint(section):
+    # size + mtime per source: catches edits, deletions and re-delivered files with old dates.
+    return {os.path.basename(p): [os.path.getsize(p), os.path.getmtime(p)] for p in _sources(section)}
 
 
 def _is_section(path):
@@ -127,15 +132,15 @@ def import_section(section):
     with open(os.path.join(strips, "manifest.json"), "w") as f:
         json.dump(manifest, f, indent=1)
     with open(os.path.join(strips, "stamp.json"), "w") as f:
-        json.dump({"sources": len(_sources(section))}, f)
+        json.dump(_fingerprint(section), f)
 
 
 def _up_to_date(section):
     stamp = os.path.join(section, "_strips", "stamp.json")
     if not os.path.exists(stamp):
         return False
-    t = os.path.getmtime(stamp)
-    return all(os.path.getmtime(s) < t for s in _sources(section))
+    with open(stamp) as f:
+        return json.load(f) == _fingerprint(section)
 
 
 def main(argv):

@@ -86,7 +86,6 @@ func _on_exited() -> void:
 
 
 func _on_player_died() -> void:
-	player.combat.stun(RESPAWN_DELAY)
 	await get_tree().create_timer(RESPAWN_DELAY).timeout
 	if not is_instance_valid(player):
 		return
