@@ -62,3 +62,18 @@ func test_finisher_only_on_staggered_enemy() -> void:
 	assert_eq(p.resolve_heavy_action(), &"heavy", "heavy when the enemy is not staggered")
 	e.vitals.take(0.0, 1000.0)
 	assert_eq(p.resolve_heavy_action(), &"finisher", "finisher on a staggered enemy in range")
+
+
+func test_dead_enemy_is_untargetable() -> void:
+	var p := Player.create()
+	var e := Enemy.create_officer()
+	add_node(p)
+	add_node(e)
+	await tree.physics_frame
+	var died := [false]
+	e.died.connect(func() -> void: died[0] = true)
+	e.receive_hit({"outcome": HitResolver.Outcome.HIT, "damage": 1000.0, "stagger": 0.0, "knockback": Vector2.ZERO}, p)
+	await tree.physics_frame
+	assert_true(died[0], "died signal")
+	assert_true(not e.is_in_group(&"enemies"), "left the enemies group")
+	assert_true(not e.hurtbox.monitorable, "no longer hittable")

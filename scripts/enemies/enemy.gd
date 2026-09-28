@@ -44,7 +44,10 @@ func intent() -> Dictionary:
 
 func receive_hit(result: Dictionary, attacker: Fighter) -> void:
 	super(result, attacker)
-	if vitals.is_dead() and brain != null:
+	if vitals.is_dead() and is_in_group(&"enemies"):
+		# Out of play immediately (arenas count it as cleared); the body lingers briefly for feedback.
+		remove_from_group(&"enemies")
+		hurtbox.set_deferred("monitorable", false)
 		brain = null
 		get_tree().create_timer(DEATH_DELAY).timeout.connect(queue_free)
 

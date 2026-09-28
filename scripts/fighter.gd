@@ -6,6 +6,7 @@ extends CharacterBody3D
 
 signal hit_landed(target: Fighter, result: Dictionary)
 signal got_hit(result: Dictionary)
+signal died ## Emitted once, when HP first reaches 0.
 
 const RADIUS := 0.4
 const HEIGHT := 1.8
@@ -33,6 +34,7 @@ var hurtbox: Area3D
 var blade_light: OmniLight3D
 
 var _hitbox_shape: CollisionShape3D
+var _dead := false
 
 
 func build(rig_scene: PackedScene, albedo: Texture2D, normal: Texture2D, emissive: Texture2D,
@@ -82,9 +84,13 @@ func intent() -> Dictionary:
 	return {"x": 0.0, "jump": false, "action": &""}
 
 
+## attacker may be null (environmental damage, tests).
 func receive_hit(result: Dictionary, _attacker: Fighter) -> void:
 	var was_staggered := vitals.is_staggered()
 	vitals.take(result.damage, result.stagger)
+	if vitals.is_dead() and not _dead:
+		_dead = true
+		died.emit()
 	var kb: Vector2 = result.knockback
 	if kb != Vector2.ZERO:
 		velocity = Vector3(kb.x, kb.y, 0.0)
@@ -96,6 +102,15 @@ func receive_hit(result: Dictionary, _attacker: Fighter) -> void:
 		combat.stun(HURT_STUN)
 		_play(&"hurt")
 	got_hit.emit(result)
+
+
+## Back to full health, free to act (respawn).
+func revive() -> void:
+	_dead = false
+	vitals.hp = vitals.max_hp
+	vitals.stagger = 0.0
+	combat.stun(0.0)
+	velocity = Vector3.ZERO
 
 
 func _physics_process(delta: float) -> void:

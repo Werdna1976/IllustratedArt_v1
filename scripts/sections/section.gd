@@ -59,6 +59,11 @@ func setup(p_def: SectionDef) -> void:
 		blocks.append(LevelBuilder.block(self, rect, null))
 	if def.has_exit:
 		_add_exit()
+	for arena_spec: Dictionary in def.arenas:
+		var arena := ArenaZone.new()
+		arena.setup(arena_spec.rect, arena_spec.enemies)
+		add_child(arena)
+		arenas.append(arena)
 	for spec: Dictionary in def.enemies:
 		var enemy := spawn_enemy(spec)
 		add_child(enemy)
