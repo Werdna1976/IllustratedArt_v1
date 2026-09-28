@@ -11,7 +11,7 @@ mkdir -p .godot
 python -m unittest discover -s tools/art -p "test_*.py" -q >"$PYLOG" 2>&1
 py_status=$?
 [[ $py_status -ne 0 ]] && tail -30 "$PYLOG"
-echo "python: $(grep -E "^Ran " "$PYLOG") $(grep -E "^(OK|FAILED)" "$PYLOG")"
+echo "python: $(grep -E "^Ran " "$PYLOG") $(grep -E "^(OK|FAILED)( (.*)?$" "$PYLOG")"
 # --import refreshes the class_name cache so new scripts are visible to the runner.
 "$GODOT" --headless --path . --import >/dev/null 2>&1
 "$GODOT" --headless --path . --script res://tests/run_tests.gd >"$LOG" 2>&1
