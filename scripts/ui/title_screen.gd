@@ -5,7 +5,7 @@ extends Control
 const BACKGROUND := preload("res://art/ui/title_bg.png")
 const THEME_MUSIC := preload("res://audio/music/title_theme.ogg")
 const ACCENT := Color("#39f3ff")
-const MENU_TOP := 0.56 ## Fraction of screen height where the menu starts.
+const MENU_TOP := 0.70 ## Fraction of screen height where the menu starts (the fog band in title_bg.png).
 
 var background: TextureRect
 var music: AudioStreamPlayer
@@ -33,7 +33,7 @@ func _ready() -> void:
 
 func _build_menu() -> void:
 	var menu := VBoxContainer.new()
-	# Sits in the art's open band between the tagline and the icon row; proportional anchors keep
+	# Sits in the open band of the background art; proportional anchors keep
 	# it there as the covered background scales with the window.
 	menu.anchor_left = 0.5
 	menu.anchor_right = 0.5
