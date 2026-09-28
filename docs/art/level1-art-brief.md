@@ -71,5 +71,8 @@ The train stays still in the game world and the tunnel scrolls past it. The scen
 
 ## Delivery checklist
 1. Put the files in the folders above using exactly these filenames.
-2. Run `python tools/art/make_maps.py <file>` on the gameplay, near and mid layers and on the train (starter `_n` and `_emit` maps), then paint over the `_emit` masks if you want exact glow.
-3. Run `python tools/art/check_art.py art`: each file should print `OK`. Size problems show as `FAIL … expected WxH`.
+2. **Collision (optional):** either compose the gameplay plate with `compose_plate.py` and mark walkable pieces (it writes `gameplay_collision.json`), or paint a black/white **`gameplay_solid.png`** (same size as `gameplay.png`, white = solid ground/ledges). Until you do, the greybox collision in `section.json` is used.
+3. Run **`bash tools/import_art.sh`**: it makes starter `_n`/`_emit` maps where missing, slices and compresses the plates, traces `gameplay_solid.png`, checks every file and imports into Godot (one line per step).
+4. Press F5 → START: your art replaces the placeholders in Level 1.
+
+Gameplay data (spawn, exit, enemies, arena, lights, loop speed) lives in each folder's `section.json` (metres, schema in the M3 plan's Global Constraints).

@@ -10,7 +10,7 @@ const MENU_TOP := 0.70 ## Fraction of screen height where the menu starts (the f
 var background: TextureRect
 var music: AudioStreamPlayer
 var start_button: Button
-var start_scene := "res://scenes/level/combat_sandbox.tscn"
+var start_scene := "res://scenes/level/level_1.tscn"
 
 
 func _ready() -> void:
@@ -43,7 +43,7 @@ func _build_menu() -> void:
 	menu.add_theme_constant_override("separation", 10)
 	add_child(menu)
 	start_button = _button(menu, "START", func() -> void: get_tree().change_scene_to_file(start_scene))
-	_button(menu, "TEST LEVEL", func() -> void: get_tree().change_scene_to_file("res://scenes/level/test_level.tscn"))
+	_button(menu, "COMBAT SANDBOX", func() -> void: get_tree().change_scene_to_file("res://scenes/level/combat_sandbox.tscn"))
 	_button(menu, "QUIT", func() -> void: get_tree().quit())
 
 

@@ -32,4 +32,4 @@ func test_start_button_has_focus_for_keyboard_and_gamepad() -> void:
 	var title = add_node(load(SCENE).instantiate()) # untyped: reads title_screen.gd vars
 	await tree.process_frame
 	assert_true(title.start_button.has_focus(), "Start is focused so Enter / A works immediately")
-	assert_eq(title.start_scene, "res://scenes/level/combat_sandbox.tscn", "Start opens the combat sandbox")
+	assert_eq(title.start_scene, "res://scenes/level/level_1.tscn", "Start opens Level 1")

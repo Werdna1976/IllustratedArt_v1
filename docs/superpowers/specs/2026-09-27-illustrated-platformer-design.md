@@ -183,6 +183,7 @@ Tools print terse summaries; full output goes to git-ignored logs under `.godot/
 | `python tools/art/make_maps.py <png>` | Starter `_n` / `_emit` maps from colour art; never overwrites without `--force`. |
 | `python tools/art/check_art.py art` | Validates delivered art; one line per file. |
 | `godot --headless --path . --script res://tools/art_sizes.gd -- <w_m> <h_m> [sizes.json]` | Plate sizes for any section (writes the JSON `check_art.py` uses). |
+| `bash tools/import_art.sh [levels_dir]` | After dropping level art: starter maps, BC7 strip slicing + manifest, `gameplay_solid.png` collision tracing, checks, Godot import. |
 | `stitch.py`, `compose_plate.py`, `loop_seam.py` (tools/art) | Build full plates from panels or kit pieces, export walkable rects, make/verify seamless loops — see art guide §5. |
 | `python tools/art/probe_px.py <png> x0 y0 x1 y1` | Mean colour of a screenshot region — cheap visual assertions without viewing images. |
 
@@ -197,6 +198,7 @@ Tools print terse summaries; full output goes to git-ignored logs under `.godot/
 - Success: traversing the level shows correct parallax at every layer, no plate edges visible at 16:9 or 21:9, stable 60+ fps.
 
 **M1 status:** complete (38 tests).
+**M3 status:** complete — sections from data (`art/levels/<id>/section.json`), plate import pipeline (`tools/import_art.sh`), looping layers, arena camera locks + barriers, level runner with fades/respawn, rain/lightning/flicker; Level 1 playable as a greybox from the title screen.
 **M2 status:** complete — live cutout fighter, full moveset, officer + dummy, combat sandbox (`scenes/level/combat_sandbox.tscn`), art tools; 73 Godot + 9 Python tests.
 
 **Road to a Level 1 vertical slice** (game design: *The Last Train*), each milestone its own plan:

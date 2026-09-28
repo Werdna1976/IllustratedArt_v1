@@ -130,6 +130,8 @@ Approximate part heights at 400 px/m for a 1.8 m fighter: head ≈ 110 px, torso
 
 ## 6. Delivery & checks
 
+- **Levels:** after dropping art into `art/levels/<section>/`, run `bash tools/import_art.sh` — maps, slicing, collision tracing, checks and Godot import in one step.
+
 - Put files at the paths in §1 and run `python tools/art/check_art.py art/` — one line per file: OK, or what's wrong (size, missing alpha, missing companion map).
 - PNG, 8-bit RGBA, sRGB. Don't pre-compress; the importer (M3) makes BC7 strips.
 - Keep your source panels and prompts in `art/_source/<lvl>/` (git-ignored for now) so any plate can be regenerated.

@@ -50,9 +50,11 @@ func start(dirs: Array = [], first: int = 0) -> void:
 
 func go_to(i: int) -> void:
 	_busy = true
-	await _fade_to(1.0)
 	if section:
+		await _fade_to(1.0)
 		section.queue_free()
+	else:
+		_fade.color.a = 1.0 # first section: start from black, nothing to fade out
 	index = i
 	var def := SectionDef.load_dir(section_dirs[i])
 	section = Section.new()
