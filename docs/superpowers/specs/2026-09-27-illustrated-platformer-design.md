@@ -183,6 +183,7 @@ Tools print terse summaries; full output goes to git-ignored logs under `.godot/
 | `python tools/art/make_maps.py <png>` | Starter `_n` / `_emit` maps from colour art; never overwrites without `--force`. |
 | `python tools/art/check_art.py art` | Validates delivered art; one line per file. |
 | `godot --headless --path . --script res://tools/art_sizes.gd -- <w_m> <h_m> [sizes.json]` | Plate sizes for any section (writes the JSON `check_art.py` uses). |
+| `stitch.py`, `compose_plate.py`, `loop_seam.py` (tools/art) | Build full plates from panels or kit pieces, export walkable rects, make/verify seamless loops — see art guide §5. |
 | `python tools/art/probe_px.py <png> x0 y0 x1 y1` | Mean colour of a screenshot region — cheap visual assertions without viewing images. |
 
 ## 10. Milestones
