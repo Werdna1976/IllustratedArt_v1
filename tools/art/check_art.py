@@ -61,10 +61,10 @@ def check_file(path):
 def main(argv):
     ok = failed = 0
     for root, _dirs, files in os.walk(argv[0]):
-        if "_source" in root.split(os.sep):
-            continue
+        if {"_source", "_strips"} & set(root.split(os.sep)):
+            continue  # raw sources and generated strips are not deliveries
         for f in sorted(files):
-            if not f.endswith(".png") or f.endswith(("_n.png", "_emit.png")):
+            if not f.endswith(".png") or f.endswith(("_n.png", "_emit.png", "_solid.png")):
                 continue
             path = os.path.join(root, f)
             errs = check_file(path)

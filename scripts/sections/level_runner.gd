@@ -3,7 +3,8 @@ extends Node3D
 ## Plays a level as a chain of sections (spec §3.1): fades between sections, spawns the player and
 ## camera at each section's spawn, respawns the player after death (resetting unfinished arenas),
 ## and returns to the title when the last section's exit is reached.
-## User arg `--section=N` starts at section N (captures, testing).
+## User args: `--section=N` starts at section N; `--spawn-x=M` spawns the player at x = M metres
+## in the first section loaded (captures, testing).
 
 signal level_completed
 
@@ -24,6 +25,7 @@ var rig: CameraRig
 
 var _fade: ColorRect
 var _busy := false
+var _first_load := true
 
 
 func _ready() -> void:
@@ -62,7 +64,12 @@ func go_to(i: int) -> void:
 	add_child(section)
 	section.exited.connect(_on_exited, CONNECT_DEFERRED) # exits fire inside physics callbacks
 	player = Player.create()
-	player.position = Vector3(def.spawn.x, def.spawn.y, 0.0)
+	var spawn_x := def.spawn.x
+	var override := spawn_x_override(OS.get_cmdline_user_args())
+	if _first_load and not is_nan(override):
+		spawn_x = clampf(override, 2.0, def.size.x - 2.0)
+	_first_load = false
+	player.position = Vector3(spawn_x, def.spawn.y + 3.0 if spawn_x != def.spawn.x else def.spawn.y, 0.0)
 	section.add_child(player)
 	player.died.connect(_on_player_died)
 	rig = CameraRig.new()
@@ -72,6 +79,13 @@ func go_to(i: int) -> void:
 	rig.snap_to_target()
 	await _fade_to(0.0)
 	_busy = false
+
+
+static func spawn_x_override(args: PackedStringArray) -> float:
+	for arg in args:
+		if arg.begins_with("--spawn-x="):
+			return arg.get_slice("=", 1).to_float()
+	return NAN
 
 
 func _on_exited() -> void:

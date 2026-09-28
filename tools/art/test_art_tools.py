@@ -75,9 +75,16 @@ class CheckArtTest(unittest.TestCase):
             self.assertTrue(any("transparen" in e for e in check_art.check_file(mid)))
             self.assertEqual(check_art.check_file(sky), [])
 
+    def test_generated_strips_and_collision_masks_are_not_checked(self):
+        with tempfile.TemporaryDirectory() as d:
+            ldir = os.path.join(d, "levels", "l1"); os.makedirs(os.path.join(ldir, "_strips"))
+            rgba(8, 8, (5, 5, 5, 255)).save(os.path.join(ldir, "_strips", "sky_00.png"))
+            Image.new("L", (8, 8), 255).save(os.path.join(ldir, "gameplay_solid.png"))
+            self.assertEqual(check_art.main([d]), 0)
+
+
 
 import make_placeholder_fighter
-
 
 class PlaceholderFighterTest(unittest.TestCase):
     def test_sheet_packs_all_parts_without_overlap(self):

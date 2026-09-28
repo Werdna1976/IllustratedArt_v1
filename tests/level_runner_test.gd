@@ -63,3 +63,8 @@ func test_death_in_arena_resets_it() -> void:
 	assert_true(not r.rig.is_locked(), "camera unlocked")
 	assert_near(r.player.vitals.hp, r.player.vitals.max_hp, 1e-6, "full health")
 	assert_near(r.player.global_position.x, 4.0, 0.2, "back at spawn")
+
+
+func test_spawn_x_override_parses_user_args() -> void:
+	assert_near(LevelRunner.spawn_x_override(PackedStringArray(["--spawn-x=62.5"])), 62.5, 1e-6, "parsed")
+	assert_true(is_nan(LevelRunner.spawn_x_override(PackedStringArray(["--section=1"]))), "absent -> NAN")
