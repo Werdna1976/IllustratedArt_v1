@@ -24,6 +24,10 @@ func _ready() -> void:
 	_floor_material.albedo_color = Color("#2e2a33")
 	LevelBuilder.environment(self)
 	LevelBuilder.lights(self, Vector2(SECTION.x * 0.5, 6.0))
+	if OS.get_cmdline_user_args().has("--rain"):
+		var weather := Weather.new()
+		weather.setup(true, true, find_children("*", "DirectionalLight3D", false, false)[0])
+		add_child(weather)
 	for style in LevelBuilder.default_styles():
 		LevelBuilder.plate_layer(self, style, SECTION)
 	LevelBuilder.block(self, Rect2(0.0, 0.0, SECTION.x, 1.0), _floor_material)

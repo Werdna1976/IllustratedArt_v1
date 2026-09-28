@@ -25,6 +25,8 @@ var sun: DirectionalLight3D
 var environment: Environment
 var weather: Node3D ## Weather, when the section has rain or lightning.
 var lamps: Array[OmniLight3D] = []
+var flicker: Flicker
+var _layer_by_name := {}
 
 var _t := 0.0
 var _exited := false
@@ -64,6 +66,7 @@ func setup(p_def: SectionDef) -> void:
 		arena.setup(arena_spec.rect, arena_spec.enemies)
 		add_child(arena)
 		arenas.append(arena)
+	_add_fx()
 	for spec: Dictionary in def.enemies:
 		var enemy := spawn_enemy(spec)
 		add_child(enemy)
@@ -97,6 +100,7 @@ func _add_static(layer: String) -> void:
 		plate.build(depth, maps.albedo, layer in LIT, def.size, layer != "sky", maps.normal, maps.emit)
 		add_child(plate)
 	layers.append(plate)
+	_layer_by_name[layer] = plate
 
 
 func _add_loop(layer: String) -> void:
@@ -114,6 +118,7 @@ func _add_loop(layer: String) -> void:
 	loop.setup(depth, maps.albedo, layer in LIT, true, def.size, maps.normal, maps.emit)
 	add_child(loop)
 	loops.append(loop)
+	_layer_by_name[layer] = loop
 
 
 # Imported strips for a layer: {albedo, normal, emit} texture arrays, or {} when not imported.
@@ -145,6 +150,21 @@ func _style(layer: String, depth: float) -> Dictionary:
 		style.bottom = Color(custom[1])
 		style.fill_from = float(custom[2])
 	return style
+
+
+func _add_fx() -> void:
+	if def.rain or def.lightning:
+		weather = Weather.new()
+		weather.setup(def.rain, def.lightning, sun)
+		add_child(weather)
+	flicker = Flicker.new()
+	for layer_name in def.flicker_layers:
+		if _layer_by_name.has(layer_name):
+			flicker.add_layer(_layer_by_name[layer_name], 0.5)
+	for i in lamps.size():
+		if def.lights[i].flicker > 0.0:
+			flicker.add_light(lamps[i], def.lights[i].flicker)
+	add_child(flicker)
 
 
 func _add_props() -> void:
