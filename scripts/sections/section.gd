@@ -173,14 +173,13 @@ func _add_fx() -> void:
 
 
 func _add_props() -> void:
-	var px_per_m := WorldSpec.density(FG_DEPTH)
 	var available: Array = def.manifest.get("props", [])
 	for spec: Dictionary in def.props:
 		var path := "%s_strips/%s" % [def.dir, spec.image]
 		if not spec.image in available or not ResourceLoader.exists(path):
 			continue
 		var tex: Texture2D = load(path)
-		var size_m := Vector2(tex.get_size()) / px_per_m
+		var size_m := prop_size(Vector2(tex.get_size()), spec.get("scale", 1.0))
 		var quad := QuadMesh.new()
 		quad.size = size_m
 		var mi := MeshInstance3D.new()
@@ -189,6 +188,11 @@ func _add_props() -> void:
 		mi.position = Vector3(spec.x, spec.get("y", 0.0) + size_m.y * 0.5, -FG_DEPTH)
 		add_child(mi)
 		props.append(mi)
+
+
+## Foreground prop size in metres: art px at the foreground density, times the section.json "scale".
+static func prop_size(tex_px: Vector2, scale: float) -> Vector2:
+	return tex_px / WorldSpec.density(FG_DEPTH) * scale
 
 
 func _add_exit() -> void:

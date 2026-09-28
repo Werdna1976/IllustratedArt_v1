@@ -77,3 +77,10 @@ func test_manifest_without_strip_files_uses_placeholders() -> void:
 	s.setup(SectionDef.load_dir(dir))
 	add_node(s)
 	assert_eq(s.layers.size(), 5, "all five layers built, the broken one as a placeholder")
+
+
+func test_prop_size_uses_foreground_density_and_scale() -> void:
+	var size := Section.prop_size(Vector2(600, 900), 1.5)
+	var ppm := WorldSpec.density(Section.FG_DEPTH)
+	assert_near(size.x, 600.0 / ppm * 1.5, 1e-5, "width")
+	assert_near(size.y, 900.0 / ppm * 1.5, 1e-5, "height")

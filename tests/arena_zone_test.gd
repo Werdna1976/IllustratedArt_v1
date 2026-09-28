@@ -56,3 +56,18 @@ func test_reset_after_player_death() -> void:
 	assert_true(not arena.active and not arena.is_cleared, "ready to trigger again")
 	assert_eq(arena.barriers.size(), 0, "walls removed")
 	assert_true(not rig.is_locked(), "camera unlocked")
+
+
+func test_barriers_are_visible_security_gates() -> void:
+	var w := _world()
+	var player: Player = w[1]
+	var arena: ArenaZone = w[3]
+	player.position.x = 45.0
+	for i in 10:
+		await tree.physics_frame
+	for wall in arena.barriers:
+		var gates := wall.find_children("*", "MeshInstance3D", false, false)
+		assert_eq(gates.size(), 1, "each barrier shows a gate")
+		var gate: MeshInstance3D = gates[0]
+		assert_true(gate.visible and gate.position.z > 0.0, "gate drawn in front of the gameplay plate")
+		assert_true((gate.material_override as StandardMaterial3D).emission_enabled, "gate glows")

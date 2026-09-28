@@ -75,4 +75,6 @@ The train stays still in the game world and the tunnel scrolls past it. The scen
 3. Run **`bash tools/import_art.sh`**: it makes starter `_n`/`_emit` maps where missing, slices and compresses the plates, traces `gameplay_solid.png`, checks every file and imports into Godot (one line per step).
 4. Press F5 → START: your art replaces the placeholders in Level 1.
 
+Foreground props are placed by `props` entries in `section.json` (`image`, `x`, `y` = bottom edge in metres, optional `scale`, e.g. `1.6` to enlarge hanging cables).
+
 Gameplay data (spawn, exit, enemies, arena, lights, loop speed) lives in each folder's `section.json` (metres, schema in the M3 plan's Global Constraints).

@@ -106,6 +106,7 @@ For moving-vehicle sections the world scrolls past a stationary vehicle. Each ba
 - Clamp to level bounds at the gameplay plane.
 - Additive offsets: dolly (zoom), trauma-based shake, scripted cinematic nudges via trigger `Area3D`s. All offsets are bounded to stay within the 10% plate margin.
 - **Camera locks:** entering an arena (or scripted zone) swaps the clamp bounds to that zone's rect, blending over ~0.5 s; leaving restores the section bounds.
+- **Arena gates:** while an arena is unfinished, both sides are sealed by visible, glowing red security gates (so the lock never reads as an invisible wall); they drop when the last enemy dies.
 
 ### 5.5 Physics
 - `CharacterBody3D` player and `StaticBody3D` level collision exist only at z = 0; player Z axis locked.
