@@ -9,18 +9,21 @@ const MAJOR_EVERY_M := 5 ## Every 5th vertical line is drawn twice as thick.
 
 
 ## Columns [x0, x0 + width) of a plate plate_size px big. fill_from: fraction of the plate
-## height (from the top) where the opaque silhouette begins; 0 = fully opaque.
+## height (from the top) where the opaque silhouette begins; 0 = fully opaque. period_px > 0 makes
+## the silhouette repeat exactly every period_px (seamless loops; vertical grid lines are omitted).
 static func generate_strip(plate_size: Vector2i, x0: int, width: int, px_per_m: float,
-		top: Color, bottom: Color, fill_from: float) -> Image:
+		top: Color, bottom: Color, fill_from: float, period_px: int = 0) -> Image:
 	var h := plate_size.y
 	var img := Image.create_empty(width, h, false, Image.FORMAT_RGBA8)
 	var column := _column(h, px_per_m, top, bottom)
 	var x := 0
 	while x < width:
 		var w := mini(COLUMN_PX - (x0 + x) % COLUMN_PX, width - x)
-		var y_top := silhouette_top(x0 + x, h, px_per_m, fill_from)
+		var y_top := silhouette_top(x0 + x, h, px_per_m, fill_from, period_px)
 		img.blit_rect(column, Rect2i(0, y_top, w, h - y_top), Vector2i(x, y_top))
 		x += w
+	if period_px > 0:
+		return img
 	var grid := grid_color(top, bottom)
 	var m := int(ceil(x0 / px_per_m))
 	while true:
@@ -35,12 +38,18 @@ static func generate_strip(plate_size: Vector2i, x0: int, width: int, px_per_m: 
 
 
 ## Top row of the opaque silhouette at an absolute plate column.
-static func silhouette_top(abs_x: int, h: int, px_per_m: float, fill_from: float) -> int:
+static func silhouette_top(abs_x: int, h: int, px_per_m: float, fill_from: float, period_px: int = 0) -> int:
 	if fill_from <= 0.0:
 		return 0
+	var wavelength := 12.0 * px_per_m # 12 m in world space
+	var harmonic := 2.7
+	if period_px > 0:
+		abs_x = posmod(abs_x, period_px)
+		wavelength = period_px / maxf(1.0, roundf(period_px / wavelength))
+		harmonic = 3.0 # an integer harmonic keeps the pattern periodic
 	var x := float(abs_x - abs_x % COLUMN_PX)
-	var phase := x / (12.0 * px_per_m) * TAU # 12 m wavelength in world space
-	var wave := sin(phase) * 0.06 + sin(phase * 2.7) * 0.03
+	var phase := x / wavelength * TAU
+	var wave := sin(phase) * 0.06 + sin(phase * harmonic) * 0.03
 	return clampi(int((fill_from + wave) * h), 0, h - 1)
 
 

@@ -52,4 +52,6 @@ func _run() -> void:
 				for f in t.failures:
 					printerr("    " + f)
 	print("%d passed, %d failed" % [passed, failed])
+	for i in 5: # let freed audio players and scenes finish releasing before exit
+		await process_frame
 	quit(1 if failed > 0 else 0)
