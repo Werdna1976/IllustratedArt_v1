@@ -50,15 +50,20 @@ func build(dir: String) -> Node2D:
 	root.add_child(rig) # in the tree so global transforms are available for the ground lift
 	var info := {} # bone name -> {pivot, distal, scale}
 	for spec: Dictionary in skeleton.nodes:
-		if not rects.has(spec.part):
-			if spec.get("optional", false):
-				continue
+		var has_art := rects.has(spec.part)
+		if not has_art and not spec.get("optional", false):
 			push_error("part %s missing from %sparts.json" % [spec.part, dir])
 			continue
 		var bone := Node2D.new()
 		bone.name = spec.name
 		var parent: Node2D = rig if spec.parent == "" else rig.find_child(spec.parent, true, false)
 		parent.add_child(bone)
+		bone.visible = not spec.get("hidden", false) # e.g. the glint, shown by animations
+		if not has_art: # optional part this character lacks: keep the bone so animation tracks resolve
+			var p0: Dictionary = info[spec.parent]
+			bone.position = (_vec(spec.attach) - p0.pivot) * p0.scale
+			info[spec.name] = {"pivot": Vector2.ZERO, "distal": Vector2.ZERO, "scale": Vector2.ONE}
+			continue
 		var pivot := _vec(pivots[spec.part].pivot)
 		var distal: Variant = pivots[spec.part].distal
 		var scale := Vector2.ONE
@@ -103,7 +108,6 @@ func _sprite(spec: Dictionary, rects: Dictionary, pivots: Dictionary, tex: Textu
 	sprite.centered = true
 	sprite.z_index = spec.z
 	sprite.scale = scale
-	sprite.visible = not spec.get("hidden", false)
 	var variants := {}
 	var offsets := {}
 	for part: String in spec.get("variants", [spec.part]):
