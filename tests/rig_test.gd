@@ -41,3 +41,18 @@ func test_missing_required_parts_are_listed_before_building() -> void:
 	assert_true("arm_lower_far" in missing and "katana" in missing, "required parts reported")
 	assert_true(not ("glint" in missing), "optional parts are not required")
 	assert_true(not ("pelvis" in missing), "present parts are fine")
+
+
+func test_head_draws_behind_the_collar() -> void:
+	var rig: Node2D = add_node(load(PLAYER).instantiate())
+	var head: Sprite2D = rig.get_node("Pelvis/Torso/Head/Sprite")
+	var torso: Sprite2D = rig.get_node("Pelvis/Torso/Sprite")
+	assert_true(head.z_index < torso.z_index, "the jacket collar overlaps the neck")
+
+
+func test_width_override_combines_with_limb_stretch() -> void:
+	var rig: Node2D = add_node(load(PLAYER).instantiate())
+	var thigh: Node2D = rig.get_node("Pelvis/ThighNear/Sprite")
+	var torso: Node2D = rig.get_node("Pelvis/Torso/Sprite")
+	assert_true(torso.scale.x > 1.1, "torso widened (%.2f)" % torso.scale.x)
+	assert_true(thigh.scale.x > 1.1 and thigh.scale.y > 1.2, "thigh widened and still stretched (%s)" % thigh.scale)

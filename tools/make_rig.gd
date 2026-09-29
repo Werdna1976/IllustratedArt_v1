@@ -2,7 +2,7 @@ extends SceneTree
 ## Builds a cutout rig scene from part data (M4a plan Task 5).
 ## usage: godot --headless --path . --script res://tools/make_rig.gd -- <char_dir> <out.tscn>
 ##   char_dir: res:// folder with parts.png, parts.json, pivots.json (pack_parts.py) and an
-##             optional rig_overrides.json ({"lengths": {...}, "sprite_scale": {part: [x, y]}}).
+##             optional rig_overrides.json ({"lengths": {...}, "width": {family: x}, "sprite_scale": {part: [x, y]}}).
 ## Skeleton: res://data/rigs/humanoid.json. Each bone is a Node2D (animated) holding a "Sprite"
 ## PartSwap; limb stretch is applied to the sprite only, so children are never stretched.
 
@@ -48,6 +48,7 @@ func build(dir: String) -> Node2D:
 	var lengths: Dictionary = skeleton.lengths.duplicate()
 	lengths.merge(overrides.get("lengths", {}), true)
 	var sprite_scales: Dictionary = overrides.get("sprite_scale", {})
+	var widths: Dictionary = overrides.get("width", {})
 	var tex: Texture2D = load(dir + "parts.png")
 	var rig := Node2D.new()
 	rig.name = dir.trim_suffix("/").get_file().capitalize().replace(" ", "") + "Rig"
@@ -74,8 +75,9 @@ func build(dir: String) -> Node2D:
 		var family: String = spec.part.trim_suffix("_near").trim_suffix("_far")
 		if lengths.has(family) and distal != null:
 			scale.y = lengths[family] / (_vec(distal).y - pivot.y)
-		if sprite_scales.has(spec.part):
-			scale = _vec(sprite_scales[spec.part])
+		scale.x *= widths.get(family, 1.0)
+		if sprite_scales.has(spec.part): # multiplies: never discards the limb stretch or width
+			scale *= _vec(sprite_scales[spec.part])
 		if spec.parent != "":
 			var p: Dictionary = info[spec.parent]
 			var at: Vector2 = p.distal if str(spec.get("attach")) == "distal" else _vec(spec.attach)

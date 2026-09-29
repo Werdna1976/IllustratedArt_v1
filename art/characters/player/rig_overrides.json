@@ -1,4 +1,17 @@
 {
- "note": "Per-character tweaks on top of data/rigs/humanoid.json.",
- "sprite_scale": {"saya": [0.68, 1.0]}
+ "note": "Per-character tweaks on top of data/rigs/humanoid.json. width: horizontal scale per part family (fuller build); combined with the limb stretch and sprite_scale.",
+ "sprite_scale": {
+  "saya": [
+   0.68,
+   1.0
+  ]
+ },
+ "width": {
+  "torso": 1.15,
+  "pelvis": 1.15,
+  "arm_upper": 1.15,
+  "arm_lower": 1.15,
+  "thigh": 1.15,
+  "shin": 1.15
+ }
 }
