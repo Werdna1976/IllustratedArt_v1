@@ -3,7 +3,11 @@ extends Fighter
 ## Network-controlled enemy driven by an OfficerBrain; uses the placeholder cutout, tinted.
 
 const OFFICER_MOVES := preload("res://data/moves/officer.tres")
-const OFFICER_TINT := Color(1.0, 0.55, 0.55)
+const OFFICER_RIG := preload("res://scenes/characters/officer_rig.tscn")
+const OFFICER_ALBEDO := preload("res://art/characters/officer/parts.png")
+const OFFICER_NORMAL := preload("res://art/characters/officer/parts_n.png")
+const OFFICER_EMISSIVE := preload("res://art/characters/officer/parts_emit.png")
+const OFFICER_TINT := Color.WHITE ## The officer art carries its own uniform colours.
 const DEATH_DELAY := 0.6
 
 var brain: OfficerBrain
@@ -17,7 +21,7 @@ static func create_officer() -> Enemy:
 
 
 func setup(tint: Color, hp: float, stagger: float) -> void:
-	build(Player.RIG, Player.ALBEDO, Player.NORMAL, Player.EMISSIVE, OFFICER_MOVES, hp, stagger)
+	build(OFFICER_RIG, OFFICER_ALBEDO, OFFICER_NORMAL, OFFICER_EMISSIVE, OFFICER_MOVES, hp, stagger)
 	is_network = true
 	facing = -1.0
 	for quad: MeshInstance3D in mirror.quads.values():

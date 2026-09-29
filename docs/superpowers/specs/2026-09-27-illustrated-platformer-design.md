@@ -117,6 +117,7 @@ For moving-vehicle sections the world scrolls past a stationary vehicle. Each ba
 Characters are flat painted parts on lit quads in the same 3D scene as the plates, so the whole game stays 2.5D.
 
 - **Parts sheet:** each character is painted once as separate parts (head, torso, pelvis, upper/lower arms, hands, thighs, shins, feet, blade, swap parts such as open/closed hands) on one sheet, side view facing right, at **400 px/m** (a 1.8 m fighter ≈ 720 px tall). Companion `_n` (normal) and `_emit` (glow) maps match it pixel for pixel.
+- **Pipeline (M4a):** part PNGs → `tools/art/pack_parts.py` (sheet, glow, normals, `pivots.json` joint data) → `tools/make_rig.gd` builds the rig from the shared skeleton `data/rigs/humanoid.json` (+ per-character `rig_overrides.json`) → shared animation library `data/animations/humanoid.tres` (`tools/make_animations.gd`, diagonal katana cuts, no overhead swings). Bones are `Node2D`s; each holds a `PartSwap` sprite (hand and head variants), and limb stretch applies to the sprite only. `CutoutIK` pins the far hand to the katana's rear grip for two-handed poses.
 - **Rig authoring (2D):** a character rig is an ordinary Godot 2D scene — a `Node2D` hierarchy of `Sprite2D` parts using regions of the parts sheet, pivots set with `offset`, layering by `z_index` — animated with `AnimationPlayer` in the 2D editor. The 2D rig is never rendered.
 - **Runtime (3D mirror):** `CutoutMirror` builds one lit `MeshInstance3D` quad per `Sprite2D` and each frame copies the part's 2D transform (px → metres at 400 px/m, Y flipped) onto it in the character's plane at z = `ACTOR_Z`; `z_index` becomes a tiny z offset for layering. Parts are normal-mapped and emissive, so neon, the blade signature light and lightning light them natively.
 - **Facing:** mirror the rig horizontally; quads render double-sided.
@@ -186,6 +187,10 @@ Tools print terse summaries; full output goes to git-ignored logs under `.godot/
 | `godot --headless --path . --script res://tools/art_sizes.gd -- <w_m> <h_m> [sizes.json]` | Plate sizes for any section (writes the JSON `check_art.py` uses). |
 | `bash tools/import_art.sh [levels_dir]` | After dropping level art: starter maps, BC7 strip slicing + manifest, `gameplay_solid.png` collision tracing, checks, Godot import. |
 | `stitch.py`, `compose_plate.py`, `loop_seam.py` (tools/art) | Build full plates from panels or kit pieces, export walkable rects, make/verify seamless loops — see art guide §5. |
+| `python tools/art/pack_parts.py <parts_dir> <char_dir>` | Character parts → sheet + glow + normals + joint data; reports missing or wrongly sized parts. |
+| `godot --headless --path . --script res://tools/make_rig.gd -- res://art/characters/<c> res://scenes/characters/<c>_rig.tscn` | Build a character rig from its packed parts. |
+| `godot --headless --path . --script res://tools/make_animations.gd` | Regenerate the shared katana animation library. |
+| `godot --path . --resolution 1920x1080 --script res://tools/pose_gallery.gd -- res://.godot/captures/poses.png idle@0 light1@0.16 …` | One screenshot of the player frozen in several poses (animation tuning). |
 | `python tools/art/probe_px.py <png> x0 y0 x1 y1` | Mean colour of a screenshot region — cheap visual assertions without viewing images. |
 
 ## 10. Milestones

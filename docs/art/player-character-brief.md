@@ -84,6 +84,8 @@ Avoid pink, magenta, cyan and bright blue in the costume: those are the backgrou
 | `katana.png` | 440 × 32 | The whole katana **horizontal, pommel at the left, tip at the right**, gentle upward curve toward the tip, cutting edge along the **bottom**. Layout left→right: pommel cap, **two-hand grip ~120 px long** (lime/black cord wrap), round guard at ~x 125, blade ~300 px to the tip. | **Near-hand grip point: 105 px from the left edge, mid-height** (just behind the guard). The far hand holds at **~35 px from the left**. |
 | `saya.png` | 440 × 32 | **Empty scabbard**, drawn in the same horizontal orientation as the katana (mouth at the left, tip at the right), dark lacquer with a thin yellow band and a harness clip near the mouth. **The game mounts it diagonally across the back**; don't draw it angled. | Harness clip, **120 px from the left edge, mid-height** |
 
+> **Note for future characters (learned from the player delivery):** limbs at these canvas heights come out short once 25 px joint caps are taken off each end, so the game stretches them 1.15–1.34× to reach 720 px. For new characters, use **thigh 60 × 210, shin 50 × 210, upper arm 50 × 160, forearm 45 × 150** so no stretch is needed.
+
 **Joint overlap:** each limb segment's ends are **rounded** and extend **20–30 px past the joint** inside its canvas. For example, the upper arm's top 25 px is a rounded shoulder cap and its bottom 25 px a rounded elbow cap. Then when parts rotate they overlap instead of showing a gap. The canvas sizes above already include this overlap.
 
 **Consistency checks before delivering:**

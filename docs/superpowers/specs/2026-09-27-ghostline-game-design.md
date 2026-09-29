@@ -54,7 +54,7 @@ Principle: introduce new *uses* of a small, fixed moveset rather than piling on 
 | 7 | Advanced enemy combinations, demanding traversal |
 | 8 | Adaptation, mastery, final test of every mechanic |
 
-**Signature effect:** the experimental blade briefly illuminates whenever it disrupts a network-controlled enemy — a consistent visual signature from the first subway fight to the final boss.
+**Signature effect:** the experimental blade briefly illuminates (lime-green, the katana's energy edge) whenever it disrupts a network-controlled enemy — a consistent visual signature from the first subway fight to the final boss.
 
 ## 4. Visual Progression
 
@@ -78,7 +78,7 @@ Per-level palettes map directly onto the technical spec's per-level environment 
 3. **Neon is core tech:** emissive masks, lit/normal-mapped plates, rain and lightning are built early, not deferred.
 4. **Boss arenas lock the camera** to arena bounds.
 5. **The finale reuses earlier levels:** Level 8's memory phases re-present earlier levels' plates through a glitch/hologram treatment — memorable, cheap, and on-theme.
-6. **The blade signature is a real light:** each network disruption flashes a cyan light that lights nearby characters and scenery.
+6. **The blade signature is a real light:** each network disruption flashes a lime-green light that lights nearby characters and scenery.
 7. **Story is delivered mainly through Moth over comms** (portrait + text/voice during play), keeping cutscenes rare.
 8. **Vertical slice first:** Level 1 is built to final quality — every move, the train-roof set piece, real art — before Levels 2–8.
 9. **Characters stay 2.5D:** flat painted cutout rigs animated live as lit 2.5D parts; no 3D models (technical spec §5.6).

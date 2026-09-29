@@ -15,7 +15,7 @@ const LAYER_WORLD := 1
 const LAYER_ACTORS := 1 << 1 ## Actors collide with the world, not with each other.
 const LAYER_HITBOX := 1 << 2
 const LAYER_HURTBOX := 1 << 3
-const BLADE_COLOR := Color("#39f3ff")
+const BLADE_COLOR := Color("#c8ff3a") ## Lime katana glow (player brief).
 const BLADE_FLASH_ENERGY := 6.0
 const BLADE_FLASH_TIME := 0.25
 const KNOCKBACK_DECEL := 12.0 ## m/s² of slide while stunned, so hits visibly push.
@@ -55,6 +55,7 @@ func build(rig_scene: PackedScene, albedo: Texture2D, normal: Texture2D, emissiv
 	add_child(rig)
 	anim = rig.get_node("AnimationPlayer")
 	mirror = CutoutMirror.new()
+	mirror.process_priority = 200 # after the AnimationPlayer and CutoutIK have posed the rig
 	visual.add_child(mirror)
 	mirror.setup(rig, albedo, normal, emissive)
 	hurtbox = Area3D.new()

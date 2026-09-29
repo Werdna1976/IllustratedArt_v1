@@ -29,7 +29,7 @@ func test_cancel_time_defaults_to_end_of_active() -> void:
 
 func test_player_move_set_matches_rig_animations() -> void:
 	var set: MoveSet = load("res://data/moves/player.tres")
-	var rig: Node2D = add_node(load("res://scenes/characters/placeholder_fighter_rig.tscn").instantiate())
+	var rig: Node2D = add_node(load("res://scenes/characters/player_rig.tscn").instantiate())
 	var ap: AnimationPlayer = rig.get_node("AnimationPlayer")
 	for id in [&"light1", &"light2", &"light3", &"heavy", &"launcher", &"air_light", &"finisher", &"parry", &"dodge"]:
 		var m := set.get_move(id)

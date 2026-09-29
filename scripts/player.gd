@@ -4,10 +4,10 @@ extends Fighter
 ## when a staggered enemy stands within FINISHER_RANGE in front.
 
 const FINISHER_RANGE := 2.0
-const RIG := preload("res://scenes/characters/placeholder_fighter_rig.tscn")
-const ALBEDO := preload("res://art/characters/placeholder_fighter/parts.png")
-const NORMAL := preload("res://art/characters/placeholder_fighter/parts_n.png")
-const EMISSIVE := preload("res://art/characters/placeholder_fighter/parts_emit.png")
+const RIG := preload("res://scenes/characters/player_rig.tscn")
+const ALBEDO := preload("res://art/characters/player/parts.png")
+const NORMAL := preload("res://art/characters/player/parts_n.png")
+const EMISSIVE := preload("res://art/characters/player/parts_emit.png")
 const MOVES := preload("res://data/moves/player.tres")
 
 var autorun := false ## Forces running right (demo / capture runs).

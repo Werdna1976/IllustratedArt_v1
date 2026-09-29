@@ -114,7 +114,7 @@ Cut the reference into parts (or prompt a tool to lay out a sheet from the refer
 
 Approximate part heights at 400 px/m for a 1.8 m fighter: head ≈ 110 px, torso ≈ 230 px, pelvis ≈ 90 px, upper arm ≈ 130 px, forearm ≈ 120 px, thigh ≈ 170 px, shin ≈ 170 px, blade ≈ 400 px long.
 
-**Worked example:** `art/characters/placeholder_fighter/` — `parts.png` (flat-shaded stand-in parts, shelf-packed with 32 px padding), `parts.json` (part rectangles) and the generated maps. The rig built from it is `scenes/characters/placeholder_fighter_rig.tscn`; open it in the 2D editor to see pivots, layering and animations. A real parts sheet with the same part names drops into the same rig layout.
+**Worked example:** the player (`docs/art/player-character-brief.md`): 23 part PNGs → `python tools/art/pack_parts.py <parts_dir> art/characters/player` → `tools/make_rig.gd` → `scenes/characters/player_rig.tscn` (open it in the 2D editor to see pivots, layering and animations). The officer placeholder (`tools/art/make_placeholder_character.py`) goes through the same steps.
 
 ### Step 3: glow and normals
 - **Glow (`_emit`):** anything self-lit (blade edge, cybernetic lights, visor) in its own colour on black; everything else black. `make_maps.py` makes a starter mask from bright saturated pixels.
