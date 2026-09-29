@@ -2,6 +2,8 @@
 
 *Self-contained brief for generating the playable character's art. Every pixel requirement is here; you don't need the rest of the project.*
 
+> **v2 (2026-09-28):** repaint all parts at the **new proportions and canvas sizes** below (§2b, §4). The design, colours and katana are unchanged. Use `proportion_reference_v2.webp` as the visual reference for proportions.
+
 ## 1. What this art is for
 
 A 2.5D side-scrolling action platformer with hand-painted backgrounds. The main character is a **cutout puppet**: the body is painted **once**, as separate parts (head, torso, arm and leg segments, hands, katana), and the game animates it by rotating those parts at the joints, like a paper-doll or shadow puppet. There is **no frame-by-frame animation** and **no 3D model**.
@@ -48,6 +50,24 @@ Avoid pink, magenta, cyan and bright blue in the costume: those are the backgrou
 
 **The character faces right.** Everything is drawn in **side view (profile) facing right**. The game mirrors it to face left.
 
+## 2b. Proportions (v2 — match the proportion reference)
+
+The first delivery was painted too slim, with a small head on a long neck. **Match the proportions of `proportion_reference_v2.webp`** (the stocky two-pose sheet: guard with the katana, neutral standing). At the game's 720 px height, that means:
+
+| Feature | Target at 720 px tall |
+|---|---|
+| Head, hair to jaw | ~120 px (about 1/6 of the height: a strong, readable head) |
+| Neck | **Almost hidden.** The high jacket collar reaches the jaw; only a short neck stub is painted |
+| Chest, front to back (profile) | ~130–140 px (a solid, athletic torso, not slender) |
+| Hips/belt, profile | ~145 px |
+| Thigh thickness | ~90 px |
+| Shin thickness (with the boot shaft) | ~75 px |
+| Upper arm / forearm thickness | ~60 / ~55 px (the cybernetic arm slightly bulkier) |
+| Boots | Chunky armoured boots, ~130 px long, ~70 px tall |
+| Legs, hip to floor | ~48% of the height |
+
+The overall read is a **compact, powerful fighter** with a cropped jacket, heavy cargo trousers and big boots, not a tall, thin figure.
+
 ## 3. Scale and format (strict)
 
 | Rule | Value |
@@ -66,27 +86,25 @@ Avoid pink, magenta, cyan and bright blue in the costume: those are the backgrou
 
 | File | Canvas W × H (px) | How to draw it | Pivot (joint) |
 |---|---|---|---|
-| `head.png` | 90 × 110 | Head and neck in profile facing right, focused neutral expression | Base of the neck, **bottom centre** |
-| `head_attack.png` | 90 × 110 | Same head, teeth gritted, eyes narrowed | Bottom centre |
-| `head_hurt.png` | 90 × 110 | Same head, wincing | Bottom centre |
-| `torso.png` | 110 × 230 | Chest and belly, jacket with neon collar lining and piping, standing upright, **with the diagonal scabbard harness strap across the chest** (a yellow buckle suits it) | Waist, **bottom centre** (the neck joins at top centre) |
-| `pelvis.png` | 100 × 90 | Hips and belt (optional small yellow buckle), trouser top | **Centre** |
-| `arm_upper_near.png` | 50 × 130 | **Cybernetic** upper arm, hanging straight down | Shoulder, **top centre** (elbow at bottom centre) |
-| `arm_lower_near.png` | 45 × 120 | **Cybernetic** forearm with lime status lights, hanging straight down | Elbow, **top centre** (wrist at bottom centre) |
-| `arm_upper_far.png` | 50 × 130 | Upper arm in jacket sleeve with neon piping, hanging down, 25% darker | Top centre |
-| `arm_lower_far.png` | 45 × 120 | Forearm, sleeve and cuff, hanging down, 25% darker | Top centre |
-| `hand_open_near.png` / `hand_open_far.png` | 45 × 45 | Relaxed open hand, fingers down. Near = cybernetic hand, far = gloved hand with neon knuckle plates. | Wrist, **top centre** |
-| `hand_fist_near.png` / `hand_fist_far.png` | 45 × 45 | Clenched fist (same near/far split) | Top centre |
-| `hand_grip_near.png` / `hand_grip_far.png` | 45 × 45 | Hand closed around a katana grip, shown from the side. The grip itself is **not** drawn; leave a hollow channel running horizontally through the fist. | Top centre |
-| `thigh_near.png` / `thigh_far.png` | 60 × 170 | Thigh in dark cargo trousers, hanging straight down | Hip, **top centre** (knee at bottom centre) |
-| `shin_near.png` / `shin_far.png` | 50 × 170 | Shin and armoured boot upper, straight down | Knee, **top centre** (ankle at bottom centre) |
-| `foot_near.png` / `foot_far.png` | 90 × 40 | Armoured boot with neon sole and toe cap, toe pointing **right**, sole flat along the bottom edge | Ankle, **25 px from the left edge, mid-height** |
+| `head.png` | 120 × 130 | Head in profile facing right, focused neutral expression, with only a **short neck stub (~12 px)** under the jaw: the collar hides the rest | Base of the neck stub, **bottom centre** |
+| `head_attack.png` | 120 × 130 | Same head, teeth gritted, eyes narrowed | Bottom centre |
+| `head_hurt.png` | 120 × 130 | Same head, wincing | Bottom centre |
+| `torso.png` | 150 × 250 | Chest and belly, jacket with neon collar lining and piping, standing upright, **with the diagonal scabbard harness strap across the chest** (a yellow buckle suits it) | Waist, **bottom centre** (the neck joins at top centre) |
+| `pelvis.png` | 140 × 100 | Hips and belt (optional small yellow buckle), trouser top | **Centre** |
+| `arm_upper_near.png` | 70 × 175 | **Cybernetic** upper arm, hanging straight down | Shoulder, **top centre** (elbow at bottom centre) |
+| `arm_lower_near.png` | 64 × 165 | **Cybernetic** forearm with lime status lights, hanging straight down | Elbow, **top centre** (wrist at bottom centre) |
+| `arm_upper_far.png` | 70 × 175 | Upper arm in jacket sleeve with neon piping, hanging down, 25% darker | Top centre |
+| `arm_lower_far.png` | 64 × 165 | Forearm, sleeve and cuff, hanging down, 25% darker | Top centre |
+| `hand_open_near.png` / `hand_open_far.png` | 64 × 64 | Relaxed open hand, fingers down. Near = cybernetic hand, far = gloved hand with neon knuckle plates. | Wrist, **top centre** |
+| `hand_fist_near.png` / `hand_fist_far.png` | 64 × 64 | Clenched fist (same near/far split) | Top centre |
+| `hand_grip_near.png` / `hand_grip_far.png` | 64 × 64 | Hand closed around a katana grip, shown from the side. The grip itself is **not** drawn; leave a hollow channel running horizontally through the fist. | Top centre |
+| `thigh_near.png` / `thigh_far.png` | 95 × 215 | Thigh in dark cargo trousers, hanging straight down | Hip, **top centre** (knee at bottom centre) |
+| `shin_near.png` / `shin_far.png` | 80 × 215 | Shin and armoured boot upper, straight down | Knee, **top centre** (ankle at bottom centre) |
+| `foot_near.png` / `foot_far.png` | 130 × 70 | Chunky armoured boot (ankle and foot) with neon sole and toe cap, toe pointing **right**, sole flat along the bottom edge | Ankle, **35 px from the left edge, 25 px from the top** |
 | `katana.png` | 440 × 32 | The whole katana **horizontal, pommel at the left, tip at the right**, gentle upward curve toward the tip, cutting edge along the **bottom**. Layout left→right: pommel cap, **two-hand grip ~120 px long** (lime/black cord wrap), round guard at ~x 125, blade ~300 px to the tip. | **Near-hand grip point: 105 px from the left edge, mid-height** (just behind the guard). The far hand holds at **~35 px from the left**. |
 | `saya.png` | 440 × 32 | **Empty scabbard**, drawn in the same horizontal orientation as the katana (mouth at the left, tip at the right), dark lacquer with a thin yellow band and a harness clip near the mouth. **The game mounts it diagonally across the back**; don't draw it angled. | Harness clip, **120 px from the left edge, mid-height** |
 
-> **Note for future characters (learned from the player delivery):** limbs at these canvas heights come out short once 25 px joint caps are taken off each end, so the game stretches them 1.15–1.34× to reach 720 px. For new characters, use **thigh 60 × 210, shin 50 × 210, upper arm 50 × 160, forearm 45 × 150** so no stretch is needed.
-
-**Joint overlap:** each limb segment's ends are **rounded** and extend **20–30 px past the joint** inside its canvas. For example, the upper arm's top 25 px is a rounded shoulder cap and its bottom 25 px a rounded elbow cap. Then when parts rotate they overlap instead of showing a gap. The canvas sizes above already include this overlap.
+**Joint overlap:** each limb segment's ends are **rounded** and extend **about 30 px past the joint** inside its canvas. For example, the upper arm's top 30 px is a rounded shoulder cap and its bottom 30 px a rounded elbow cap. With these canvas sizes the limbs come out at the right length with **no stretching** in the game (joint to joint: upper arm ~115, forearm ~105, thigh ~155, shin ~155 px). Then when parts rotate they overlap instead of showing a gap. The canvas sizes above already include this overlap.
 
 **Consistency checks before delivering:**
 - Hold each near/far pair side by side. They should be the same shape, with the far one only darker (apart from the cybernetic near arm and hand, which differ by design).
