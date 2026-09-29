@@ -8,10 +8,13 @@ const Z_STEP := 0.002 ## Metres of depth per z_index step, for part layering.
 
 var quads := {} ## Sprite2D -> MeshInstance3D
 var _rig: Node2D
+var _regions := {} ## Sprite2D -> region the quad's UVs were built for
+var _atlas_size := Vector2.ONE
 
 
 func setup(rig: Node2D, albedo: Texture2D, normal: Texture2D, emissive: Texture2D) -> void:
 	_rig = rig
+	_atlas_size = Vector2(albedo.get_size())
 	for sprite in _sprites(rig):
 		var quad := MeshInstance3D.new()
 		quad.mesh = QuadMesh.new()
@@ -19,6 +22,7 @@ func setup(rig: Node2D, albedo: Texture2D, normal: Texture2D, emissive: Texture2
 		quad.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		add_child(quad)
 		quads[sprite] = quad
+		_regions[sprite] = sprite.region_rect
 	sync()
 
 
@@ -40,6 +44,9 @@ func sync() -> void:
 				Basis(Vector3.BACK, -rel.get_rotation()) * Basis.from_scale(Vector3(s.x, s.y, 1.0)),
 				Vector3(c.x / WorldSpec.CHAR_PX_PER_M, -c.y / WorldSpec.CHAR_PX_PER_M, sprite.z_index * Z_STEP))
 		quad.visible = _visible_in_rig(sprite)
+		if sprite.region_rect != _regions[sprite]: # a PartSwap changed variant
+			_regions[sprite] = sprite.region_rect
+			_set_uvs(quad.material_override as StandardMaterial3D, sprite.region_rect, _atlas_size)
 
 
 # Sprite transform relative to the rig root, composed from local transforms (works outside the tree).
@@ -72,12 +79,9 @@ static func _sprites(node: Node) -> Array[Sprite2D]:
 
 static func _material(sprite: Sprite2D, albedo: Texture2D, normal: Texture2D, emissive: Texture2D) -> StandardMaterial3D:
 	var mat := StandardMaterial3D.new()
-	var tex_size := Vector2(albedo.get_size())
-	var r := sprite.region_rect
 	mat.albedo_texture = albedo
 	mat.albedo_color = sprite.modulate
-	mat.uv1_scale = Vector3(r.size.x / tex_size.x, r.size.y / tex_size.y, 1.0)
-	mat.uv1_offset = Vector3(r.position.x / tex_size.x, r.position.y / tex_size.y, 0.0)
+	_set_uvs(mat, sprite.region_rect, Vector2(albedo.get_size()))
 	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
 	mat.alpha_scissor_threshold = 0.5
 	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
@@ -91,3 +95,8 @@ static func _material(sprite: Sprite2D, albedo: Texture2D, normal: Texture2D, em
 		mat.emission_operator = BaseMaterial3D.EMISSION_OP_MULTIPLY # glow = mask colour only
 		mat.emission_texture = emissive
 	return mat
+
+
+static func _set_uvs(mat: StandardMaterial3D, r: Rect2, tex_size: Vector2) -> void:
+	mat.uv1_scale = Vector3(r.size.x / tex_size.x, r.size.y / tex_size.y, 1.0)
+	mat.uv1_offset = Vector3(r.position.x / tex_size.x, r.position.y / tex_size.y, 0.0)

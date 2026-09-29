@@ -83,3 +83,23 @@ func test_emission_comes_only_from_the_glow_mask() -> void:
 	var mat := (mirror.quads[r[1]] as MeshInstance3D).material_override as StandardMaterial3D
 	var texture_only := mat.emission_operator == BaseMaterial3D.EMISSION_OP_MULTIPLY or mat.emission == Color.BLACK
 	assert_true(texture_only, "emission must not add a constant colour on top of the mask")
+
+
+func test_variant_change_updates_mirrored_uvs() -> void:
+	var rig := Node2D.new()
+	rig.visible = false
+	var hand := PartSwap.new()
+	hand.region_enabled = true
+	hand.variants = {&"grip": Rect2(0, 0, 20, 20), &"fist": Rect2(100, 50, 20, 20)}
+	hand.offsets = {&"grip": Vector2.ZERO, &"fist": Vector2.ZERO}
+	hand.variant = &"grip"
+	rig.add_child(hand)
+	var mirror := CutoutMirror.new()
+	add_node(rig)
+	add_node(mirror)
+	mirror.setup(rig, _atlas(), null, null)
+	hand.variant = &"fist"
+	mirror.sync()
+	var mat := (mirror.quads[hand] as MeshInstance3D).material_override as StandardMaterial3D
+	assert_near(mat.uv1_offset.x, 100.0 / 200.0, 1e-6, "uv follows the fist region")
+	assert_near(mat.uv1_offset.y, 50.0 / 100.0, 1e-6, "uv y")
