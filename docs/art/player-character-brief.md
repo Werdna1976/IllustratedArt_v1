@@ -1,156 +1,107 @@
-# Cyberpunk: Ghostline — Player Character Art Brief
+# Cyberpunk: Ghostline — Player Character Art Brief (v3: dual blades)
 
 *Self-contained brief for generating the playable character's art. Every pixel requirement is here; you don't need the rest of the project.*
 
-> **v2 (2026-09-28):** repaint all parts at the **new proportions and canvas sizes** below (§2b, §4). The design, colours and katana are unchanged. Use `proportion_reference_v2.webp` as the visual reference for proportions.
+> **What's new in v3 (2026-09-28):**
+> - **Two blades** (a long special Ghostblade and a short blade) worn in **hip sheaths**. There's no back scabbard any more.
+> - **Two-layer grip hands**, so the fingers actually wrap the handles.
+> - **Mid-length swept-back hair** as separate moving locks.
+> - A **sturdier build**: thick legs, chunky boots, and a bulky plated cybernetic arm.
+> - **Keep** the approved face and the current jacket torso design.
+> - Use `proportion_reference_v2.webp` for proportions.
 
 ## 1. What this art is for
 
-A 2.5D side-scrolling action platformer with hand-painted backgrounds. The main character is a **cutout puppet**: the body is painted **once**, as separate parts (head, torso, arm and leg segments, hands, katana), and the game animates it by rotating those parts at the joints, like a paper-doll or shadow puppet. There is **no frame-by-frame animation** and **no 3D model**.
+A 2.5D side-scrolling action platformer with hand-painted backgrounds. The character is a **cutout puppet**: every body part is painted **once**, as a separate PNG, and the game animates it by rotating the parts at their joints. There is no frame-by-frame animation and no 3D model.
 
-That means:
-- Every part must match the others exactly in style, lighting and colour, because they're shown together in every pose.
-- Each part is drawn **once, straight, in a neutral orientation** (limbs hanging straight down). The game bends it.
-- Joints need **rounded overlapping ends** so no gap shows when a limb rotates.
+- Every part must match the others exactly in style, lighting and colour.
+- Each part is drawn **once, straight, in a neutral orientation**. The game bends it.
+- Joints have **rounded overlapping ends** (about 30 px past the joint) so rotation never shows a gap.
 
 ## 2. The character
 
-**Who:** a disgraced former corporate enforcer turned street fighter, in a rain-soaked neon megacity (*Ghost in the Shell* atmosphere). Lean, athletic, mid-30s, alert and weary. Adult, gender-neutral presentation is fine; keep the silhouette readable.
+A disgraced former corporate enforcer turned street fighter in a rain-soaked neon megacity (*Ghost in the Shell* atmosphere). Mid-30s, **compact and powerful**. **Faces right, side view (profile).** The game mirrors it to face left.
 
-**Fighting style:** a **two-handed katana** fighter. Most attacks use **both hands on the grip**: the near hand just behind the guard, the far hand near the pommel. Poses should feel grounded and disciplined (kendo and iaido influence), with occasional one-handed flourishes.
+- **Face:** keep the approved face (lean, thin cheek scar, focused).
+- **Hair:** **mid-length and swept back**, chin-to-collar length, dark. It's painted as a close **hair cap on the head** plus **two separate locks** that swing (see `hair_*` parts).
+- **Clothing:** a cropped, high-collar tactical jacket in near-black and charcoal, keeping the current torso design (lime collar lining and piping, yellow shoulder stripe). Heavy dark cargo trousers with knee pads. **Chunky armoured boots** with neon lime soles and toe caps.
+- **Right arm, cybernetic (near side):** **bulky and plated**. Gunmetal and brushed steel, visible pistons at the elbow, a thick forearm, and small lime status lights. It must look strong, never thin.
+- **Left arm, organic (far side):** jacket sleeve and a gloved hand with lime knuckle plates.
+- **Ghostblade (long, left hand):** a slim single-edged long blade about 1.3 m long, gently curved, dark steel with a **bright lime energy edge** and faint circuit etching near the guard. The grip is wrapped in lime and black cord with an angular guard. This is the special blade.
+- **Short blade (right, cybernetic hand):** a straight single-edged blade about 0.75 m long in **plain polished steel**, with a black grip wrapped in **yellow** cord and a small square guard. No glow.
+- **Sheaths:** a long dark-lacquer sheath for the Ghostblade and a short one for the short blade, both **worn at the hips** on belt hangers. The long sheath hangs on the near (right) hip angled back and down; the short sheath hangs on the far (left) hip. Each hand cross-draws.
 
-**Look:**
-- **Base clothing, mostly dark:** a fitted short tactical jacket with a high collar, slim cargo trousers and armoured boots, in **charcoal, near-black and dark graphite**. These dark fabrics make up most of the silhouette.
-- **Neon contrast accents:** **acid lime-green** and **warning yellow**, chosen to pop against the pink and blue neon of the first level. Use them sparingly and deliberately:
-  - collar lining and a thin piping line down the jacket front and sleeves
-  - one bold shoulder panel or a diagonal chest stripe
-  - glove knuckle plates and finger tips
-  - boot soles, toe caps and laces
-  - the katana's grip wrap
-  - small status lights on the bionics
-- **Bionics, metallic:** the **right arm is a cybernetic prosthetic** in worn gunmetal and brushed steel with dark joint seams and a few **small lime-green status lights** at the shoulder and forearm. Natural metal tones, not painted neon. The left arm is a normal jacket sleeve with a gloved hand.
-- **Head:** short cropped dark hair, a lean face and a thin scar on one cheek. An optional small lime-green earpiece light is fine.
-- **The katana:** slim, gently curved blade in polished steel, a dark round guard (*tsuba*), and a long two-hand grip wrapped in **lime-green and black cord**. A **glowing neon lime-green energy edge** runs along the cutting edge. This glow is the character's signature.
-- **Scabbard on the back:** the *saya* is worn **diagonally across the back**, held by a harness strap across the chest, mouth at the top behind the shoulders and tip pointing down and back. With the katana drawn (always, during play), the empty scabbard stays on the back.
+**Palette:** base fabric `#141417` `#23252b` `#34373f`; bionic metal `#4a4f58` `#8a9099`; lime accent `#b6ff1a`; warning yellow `#ffd400`; Ghostblade glow `#c8ff3a`. **No pink, magenta, cyan or blue** in the costume.
 
-**Palette (for reference; exact hues can vary slightly):**
-
-| Role | Colour | Hex |
-|---|---|---|
-| Base fabric | Near-black / charcoal / graphite | `#141417`, `#23252b`, `#34373f` |
-| Bionic metal | Gunmetal, brushed steel highlights | `#4a4f58`, `#8a9099` |
-| Accent 1 | Acid lime-green (neon) | `#b6ff1a` |
-| Accent 2 | Warning yellow | `#ffd400` |
-| Blade glow | Neon lime-green | `#c8ff3a` |
-| Skin | Natural, lit from the upper left | (any natural tone) |
-
-Avoid pink, magenta, cyan and bright blue in the costume: those are the background's colours.
-
-**Style:** hand-painted illustrated concept art, painterly brush texture, clean readable shapes, cinematic. **Key light from the upper left**, a soft cool bounce from below right, and no cast shadow on the ground.
-
-**The character faces right.** Everything is drawn in **side view (profile) facing right**. The game mirrors it to face left.
-
-## 2b. Proportions (v2 — match the proportion reference)
-
-The first delivery was painted too slim, with a small head on a long neck. **Match the proportions of `proportion_reference_v2.webp`** (the stocky two-pose sheet: guard with the katana, neutral standing). At the game's 720 px height, that means:
-
-| Feature | Target at 720 px tall |
-|---|---|
-| Head, hair to jaw | ~120 px (about 1/6 of the height: a strong, readable head) |
-| Neck | **Almost hidden.** The high jacket collar reaches the jaw; only a short neck stub is painted |
-| Chest, front to back (profile) | ~130–140 px (a solid, athletic torso, not slender) |
-| Hips/belt, profile | ~145 px |
-| Thigh thickness | ~90 px |
-| Shin thickness (with the boot shaft) | ~75 px |
-| Upper arm / forearm thickness | ~60 / ~55 px (the cybernetic arm slightly bulkier) |
-| Boots | Chunky armoured boots, ~130 px long, ~70 px tall |
-| Legs, hip to floor | ~48% of the height |
-
-The overall read is a **compact, powerful fighter** with a cropped jacket, heavy cargo trousers and big boots, not a tall, thin figure.
+**Style:** hand-painted illustrated concept art, painterly brush texture, clean readable silhouette. **Key light from the upper left**, a cool bounce from the lower right, and no ground shadow.
 
 ## 3. Scale and format (strict)
 
 | Rule | Value |
 |---|---|
-| Density | **400 pixels per metre** |
-| Full character height | **720 px** (1.8 m), feet to top of hair |
-| File format | PNG, 8-bit **RGBA**, sRGB |
-| Background | **Transparent** (alpha 0) around every part: no floor, no shadow, no backdrop |
-| Canvas | Each part is its **own PNG** at the exact canvas size in §4 |
-| Margins | The part fills its canvas as described; no extra empty border beyond ~4 px |
-| Text / logos | None anywhere |
+| Density | **400 pixels per metre**; the full character is **720 px** tall |
+| Format | PNG, 8-bit **RGBA**, sRGB, **transparent** background, no shadow |
+| Canvas | Each part is its **own PNG** at the exact size below, filling it (≤ 4 px empty border) |
+| Near / far | "Near" = the side facing the camera. "Far" parts are the same shapes **~25% darker**. |
+| Text / logos | None |
+
+**Proportions (match `proportion_reference_v2.webp`):** at 720 px tall, the head is about 120 px from hair to jaw (roughly 1/6 of the height). The neck is almost hidden by the collar. The chest is 130–140 px front to back, the hips 145 px, the thighs about 90 px thick and the shins about 75 px (with the boot shaft). Boots are about 130 × 70 px, and the legs are about 48% of the height. The overall read is **compact and powerful**, not tall and thin.
 
 ## 4. Parts to deliver
 
-"Near" parts are on the side facing the camera. "Far" parts are behind the body: draw them the same way but **about 25% darker**, as they're in shadow. Because the katana is held two-handed, **the far arm is fully visible in most poses**, so give it the same care as the near arm. The **pivot** is the joint the part rotates around, measured from the part's own canvas.
+Pivot = the joint the part rotates around, in the part's own canvas.
 
-| File | Canvas W × H (px) | How to draw it | Pivot (joint) |
+### Body
+
+| File | Canvas W × H | How to draw it | Pivot |
 |---|---|---|---|
-| `head.png` | 120 × 130 | Head in profile facing right, focused neutral expression, with only a **short neck stub (~12 px)** under the jaw: the collar hides the rest | Base of the neck stub, **bottom centre** |
-| `head_attack.png` | 120 × 130 | Same head, teeth gritted, eyes narrowed | Bottom centre |
-| `head_hurt.png` | 120 × 130 | Same head, wincing | Bottom centre |
-| `torso.png` | 150 × 250 | Chest and belly, jacket with neon collar lining and piping, standing upright, **with the diagonal scabbard harness strap across the chest** (a yellow buckle suits it) | Waist, **bottom centre** (the neck joins at top centre) |
-| `pelvis.png` | 140 × 100 | Hips and belt (optional small yellow buckle), trouser top | **Centre** |
-| `arm_upper_near.png` | 70 × 175 | **Cybernetic** upper arm, hanging straight down | Shoulder, **top centre** (elbow at bottom centre) |
-| `arm_lower_near.png` | 64 × 165 | **Cybernetic** forearm with lime status lights, hanging straight down | Elbow, **top centre** (wrist at bottom centre) |
-| `arm_upper_far.png` | 70 × 175 | Upper arm in jacket sleeve with neon piping, hanging down, 25% darker | Top centre |
-| `arm_lower_far.png` | 64 × 165 | Forearm, sleeve and cuff, hanging down, 25% darker | Top centre |
-| `hand_open_near.png` / `hand_open_far.png` | 64 × 64 | Relaxed open hand, fingers down. Near = cybernetic hand, far = gloved hand with neon knuckle plates. | Wrist, **top centre** |
-| `hand_fist_near.png` / `hand_fist_far.png` | 64 × 64 | Clenched fist (same near/far split) | Top centre |
-| `hand_grip_near.png` / `hand_grip_far.png` | 64 × 64 | Hand closed around a katana grip, shown from the side. The grip itself is **not** drawn; leave a hollow channel running horizontally through the fist. | Top centre |
-| `thigh_near.png` / `thigh_far.png` | 95 × 215 | Thigh in dark cargo trousers, hanging straight down | Hip, **top centre** (knee at bottom centre) |
-| `shin_near.png` / `shin_far.png` | 80 × 215 | Shin and armoured boot upper, straight down | Knee, **top centre** (ankle at bottom centre) |
-| `foot_near.png` / `foot_far.png` | 130 × 70 | Chunky armoured boot (ankle and foot) with neon sole and toe cap, toe pointing **right**, sole flat along the bottom edge | Ankle, **35 px from the left edge, 25 px from the top** |
-| `katana.png` | 440 × 32 | The whole katana **horizontal, pommel at the left, tip at the right**, gentle upward curve toward the tip, cutting edge along the **bottom**. Layout left→right: pommel cap, **two-hand grip ~120 px long** (lime/black cord wrap), round guard at ~x 125, blade ~300 px to the tip. | **Near-hand grip point: 105 px from the left edge, mid-height** (just behind the guard). The far hand holds at **~35 px from the left**. |
-| `saya.png` | 440 × 32 | **Empty scabbard**, drawn in the same horizontal orientation as the katana (mouth at the left, tip at the right), dark lacquer with a thin yellow band and a harness clip near the mouth. **The game mounts it diagonally across the back**; don't draw it angled. | Harness clip, **120 px from the left edge, mid-height** |
+| `head.png` | 120 × 130 | Approved face in profile, with the **hair as a close cap only** (the locks are separate); short neck stub (~12 px) under the jaw | Neck base, bottom centre |
+| `head_attack.png` / `head_hurt.png` | 120 × 130 | Same head: gritted teeth and narrowed eyes / wincing | Bottom centre |
+| `hair_upper.png` | 70 × 100 | Upper swept-back lock (from the crown toward the back), **hanging straight down**, rounded top | Top centre (root) |
+| `hair_lower.png` | 60 × 90 | Lower lock / tips continuing the upper lock, hanging straight down | Top centre |
+| `torso.png` | 150 × 250 | **Keep the current torso design** (jacket, collar, piping, yellow stripe), repainted at this size **without the back-scabbard strap**; belt hangers for both sheaths | Waist, bottom centre |
+| `pelvis.png` | 140 × 100 | Hips, belt, cargo-trouser top | Centre |
+| `arm_upper_near.png` | 80 × 175 | **Bulky cybernetic** upper arm, plated shoulder cap, hanging down | Shoulder, top centre |
+| `arm_lower_near.png` | 72 × 165 | **Bulky cybernetic** forearm with pistons and lime lights, hanging down | Elbow, top centre |
+| `arm_upper_far.png` | 70 × 175 | Jacket-sleeve upper arm, 25% darker | Top centre |
+| `arm_lower_far.png` | 64 × 165 | Sleeve and cuff forearm, 25% darker | Top centre |
+| `thigh_near.png` / `thigh_far.png` | 95 × 215 | Thick thigh in heavy cargo trousers, hanging down | Hip, top centre |
+| `shin_near.png` / `shin_far.png` | 80 × 215 | Shin with knee pad and boot shaft | Knee, top centre |
+| `foot_near.png` / `foot_far.png` | 130 × 70 | **Chunky armoured boot**: ankle and foot with volume (not paper-thin), toe right, sole flat along the bottom | Ankle, 35 px from the left, 25 px from the top |
 
-**Joint overlap:** each limb segment's ends are **rounded** and extend **about 30 px past the joint** inside its canvas. For example, the upper arm's top 30 px is a rounded shoulder cap and its bottom 30 px a rounded elbow cap. With these canvas sizes the limbs come out at the right length with **no stretching** in the game (joint to joint: upper arm ~115, forearm ~105, thigh ~155, shin ~155 px). Then when parts rotate they overlap instead of showing a gap. The canvas sizes above already include this overlap.
+### Hands (two layers for grips)
 
-**Consistency checks before delivering:**
-- Hold each near/far pair side by side. They should be the same shape, with the far one only darker (apart from the cybernetic near arm and hand, which differ by design).
-- Line the parts up in a standing pose, as in the diagram below. The joints should meet and the total height should be about 720 px.
-- The neon accents are visible, but the silhouette still reads as mostly dark.
+A gripping hand is painted as **two layers**: the **back** (palm and thumb, drawn *behind* the handle) and the **front** (fingers curled *over* the handle). The game puts the handle between them, so the hand really wraps the grip. The handle runs **horizontally through the fist at 32 px from the top**; leave it empty.
 
-```
-            [head]            (neck on top of torso)
-           [torso]            (arms hang from the top corners of the torso)
-  [arm_upper] [pelvis]        (legs hang from the pelvis)
-  [arm_lower] [thigh]
-   [hand]     [shin]
-              [foot] →        (toes point right)
-  two-handed guard: both [hand_grip] parts on the katana grip, ~70 px apart
-```
+| File | Canvas | How to draw it | Pivot |
+|---|---|---|---|
+| `hand_grip_near_back.png` / `hand_grip_near_front.png` | 72 × 72 | Cybernetic hand gripping (back = palm and thumb, front = metal fingers) | Wrist, top centre |
+| `hand_grip_far_back.png` / `hand_grip_far_front.png` | 64 × 64 | Gloved hand gripping (same split) | Wrist, top centre |
+| `hand_open_near.png` / `hand_fist_near.png` | 72 × 72 | Cybernetic open hand / fist | Wrist, top centre |
+| `hand_open_far.png` / `hand_fist_far.png` | 64 × 64 | Gloved open hand / fist | Wrist, top centre |
 
-## 5. Glow masks (recommended)
+### Blades and sheaths (drawn horizontally: pommel or mouth at the left, tip at the right)
 
-Anything that emits light gets a matching **glow mask**: the same filename with `_emit`, the same canvas size, **black everywhere except the glowing pixels** in their glow colour. Deliver:
-- `katana_emit.png`: the lime-green energy edge (a bright core with a soft falloff).
-- `arm_upper_near_emit.png` and `arm_lower_near_emit.png`: the lime status lights.
-- *Optional:* `torso_emit.png`, `foot_near_emit.png`, `foot_far_emit.png` if the neon piping or soles should glow faintly. Keep this subtle; the accents should read mainly as bright *fabric*, not lights.
+| File | Canvas | How to draw it | Pivot |
+|---|---|---|---|
+| `ghostblade.png` | 520 × 36 | Long special blade: ~100 px grip (lime/black wrap), angular guard at ~x 110, ~400 px curved blade, cutting edge along the bottom | Grip point **60 px from the left**, mid-height |
+| `shortblade.png` | 300 × 28 | Short blade: ~75 px grip (black/yellow wrap), square guard at ~x 80, ~210 px straight blade | Grip point **40 px from the left**, mid-height |
+| `sheath_long.png` | 470 × 40 | Empty long sheath, dark lacquer, lime band, belt hanger near the mouth | Hanger **70 px from the left**, mid-height |
+| `sheath_short.png` | 260 × 34 | Empty short sheath, dark lacquer, yellow band, belt hanger near the mouth | Hanger **50 px from the left**, mid-height |
 
-If you skip these, the game generates rough ones automatically from bright saturated pixels.
+### Glow masks (same canvas, black except the glowing pixels)
 
-## 6. Recommended workflow
+- `ghostblade_emit.png`: the lime energy edge (bright core, soft falloff).
+- `arm_upper_near_emit.png`, `arm_lower_near_emit.png`: the lime status lights.
+- *Optional:* the boot soles and collar piping, very subtle.
 
-1. **Reference sheet first:** one full-body side view, facing right, standing in a relaxed **two-handed guard** (katana held diagonally forward, both hands on the grip, empty scabbard on the back) **and** a second neutral pose with arms slightly away from the body and the katana sheathed on the back, **720 px tall on a transparent background**. Get this approved before cutting parts. It locks the design and colours.
-2. **Cut or repaint each part** from the reference to the canvas sizes and orientations in §4. Limbs are straightened to hang down, with joints rounded and extended for overlap. The katana is painted separately, straight and horizontal.
-3. **Make the variants** (near/far darkness, hands, heads) from the same base, so they match exactly.
-4. **Deliver** all PNGs in one folder named `player_parts/`.
+## 5. Consistency checks
 
-### Prompt for the reference sheet (adapt as needed)
-> Character reference sheet for a 2D side-scrolling game cutout rig, two poses side by side, both side view (profile) facing right: (1) relaxed two-handed katana guard, blade angled forward, both hands on the long grip; (2) neutral standing pose, arms slightly away from the body, legs slightly apart, katana sheathed in a dark scabbard worn diagonally across the back (grip rising over the shoulder), held by a harness strap across the chest. A disgraced former corporate enforcer turned street fighter: lean, athletic, mid-30s; fitted short tactical jacket with high collar in near-black and charcoal, slim dark cargo trousers, armoured boots; sparing neon accents in acid lime-green and warning yellow (collar lining, piping, shoulder panel, glove knuckles, boot soles); right arm is a worn gunmetal and brushed-steel cybernetic prosthetic with small lime-green status lights; short cropped dark hair, thin cheek scar. Slim curved katana, polished steel, dark round guard, long grip wrapped in lime-green and black cord, glowing neon lime-green energy edge. No pink, magenta, cyan or blue in the costume. Hand-painted illustrated concept art, painterly brush texture, clean readable silhouette, cinematic, key light from upper left, cool bounce light from lower right. Transparent background, no ground shadow, no text, no logo.
+- Near/far pairs match in shape, with the far one darker (apart from the cybernetic near arm, which differs by design).
+- A standing assembly is about 720 px tall. The head is about 1/6 of the height, the collar hides the neck, and the build reads compact and powerful.
+- Grip layers: stacking `…_back`, a handle, then `…_front` looks like a real fist around the handle.
+- Hair locks join the head's hair cap seamlessly when hanging straight.
 
-### Prompt for a part (repeat per part)
-> From the approved character reference, paint ONLY the [PART, e.g. "near-side cybernetic upper arm"] as a separate cutout-animation part: drawn straight [ORIENTATION, e.g. "hanging vertically, shoulder at the top, elbow at the bottom"], rounded overlapping ends at both joints, same painterly style, lighting (key light upper left), colours and neon accents as the reference. Exact canvas [W × H] px, the part filling the canvas, transparent background, no shadow, no text.
+## 6. Deliver
 
-### Prompt for the katana
-> From the approved character reference, paint ONLY the katana as a separate game part: perfectly horizontal side view, pommel at the left, tip at the right, gentle upward curve toward the tip, cutting edge along the bottom; long two-hand grip (about 120 of 440 px) wrapped in lime-green and black cord, dark round guard at about 125 px from the left, polished steel blade with a glowing neon lime-green energy edge. Exact canvas 440 × 32 px, transparent background, no hands, no shadow, no text.
-
-## 7. Delivery checklist
-
-- [ ] 1 reference sheet (`reference.png`: two-handed guard plus neutral pose, 720 px tall, facing right).
-- [ ] 23 part PNGs with the exact names and canvas sizes in §4: 3 heads, torso, pelvis, 4 arm segments, 6 hands, 4 leg segments, 2 feet, katana, saya (scabbard).
-- [ ] Glow masks: `katana_emit.png`, `arm_upper_near_emit.png`, `arm_lower_near_emit.png` (others optional).
-- [ ] All RGBA with transparent backgrounds, facing right, lit from the upper left, far parts about 25% darker.
-- [ ] Mostly dark costume with lime-green and yellow neon accents; no pink or cyan in the costume.
-- [ ] Joints overlap (rounded ends); a standing assembly is about 720 px tall.
+Put all PNGs in one folder, `player_parts_v3/`, plus a `reference_v3.png` (the full character standing with both blades sheathed at the hips, and a second pose in the drawn dual-blade stance). Joint data (`manifest.json` with each part's joint centres) is very welcome, as before.
