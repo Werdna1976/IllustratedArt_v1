@@ -56,22 +56,20 @@ Principle: introduce new *uses* of a small, fixed moveset rather than piling on 
 
 **Signature effect:** the experimental blade briefly illuminates (lime-green, the katana's energy edge) whenever it disrupts a network-controlled enemy — a consistent visual signature from the first subway fight to the final boss.
 
-### 3.1 Player fighting style — dual blades (revised 2026-09-28)
+### 3.1 Player fighting style — dual rigid blades (revised 2026-09-29)
 
-Supersedes the single two-handed katana.
+Supersedes the single two-handed katana. **Authoritative detail:** `docs/art/player-moveset-spec.md` (moves, inputs, timing, hitboxes, trails) and `docs/art/player-character-brief.md` v4 (art). The visual language is locked by the v5 studies in `art/_source/player/opus_attack_handoff_v5/`.
 
-- **Two blades.** The **Ghostblade** is a long special blade in the **left (organic) hand**. It has a lime energy edge, and its arcs leave glitchy lime *data-ghost* trails that break into fading pixels and glyphs, which is the network-disruption signature. The **short blade** is plain polished steel with a yellow wrap, carried in the **right (cybernetic) hand**. It leaves thin white-steel arcs.
-- **Holsters.** Both blades are **sheathed at the hips**, one on each side, and cross-drawn. The metal arm snaps the short blade out for quick extenders and flourishes, including reverse grip.
-- **Two states.**
-  - **Sheathed** for movement and traversal: running, jumping and climbing with the hands free.
-  - **Drawn** for combat. Pressing attack or block, or an enemy entering its aggro range, triggers a fast **draw** into a **defensive dual-blade stance**. After a few seconds without combat, the swords are **sheathed** again.
-- **Combo-driven attacks.** Light/heavy strings branch by input timing and alternate blades: long arcs from the Ghostblade and fast cuts from the short blade. There's a heavy Ghostblade cut, a dual **cross-slash**, a launcher with air strings, and a finisher on staggered enemies. The exact strings come from the movesheets (`docs/art/movesheet-template.md`).
-- **Defence.**
-  - **Hold block** crosses the blades: it reduces damage and drains the player's guard.
-  - **Block at the right moment** is a **parry**: it staggers the attacker and opens a counter combo.
-  - **Dodge roll** is a short roll with brief invulnerability, with a roll-attack follow-up.
-- **Look of the strikes.** Cinematic, with **arcs through the air that dissipate**: every swing leaves a trail ribbon that fades and breaks up in the blade's own style. Diagonal front arcs stay the default; spins and cross-cuts are fine for enders.
-- **Character.** The face is kept. **Mid-length swept-back hair** swings with springy secondary motion. The build is sturdier: thicker legs, chunky boots, and a bulkier plated cybernetic arm that visibly grips its blade.
+- **Two rigid, straight, one-handed blades.**
+  - **Ghostblade:** 1.43 m, in the **left (organic) hand**. Dark steel with a razor-thin lime edge; its trails are translucent lime ribbons that shed square data fragments.
+  - **Steel sword:** 1.13 m, in the **right (cybernetic) hand**. Polished steel; thin white trails.
+  - **Holsters:** both are **hip-sheathed** and cross-drawn.
+- **States:** you move **sheathed**, and fast **draws** take you into a low coiled dual-blade stance. The blades re-sheathe after 4 s out of combat.
+- **Combat:**
+  - **Grounded:** edge-led **horizontal cuts** (knee, waist, chest) in a four-hit string ending in a dual scissor cut, plus a guard-breaking Ghost Spin heavy.
+  - **Air:** a launcher leads into an acrobatic air string and a landing sweep, and **Ghostline Cascade** is a full acrobatic finisher. There are no thrusts or overhead chops.
+  - **Defence:** crossed-blade **block** with a guard meter, timed **parry** into a counter, and a **dodge roll** with a roll slash.
+- **Presentation:** body turns (back-side slashes, air tucks and spins) use a **hybrid cutout** (side view plus swapped 3/4 views). Long swept-back hair swings with spring motion.
 
 ## 4. Visual Progression
 

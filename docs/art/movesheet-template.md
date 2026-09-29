@@ -1,5 +1,7 @@
 # Ghostline — Movesheet Template (for ChatGPT)
 
+> **Superseded (2026-09-29)** by `player-moveset-spec.md`, which locks the move list against the v5 studies. Keep this card format for new moves.
+
 *Use this to design the player's moves. Each move gets one **move card** (text, filled in below) plus one **pose strip** image. Claude turns these into game animations on the cutout rig, so poses must be readable, side-on, and use the character exactly as in the art brief (`player-character-brief.md`, v3: Ghostblade in the left/organic hand, short blade in the right/cybernetic hand).*
 
 ## Rules for every move
