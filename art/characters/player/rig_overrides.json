@@ -1,0 +1,4 @@
+{
+ "note": "Per-character tweaks on top of data/rigs/humanoid.json.",
+ "sprite_scale": {"saya": [0.68, 1.0]}
+}

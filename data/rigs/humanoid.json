@@ -1,0 +1,25 @@
+{
+ "note": "Shared cutout skeleton (M4a plan Task 5). attach = point in the PARENT part's canvas px, or \"distal\" (the parent's distal joint). Attach points come from the user's approved neutral assembly (art/_source/player/previews/neutral_assembly.json). lengths = joint-to-joint px targets per limb family; the stretch applies to the sprite only.",
+ "lengths": {"thigh": 158, "shin": 159, "arm_upper": 107, "arm_lower": 96},
+ "nodes": [
+  {"name": "Pelvis", "part": "pelvis", "parent": "", "z": 0},
+  {"name": "Torso", "part": "torso", "parent": "Pelvis", "attach": [50, 20], "z": 1},
+  {"name": "Saya", "part": "saya", "parent": "Torso", "attach": [-14, 113], "rotation": 112, "z": -3},
+  {"name": "ThighFar", "part": "thigh_far", "parent": "Pelvis", "attach": [32, 89], "z": -1},
+  {"name": "ShinFar", "part": "shin_far", "parent": "ThighFar", "attach": "distal", "z": -1},
+  {"name": "FootFar", "part": "foot_far", "parent": "ShinFar", "attach": "distal", "z": -1},
+  {"name": "ThighNear", "part": "thigh_near", "parent": "Pelvis", "attach": [57, 89], "z": 2},
+  {"name": "ShinNear", "part": "shin_near", "parent": "ThighNear", "attach": "distal", "z": 2},
+  {"name": "FootNear", "part": "foot_near", "parent": "ShinNear", "attach": "distal", "z": 2},
+  {"name": "Head", "part": "head", "variants": ["head", "head_attack", "head_hurt"], "parent": "Torso", "attach": [55, 9], "z": 2},
+  {"name": "Glint", "part": "glint", "optional": true, "hidden": true, "parent": "Head", "attach": [70, 40], "z": 6},
+  {"name": "ArmUpperFar", "part": "arm_upper_far", "parent": "Torso", "attach": [55, 54], "z": -2},
+  {"name": "ArmLowerFar", "part": "arm_lower_far", "parent": "ArmUpperFar", "attach": "distal", "z": -2},
+  {"name": "HandFar", "part": "hand_grip_far", "variants": ["hand_grip_far", "hand_fist_far", "hand_open_far"], "parent": "ArmLowerFar", "attach": "distal", "z": -2},
+  {"name": "ArmUpperNear", "part": "arm_upper_near", "parent": "Torso", "attach": [37, 57], "z": 3},
+  {"name": "ArmLowerNear", "part": "arm_lower_near", "parent": "ArmUpperNear", "attach": "distal", "z": 3},
+  {"name": "HandNear", "part": "hand_grip_near", "variants": ["hand_grip_near", "hand_fist_near", "hand_open_near"], "parent": "ArmLowerNear", "attach": "distal", "z": 3},
+  {"name": "Katana", "part": "katana", "parent": "HandNear", "attach": [22.5, 26], "z": 4,
+   "markers": {"Tip": [335, 0], "FarGrip": [-70, 0]}}
+ ]
+}

@@ -1,0 +1,350 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://art/characters/player/parts.png" id="1_rrg0k"]
+[ext_resource type="Script" path="res://scripts/cutout/part_swap.gd" id="2_dyvy3"]
+[ext_resource type="Script" path="res://scripts/cutout/cutout_ik.gd" id="3_yiuu5"]
+
+[node name="PlayerRig" type="Node2D" unique_id=1607362971]
+
+[node name="Pelvis" type="Node2D" parent="." unique_id=682196623]
+position = Vector2(0, -381)
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis" unique_id=1844502089]
+texture = ExtResource("1_rrg0k")
+region_enabled = true
+region_rect = Rect2(998, 16, 100, 90)
+script = ExtResource("2_dyvy3")
+variants = {
+&"pelvis": Rect2(998, 16, 100, 90)
+}
+offsets = {
+&"pelvis": Vector2(0, 0)
+}
+variant = &"pelvis"
+
+[node name="Torso" type="Node2D" parent="Pelvis" unique_id=346599964]
+position = Vector2(0, -25)
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso" unique_id=1300067570]
+z_index = 1
+texture = ExtResource("1_rrg0k")
+offset = Vector2(0, -103)
+region_enabled = true
+region_rect = Rect2(16, 16, 110, 230)
+script = ExtResource("2_dyvy3")
+variants = {
+&"torso": Rect2(16, 16, 110, 230)
+}
+offsets = {
+&"torso": Vector2(0, -103)
+}
+variant = &"torso"
+
+[node name="Saya" type="Node2D" parent="Pelvis/Torso" unique_id=1474498874]
+position = Vector2(-69, -105)
+rotation = 1.9547688
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/Saya" unique_id=1103251860]
+z_index = -3
+scale = Vector2(0.68, 1)
+texture = ExtResource("1_rrg0k")
+offset = Vector2(100, 0)
+region_enabled = true
+region_rect = Rect2(472, 262, 440, 32)
+script = ExtResource("2_dyvy3")
+variants = {
+&"saya": Rect2(472, 262, 440, 32)
+}
+offsets = {
+&"saya": Vector2(100, 0)
+}
+variant = &"saya"
+
+[node name="Head" type="Node2D" parent="Pelvis/Torso" unique_id=1391976697]
+position = Vector2(0, -209)
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/Head" unique_id=958531583]
+z_index = 2
+texture = ExtResource("1_rrg0k")
+offset = Vector2(0, -51)
+region_enabled = true
+region_rect = Rect2(680, 16, 90, 110)
+script = ExtResource("2_dyvy3")
+variants = {
+&"head": Rect2(680, 16, 90, 110),
+&"head_attack": Rect2(786, 16, 90, 110),
+&"head_hurt": Rect2(892, 16, 90, 110)
+}
+offsets = {
+&"head": Vector2(0, -51),
+&"head_attack": Vector2(0, -51),
+&"head_hurt": Vector2(0, -51)
+}
+variant = &"head"
+
+[node name="ArmUpperFar" type="Node2D" parent="Pelvis/Torso" unique_id=816730712]
+position = Vector2(0, -164)
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperFar" unique_id=191918315]
+z_index = -2
+scale = Vector2(1, 1.3375)
+texture = ExtResource("1_rrg0k")
+offset = Vector2(0, 40)
+region_enabled = true
+region_rect = Rect2(426, 16, 50, 130)
+script = ExtResource("2_dyvy3")
+variants = {
+&"arm_upper_far": Rect2(426, 16, 50, 130)
+}
+offsets = {
+&"arm_upper_far": Vector2(0, 40)
+}
+variant = &"arm_upper_far"
+
+[node name="ArmLowerFar" type="Node2D" parent="Pelvis/Torso/ArmUpperFar" unique_id=736953117]
+position = Vector2(0, 107)
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperFar/ArmLowerFar" unique_id=111523396]
+z_index = -2
+scale = Vector2(1, 1.1566265)
+texture = ExtResource("1_rrg0k")
+offset = Vector2(0, 35)
+region_enabled = true
+region_rect = Rect2(558, 16, 45, 120)
+script = ExtResource("2_dyvy3")
+variants = {
+&"arm_lower_far": Rect2(558, 16, 45, 120)
+}
+offsets = {
+&"arm_lower_far": Vector2(0, 35)
+}
+variant = &"arm_lower_far"
+
+[node name="HandFar" type="Node2D" parent="Pelvis/Torso/ArmUpperFar/ArmLowerFar" unique_id=1191331749]
+position = Vector2(0, 96)
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperFar/ArmLowerFar/HandFar" unique_id=640166067]
+z_index = -2
+texture = ExtResource("1_rrg0k")
+offset = Vector2(0, 14.5)
+region_enabled = true
+region_rect = Rect2(1236, 16, 45, 45)
+script = ExtResource("2_dyvy3")
+variants = {
+&"hand_fist_far": Rect2(1114, 16, 45, 45),
+&"hand_grip_far": Rect2(1236, 16, 45, 45),
+&"hand_open_far": Rect2(1358, 16, 45, 45)
+}
+offsets = {
+&"hand_fist_far": Vector2(0, 14.5),
+&"hand_grip_far": Vector2(0, 14.5),
+&"hand_open_far": Vector2(0, 14.5)
+}
+variant = &"hand_grip_far"
+
+[node name="ArmUpperNear" type="Node2D" parent="Pelvis/Torso" unique_id=974700230]
+position = Vector2(-18, -161)
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperNear" unique_id=1037726850]
+z_index = 3
+scale = Vector2(1, 1.3375)
+texture = ExtResource("1_rrg0k")
+offset = Vector2(0, 40)
+region_enabled = true
+region_rect = Rect2(492, 16, 50, 130)
+script = ExtResource("2_dyvy3")
+variants = {
+&"arm_upper_near": Rect2(492, 16, 50, 130)
+}
+offsets = {
+&"arm_upper_near": Vector2(0, 40)
+}
+variant = &"arm_upper_near"
+
+[node name="ArmLowerNear" type="Node2D" parent="Pelvis/Torso/ArmUpperNear" unique_id=574042810]
+position = Vector2(0, 107)
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear" unique_id=643463718]
+z_index = 3
+scale = Vector2(1, 1.1566265)
+texture = ExtResource("1_rrg0k")
+offset = Vector2(0, 35)
+region_enabled = true
+region_rect = Rect2(619, 16, 45, 120)
+script = ExtResource("2_dyvy3")
+variants = {
+&"arm_lower_near": Rect2(619, 16, 45, 120)
+}
+offsets = {
+&"arm_lower_near": Vector2(0, 35)
+}
+variant = &"arm_lower_near"
+
+[node name="HandNear" type="Node2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear" unique_id=1926252994]
+position = Vector2(0, 96)
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear" unique_id=990116081]
+z_index = 3
+texture = ExtResource("1_rrg0k")
+offset = Vector2(0, 14.5)
+region_enabled = true
+region_rect = Rect2(1297, 16, 45, 45)
+script = ExtResource("2_dyvy3")
+variants = {
+&"hand_fist_near": Rect2(1175, 16, 45, 45),
+&"hand_grip_near": Rect2(1297, 16, 45, 45),
+&"hand_open_near": Rect2(1419, 16, 45, 45)
+}
+offsets = {
+&"hand_fist_near": Vector2(0, 14.5),
+&"hand_grip_near": Vector2(0, 14.5),
+&"hand_open_near": Vector2(0, 14.5)
+}
+variant = &"hand_grip_near"
+
+[node name="Katana" type="Node2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear" unique_id=32957846]
+position = Vector2(0, 18)
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear/Katana" unique_id=1415795811]
+z_index = 4
+texture = ExtResource("1_rrg0k")
+offset = Vector2(115, 0)
+region_enabled = true
+region_rect = Rect2(16, 262, 440, 32)
+script = ExtResource("2_dyvy3")
+variants = {
+&"katana": Rect2(16, 262, 440, 32)
+}
+offsets = {
+&"katana": Vector2(115, 0)
+}
+variant = &"katana"
+
+[node name="Tip" type="Marker2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear/Katana" unique_id=626223040]
+position = Vector2(335, 0)
+
+[node name="FarGrip" type="Marker2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear/Katana" unique_id=1996722835]
+position = Vector2(-70, 0)
+
+[node name="ThighFar" type="Node2D" parent="Pelvis" unique_id=107581766]
+position = Vector2(-18, 44)
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighFar" unique_id=1868212329]
+z_index = -1
+scale = Vector2(1, 1.3166667)
+texture = ExtResource("1_rrg0k")
+offset = Vector2(0, 60)
+region_enabled = true
+region_rect = Rect2(274, 16, 60, 170)
+script = ExtResource("2_dyvy3")
+variants = {
+&"thigh_far": Rect2(274, 16, 60, 170)
+}
+offsets = {
+&"thigh_far": Vector2(0, 60)
+}
+variant = &"thigh_far"
+
+[node name="ShinFar" type="Node2D" parent="Pelvis/ThighFar" unique_id=686642368]
+position = Vector2(0, 158)
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighFar/ShinFar" unique_id=1518484819]
+z_index = -1
+scale = Vector2(1, 1.2421875)
+texture = ExtResource("1_rrg0k")
+offset = Vector2(0, 60)
+region_enabled = true
+region_rect = Rect2(142, 16, 50, 170)
+script = ExtResource("2_dyvy3")
+variants = {
+&"shin_far": Rect2(142, 16, 50, 170)
+}
+offsets = {
+&"shin_far": Vector2(0, 60)
+}
+variant = &"shin_far"
+
+[node name="FootFar" type="Node2D" parent="Pelvis/ThighFar/ShinFar" unique_id=144808342]
+position = Vector2(0, 159)
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighFar/ShinFar/FootFar" unique_id=2136152868]
+z_index = -1
+texture = ExtResource("1_rrg0k")
+offset = Vector2(20, 0)
+region_enabled = true
+region_rect = Rect2(1480, 16, 90, 40)
+script = ExtResource("2_dyvy3")
+variants = {
+&"foot_far": Rect2(1480, 16, 90, 40)
+}
+offsets = {
+&"foot_far": Vector2(20, 0)
+}
+variant = &"foot_far"
+
+[node name="ThighNear" type="Node2D" parent="Pelvis" unique_id=686512957]
+position = Vector2(7, 44)
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighNear" unique_id=62927501]
+z_index = 2
+scale = Vector2(1, 1.3166667)
+texture = ExtResource("1_rrg0k")
+offset = Vector2(0, 60)
+region_enabled = true
+region_rect = Rect2(350, 16, 60, 170)
+script = ExtResource("2_dyvy3")
+variants = {
+&"thigh_near": Rect2(350, 16, 60, 170)
+}
+offsets = {
+&"thigh_near": Vector2(0, 60)
+}
+variant = &"thigh_near"
+
+[node name="ShinNear" type="Node2D" parent="Pelvis/ThighNear" unique_id=1773343123]
+position = Vector2(0, 158)
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighNear/ShinNear" unique_id=256625324]
+z_index = 2
+scale = Vector2(1, 1.2421875)
+texture = ExtResource("1_rrg0k")
+offset = Vector2(0, 60)
+region_enabled = true
+region_rect = Rect2(208, 16, 50, 170)
+script = ExtResource("2_dyvy3")
+variants = {
+&"shin_near": Rect2(208, 16, 50, 170)
+}
+offsets = {
+&"shin_near": Vector2(0, 60)
+}
+variant = &"shin_near"
+
+[node name="FootNear" type="Node2D" parent="Pelvis/ThighNear/ShinNear" unique_id=1212961877]
+position = Vector2(0, 159)
+
+[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighNear/ShinNear/FootNear" unique_id=548901387]
+z_index = 2
+texture = ExtResource("1_rrg0k")
+offset = Vector2(20, 0)
+region_enabled = true
+region_rect = Rect2(1586, 16, 90, 40)
+script = ExtResource("2_dyvy3")
+variants = {
+&"foot_near": Rect2(1586, 16, 90, 40)
+}
+offsets = {
+&"foot_near": Vector2(20, 0)
+}
+variant = &"foot_near"
+
+[node name="CutoutIK" type="Node2D" parent="." unique_id=1675358685]
+script = ExtResource("3_yiuu5")
+upper_path = NodePath("../Pelvis/Torso/ArmUpperFar")
+lower_path = NodePath("../Pelvis/Torso/ArmUpperFar/ArmLowerFar")
+hand_path = NodePath("../Pelvis/Torso/ArmUpperFar/ArmLowerFar/HandFar")
+near_hand_path = NodePath("../Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear")
+katana_path = NodePath("../Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear/Katana")
+target_path = NodePath("../Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear/Katana/FarGrip")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=793625174]
