@@ -56,6 +56,23 @@ Principle: introduce new *uses* of a small, fixed moveset rather than piling on 
 
 **Signature effect:** the experimental blade briefly illuminates (lime-green, the katana's energy edge) whenever it disrupts a network-controlled enemy — a consistent visual signature from the first subway fight to the final boss.
 
+### 3.1 Player fighting style — dual blades (revised 2026-09-28)
+
+Supersedes the single two-handed katana.
+
+- **Two blades.** The **Ghostblade** is a long special blade in the **left (organic) hand**. It has a lime energy edge, and its arcs leave glitchy lime *data-ghost* trails that break into fading pixels and glyphs, which is the network-disruption signature. The **short blade** is plain polished steel with a yellow wrap, carried in the **right (cybernetic) hand**. It leaves thin white-steel arcs.
+- **Holsters.** Both blades are **sheathed at the hips**, one on each side, and cross-drawn. The metal arm snaps the short blade out for quick extenders and flourishes, including reverse grip.
+- **Two states.**
+  - **Sheathed** for movement and traversal: running, jumping and climbing with the hands free.
+  - **Drawn** for combat. Pressing attack or block, or an enemy entering its aggro range, triggers a fast **draw** into a **defensive dual-blade stance**. After a few seconds without combat, the swords are **sheathed** again.
+- **Combo-driven attacks.** Light/heavy strings branch by input timing and alternate blades: long arcs from the Ghostblade and fast cuts from the short blade. There's a heavy Ghostblade cut, a dual **cross-slash**, a launcher with air strings, and a finisher on staggered enemies. The exact strings come from the movesheets (`docs/art/movesheet-template.md`).
+- **Defence.**
+  - **Hold block** crosses the blades: it reduces damage and drains the player's guard.
+  - **Block at the right moment** is a **parry**: it staggers the attacker and opens a counter combo.
+  - **Dodge roll** is a short roll with brief invulnerability, with a roll-attack follow-up.
+- **Look of the strikes.** Cinematic, with **arcs through the air that dissipate**: every swing leaves a trail ribbon that fades and breaks up in the blade's own style. Diagonal front arcs stay the default; spins and cross-cuts are fine for enders.
+- **Character.** The face is kept. **Mid-length swept-back hair** swings with springy secondary motion. The build is sturdier: thicker legs, chunky boots, and a bulkier plated cybernetic arm that visibly grips its blade.
+
 ## 4. Visual Progression
 
 Underground darkness → the city's brightest heights.

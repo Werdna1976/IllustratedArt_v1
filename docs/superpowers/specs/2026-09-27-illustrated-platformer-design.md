@@ -124,6 +124,8 @@ Characters are flat painted parts on lit quads in the same 3D scene as the plate
 - **Memory:** ~16 MB per character (2048² sheet × 3 maps, BC7 + mips). Large bosses use a 4096² sheet.
 - **Effects:** slashes, sparks and disruption glitches are separate additive/emissive quads.
 
+> **Revision pending (2026-09-28): dual blades.** Game design §3.1 replaces the single two-handed katana with a Ghostblade (left, organic hand) and a short blade (right, cybernetic hand), both sheathed at the hips. The rig gains two weapon slots, hip sheaths, two-layer grip hands (the handle between the palm and finger layers), spring-driven hair locks, sheathed/drawn states with draw and sheathe transitions, combo trees from movesheets (`docs/art/movesheet-template.md`), a crossed-blade block and timed parry, a dodge roll, and slash-trail VFX. This will be planned as M4b once the v3 parts and movesheets arrive.
+
 ### 5.7 Combat core
 - **Moves are data:** each move is a `MoveData` resource — startup / active / recovery (seconds), damage, stagger damage, knockback, launch velocity, hit-stop, cancel window, animation name. Tuning never touches code.
 - **Hitboxes / hurtboxes:** `Area3D` shapes on the gameplay plane, enabled only during a move's active window.
