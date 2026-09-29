@@ -26,6 +26,10 @@ func _initialize() -> void:
 
 func build_and_save(char_dir: String, out: String) -> Error:
 	var dir := char_dir if char_dir.ends_with("/") else char_dir + "/"
+	var missing := RigSpec.missing_parts(_json(SKELETON), _json(dir + "parts.json"))
+	if not missing.is_empty():
+		printerr("cannot build %s: missing parts %s (re-run pack_parts.py with the full delivery)" % [out, ", ".join(missing)])
+		return ERR_FILE_NOT_FOUND
 	var rig := build(dir)
 	var packed := PackedScene.new()
 	packed.pack(rig)

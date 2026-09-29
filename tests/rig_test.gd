@@ -32,3 +32,12 @@ func test_stretch_applies_to_sprite_not_children() -> void:
 	assert_near(thigh.scale.y, 1.0, 1e-6, "bone itself unscaled")
 	assert_true((thigh.get_node("Sprite") as Node2D).scale.y > 1.2, "thigh sprite stretched to the approved length")
 	assert_near((thigh.get_node("ShinNear/Sprite") as Node2D).global_scale.y / (thigh.get_node("ShinNear/Sprite") as Node2D).scale.y, 1.0, 1e-4, "shin inherits no stretch")
+
+
+func test_missing_required_parts_are_listed_before_building() -> void:
+	var skeleton: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/rigs/humanoid.json"))
+	var rects := {"pelvis": [0, 0, 1, 1], "torso": [0, 0, 1, 1]}
+	var missing := RigSpec.missing_parts(skeleton, rects)
+	assert_true("arm_lower_far" in missing and "katana" in missing, "required parts reported")
+	assert_true(not ("glint" in missing), "optional parts are not required")
+	assert_true(not ("pelvis" in missing), "present parts are fine")

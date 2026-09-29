@@ -5,12 +5,12 @@
 [ext_resource type="Script" path="res://scripts/cutout/cutout_ik.gd" id="3_gs0ig"]
 [ext_resource type="AnimationLibrary" path="res://data/animations/humanoid.tres" id="4_lyu8q"]
 
-[node name="PlayerRig" type="Node2D" unique_id=1303582401]
+[node name="PlayerRig" type="Node2D" unique_id=426936001]
 
-[node name="Pelvis" type="Node2D" parent="." unique_id=309363301]
+[node name="Pelvis" type="Node2D" parent="." unique_id=492335]
 position = Vector2(0, -381)
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis" unique_id=350976189]
+[node name="Sprite" type="Sprite2D" parent="Pelvis" unique_id=1968881093]
 texture = ExtResource("1_dyvy3")
 region_enabled = true
 region_rect = Rect2(998, 16, 100, 90)
@@ -23,10 +23,10 @@ offsets = {
 }
 variant = &"pelvis"
 
-[node name="Torso" type="Node2D" parent="Pelvis" unique_id=129550071]
+[node name="Torso" type="Node2D" parent="Pelvis" unique_id=259657481]
 position = Vector2(0, -25)
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso" unique_id=1770048368]
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso" unique_id=970648944]
 z_index = 1
 texture = ExtResource("1_dyvy3")
 offset = Vector2(0, -103)
@@ -41,11 +41,11 @@ offsets = {
 }
 variant = &"torso"
 
-[node name="Saya" type="Node2D" parent="Pelvis/Torso" unique_id=585996576]
+[node name="Saya" type="Node2D" parent="Pelvis/Torso" unique_id=197941906]
 position = Vector2(-69, -105)
 rotation = 1.9547688
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/Saya" unique_id=1854913232]
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/Saya" unique_id=1416282031]
 z_index = -3
 scale = Vector2(0.68, 1)
 texture = ExtResource("1_dyvy3")
@@ -61,10 +61,10 @@ offsets = {
 }
 variant = &"saya"
 
-[node name="Head" type="Node2D" parent="Pelvis/Torso" unique_id=585255460]
+[node name="Head" type="Node2D" parent="Pelvis/Torso" unique_id=65396551]
 position = Vector2(0, -209)
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/Head" unique_id=854814402]
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/Head" unique_id=1719014358]
 z_index = 2
 texture = ExtResource("1_dyvy3")
 offset = Vector2(0, -51)
@@ -83,14 +83,14 @@ offsets = {
 }
 variant = &"head"
 
-[node name="Glint" type="Node2D" parent="Pelvis/Torso/Head" unique_id=1637999421]
+[node name="Glint" type="Node2D" parent="Pelvis/Torso/Head" unique_id=343891657]
 visible = false
 position = Vector2(25, -66)
 
-[node name="ArmUpperFar" type="Node2D" parent="Pelvis/Torso" unique_id=1706976736]
+[node name="ArmUpperFar" type="Node2D" parent="Pelvis/Torso" unique_id=535668261]
 position = Vector2(0, -164)
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperFar" unique_id=51872945]
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperFar" unique_id=1780934292]
 z_index = -2
 scale = Vector2(1, 1.3375)
 texture = ExtResource("1_dyvy3")
@@ -106,10 +106,10 @@ offsets = {
 }
 variant = &"arm_upper_far"
 
-[node name="ArmLowerFar" type="Node2D" parent="Pelvis/Torso/ArmUpperFar" unique_id=1184144715]
+[node name="ArmLowerFar" type="Node2D" parent="Pelvis/Torso/ArmUpperFar" unique_id=300515383]
 position = Vector2(0, 107)
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperFar/ArmLowerFar" unique_id=142734986]
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperFar/ArmLowerFar" unique_id=1247558494]
 z_index = -2
 scale = Vector2(1, 1.1566265)
 texture = ExtResource("1_dyvy3")
@@ -125,10 +125,10 @@ offsets = {
 }
 variant = &"arm_lower_far"
 
-[node name="HandFar" type="Node2D" parent="Pelvis/Torso/ArmUpperFar/ArmLowerFar" unique_id=1558927648]
+[node name="HandFar" type="Node2D" parent="Pelvis/Torso/ArmUpperFar/ArmLowerFar" unique_id=485079518]
 position = Vector2(0, 96)
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperFar/ArmLowerFar/HandFar" unique_id=1246389416]
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperFar/ArmLowerFar/HandFar" unique_id=1103500518]
 z_index = -2
 texture = ExtResource("1_dyvy3")
 offset = Vector2(0, 14.5)
@@ -147,10 +147,10 @@ offsets = {
 }
 variant = &"hand_grip_far"
 
-[node name="ArmUpperNear" type="Node2D" parent="Pelvis/Torso" unique_id=529160791]
+[node name="ArmUpperNear" type="Node2D" parent="Pelvis/Torso" unique_id=174684922]
 position = Vector2(-18, -161)
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperNear" unique_id=399604159]
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperNear" unique_id=113863946]
 z_index = 3
 scale = Vector2(1, 1.3375)
 texture = ExtResource("1_dyvy3")
@@ -166,10 +166,10 @@ offsets = {
 }
 variant = &"arm_upper_near"
 
-[node name="ArmLowerNear" type="Node2D" parent="Pelvis/Torso/ArmUpperNear" unique_id=319477976]
+[node name="ArmLowerNear" type="Node2D" parent="Pelvis/Torso/ArmUpperNear" unique_id=1957524316]
 position = Vector2(0, 107)
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear" unique_id=2023636852]
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear" unique_id=1596853794]
 z_index = 3
 scale = Vector2(1, 1.1566265)
 texture = ExtResource("1_dyvy3")
@@ -185,10 +185,10 @@ offsets = {
 }
 variant = &"arm_lower_near"
 
-[node name="HandNear" type="Node2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear" unique_id=1089605836]
+[node name="HandNear" type="Node2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear" unique_id=405383941]
 position = Vector2(0, 96)
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear" unique_id=1348813682]
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear" unique_id=1418983442]
 z_index = 3
 texture = ExtResource("1_dyvy3")
 offset = Vector2(0, 14.5)
@@ -207,10 +207,10 @@ offsets = {
 }
 variant = &"hand_grip_near"
 
-[node name="Katana" type="Node2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear" unique_id=643896677]
+[node name="Katana" type="Node2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear" unique_id=361594269]
 position = Vector2(0, 18)
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear/Katana" unique_id=639863122]
+[node name="Sprite" type="Sprite2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear/Katana" unique_id=156205273]
 z_index = 4
 texture = ExtResource("1_dyvy3")
 offset = Vector2(115, 0)
@@ -225,16 +225,16 @@ offsets = {
 }
 variant = &"katana"
 
-[node name="Tip" type="Marker2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear/Katana" unique_id=1407840021]
+[node name="Tip" type="Marker2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear/Katana" unique_id=55979707]
 position = Vector2(335, 0)
 
-[node name="FarGrip" type="Marker2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear/Katana" unique_id=1064961984]
+[node name="FarGrip" type="Marker2D" parent="Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear/Katana" unique_id=911919793]
 position = Vector2(-70, 0)
 
-[node name="ThighFar" type="Node2D" parent="Pelvis" unique_id=593822991]
+[node name="ThighFar" type="Node2D" parent="Pelvis" unique_id=1050869570]
 position = Vector2(-18, 44)
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighFar" unique_id=412458990]
+[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighFar" unique_id=777704447]
 z_index = -1
 scale = Vector2(1, 1.3166667)
 texture = ExtResource("1_dyvy3")
@@ -250,10 +250,10 @@ offsets = {
 }
 variant = &"thigh_far"
 
-[node name="ShinFar" type="Node2D" parent="Pelvis/ThighFar" unique_id=2124004275]
+[node name="ShinFar" type="Node2D" parent="Pelvis/ThighFar" unique_id=1984024992]
 position = Vector2(0, 158)
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighFar/ShinFar" unique_id=1465078512]
+[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighFar/ShinFar" unique_id=2124704032]
 z_index = -1
 scale = Vector2(1, 1.2421875)
 texture = ExtResource("1_dyvy3")
@@ -269,10 +269,10 @@ offsets = {
 }
 variant = &"shin_far"
 
-[node name="FootFar" type="Node2D" parent="Pelvis/ThighFar/ShinFar" unique_id=16266126]
+[node name="FootFar" type="Node2D" parent="Pelvis/ThighFar/ShinFar" unique_id=420395346]
 position = Vector2(0, 159)
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighFar/ShinFar/FootFar" unique_id=921305102]
+[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighFar/ShinFar/FootFar" unique_id=1577983904]
 z_index = -1
 texture = ExtResource("1_dyvy3")
 offset = Vector2(20, 0)
@@ -287,10 +287,10 @@ offsets = {
 }
 variant = &"foot_far"
 
-[node name="ThighNear" type="Node2D" parent="Pelvis" unique_id=959914984]
+[node name="ThighNear" type="Node2D" parent="Pelvis" unique_id=1773426560]
 position = Vector2(7, 44)
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighNear" unique_id=1986760403]
+[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighNear" unique_id=1611156984]
 z_index = 2
 scale = Vector2(1, 1.3166667)
 texture = ExtResource("1_dyvy3")
@@ -306,10 +306,10 @@ offsets = {
 }
 variant = &"thigh_near"
 
-[node name="ShinNear" type="Node2D" parent="Pelvis/ThighNear" unique_id=1672798419]
+[node name="ShinNear" type="Node2D" parent="Pelvis/ThighNear" unique_id=130925160]
 position = Vector2(0, 158)
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighNear/ShinNear" unique_id=1805181597]
+[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighNear/ShinNear" unique_id=949836254]
 z_index = 2
 scale = Vector2(1, 1.2421875)
 texture = ExtResource("1_dyvy3")
@@ -325,10 +325,10 @@ offsets = {
 }
 variant = &"shin_near"
 
-[node name="FootNear" type="Node2D" parent="Pelvis/ThighNear/ShinNear" unique_id=480921980]
+[node name="FootNear" type="Node2D" parent="Pelvis/ThighNear/ShinNear" unique_id=1809676796]
 position = Vector2(0, 159)
 
-[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighNear/ShinNear/FootNear" unique_id=471913569]
+[node name="Sprite" type="Sprite2D" parent="Pelvis/ThighNear/ShinNear/FootNear" unique_id=1047231506]
 z_index = 2
 texture = ExtResource("1_dyvy3")
 offset = Vector2(20, 0)
@@ -343,7 +343,7 @@ offsets = {
 }
 variant = &"foot_near"
 
-[node name="CutoutIK" type="Node2D" parent="." unique_id=952710536]
+[node name="CutoutIK" type="Node2D" parent="." unique_id=1549981242]
 script = ExtResource("3_gs0ig")
 upper_path = NodePath("../Pelvis/Torso/ArmUpperFar")
 lower_path = NodePath("../Pelvis/Torso/ArmUpperFar/ArmLowerFar")
@@ -352,5 +352,5 @@ near_hand_path = NodePath("../Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear")
 katana_path = NodePath("../Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear/Katana")
 target_path = NodePath("../Pelvis/Torso/ArmUpperNear/ArmLowerNear/HandNear/Katana/FarGrip")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=662583677]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1055669591]
 libraries/ = ExtResource("4_lyu8q")

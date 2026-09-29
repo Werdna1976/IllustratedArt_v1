@@ -46,3 +46,18 @@ func test_tracks_resolve_on_both_rigs() -> void:
 			for t in anim.get_track_count():
 				var np := anim.track_get_path(t)
 				assert_true(rig.has_node(NodePath(np.get_concatenated_names())), "%s: %s resolves on %s" % [anim_name, np, path])
+
+
+func test_hitboxes_do_not_reach_past_the_blade() -> void:
+	var rig: Node2D = add_node(load(PLAYER).instantiate())
+	var ap: AnimationPlayer = rig.get_node("AnimationPlayer")
+	var moves: MoveSet = load("res://data/moves/player.tres")
+	for id in ATTACKS:
+		var m := moves.get_move(id)
+		var reach := -INF
+		ap.play(m.anim)
+		for i in 11:
+			ap.seek(m.startup + m.active * i / 10.0, true)
+			reach = maxf(reach, _tip(rig).x / WorldSpec.CHAR_PX_PER_M)
+		var far_edge := m.hitbox_offset.x + m.hitbox_size.x * 0.5
+		assert_true(far_edge <= reach + 0.25, "%s: hitbox reaches %.2f m, blade only %.2f m" % [id, far_edge, reach])
