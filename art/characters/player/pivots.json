@@ -1,0 +1,187 @@
+{
+ "arm_lower_far": {
+  "distal": [
+   22.5,
+   108
+  ],
+  "pivot": [
+   22.5,
+   25
+  ]
+ },
+ "arm_lower_near": {
+  "distal": [
+   22.5,
+   108
+  ],
+  "pivot": [
+   22.5,
+   25
+  ]
+ },
+ "arm_upper_far": {
+  "distal": [
+   25.0,
+   105
+  ],
+  "pivot": [
+   25.0,
+   25
+  ]
+ },
+ "arm_upper_near": {
+  "distal": [
+   25.0,
+   105
+  ],
+  "pivot": [
+   25.0,
+   25
+  ]
+ },
+ "foot_far": {
+  "distal": null,
+  "pivot": [
+   25,
+   20
+  ]
+ },
+ "foot_near": {
+  "distal": null,
+  "pivot": [
+   25,
+   20
+  ]
+ },
+ "hand_fist_far": {
+  "distal": null,
+  "pivot": [
+   22.5,
+   8
+  ]
+ },
+ "hand_fist_near": {
+  "distal": null,
+  "pivot": [
+   22.5,
+   8
+  ]
+ },
+ "hand_grip_far": {
+  "distal": null,
+  "pivot": [
+   22.5,
+   8
+  ]
+ },
+ "hand_grip_near": {
+  "distal": null,
+  "pivot": [
+   22.5,
+   8
+  ]
+ },
+ "hand_open_far": {
+  "distal": null,
+  "pivot": [
+   22.5,
+   8
+  ]
+ },
+ "hand_open_near": {
+  "distal": null,
+  "pivot": [
+   22.5,
+   8
+  ]
+ },
+ "head": {
+  "distal": null,
+  "pivot": [
+   45,
+   106
+  ]
+ },
+ "head_attack": {
+  "distal": null,
+  "pivot": [
+   45,
+   106
+  ]
+ },
+ "head_hurt": {
+  "distal": null,
+  "pivot": [
+   45,
+   106
+  ]
+ },
+ "katana": {
+  "distal": null,
+  "pivot": [
+   105,
+   16
+  ]
+ },
+ "pelvis": {
+  "distal": null,
+  "pivot": [
+   50,
+   45
+  ]
+ },
+ "saya": {
+  "distal": null,
+  "pivot": [
+   120,
+   16
+  ]
+ },
+ "shin_far": {
+  "distal": [
+   25.0,
+   153
+  ],
+  "pivot": [
+   25.0,
+   25
+  ]
+ },
+ "shin_near": {
+  "distal": [
+   25.0,
+   153
+  ],
+  "pivot": [
+   25.0,
+   25
+  ]
+ },
+ "thigh_far": {
+  "distal": [
+   30.0,
+   145
+  ],
+  "pivot": [
+   30.0,
+   25
+  ]
+ },
+ "thigh_near": {
+  "distal": [
+   30.0,
+   145
+  ],
+  "pivot": [
+   30.0,
+   25
+  ]
+ },
+ "torso": {
+  "distal": null,
+  "pivot": [
+   55,
+   218
+  ]
+ }
+}
